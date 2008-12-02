@@ -1,3 +1,5 @@
+require File.dirname(__FILE__) + '/spec_helper'
+
 describe PluginHelpers do
   describe "plugin" do
     it "should return Plugin object" do

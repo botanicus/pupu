@@ -1,3 +1,5 @@
+require File.dirname(__FILE__) + '/spec_helper'
+
 describe Pupu do
   describe "[]" do
     it "should return Pupu object" do
