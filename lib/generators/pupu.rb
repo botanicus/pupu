@@ -6,7 +6,7 @@ module Merb
       #
 
       def self.source_root
-        File.join(super, 'application', 'pupu')
+        File.join(File.dirname(__FILE__), 'templates', 'application', 'pupu')
       end
 
       def self.common_templates_dir
@@ -25,27 +25,40 @@ module Merb
       # ==== Generator options
       #
 
-      #option :template_engine, :default => :haml,
-      #:desc => 'Template engine to prefer for this application (one of: erb, haml).'
-
-      #desc <<-DESC
-      #This generates a "prepackaged" (or "opinionated") Merb application that uses ActiveRecord,
-      #TestUnit, helpers, assets, mailer, caching, slices and merb-auth all out of the box.
-    #DESC
+      desc <<-DESC
+      This generates a pupu, merb public plugin.
+      DESC
 
       first_argument :name, :required => true, :desc => "Pupu name"
+      # TODO
+      second_argument :files, :as => :array, :default => nil, :desc => "Extra files. Example: foo.js foo.css"
+
+      option :js_framework, :default => :mootools, :desc => "Use given JS framework for new pupu. Choices: mootools, jquery, prototype."
 
       #
       # ==== Common directories & files
       #
 
       empty_directory :images, 'images'
-      empty_directory :javascripts, 'javascripts'
-      empty_directory :stylesheets, 'stylesheets'
 
       file :gitignore do |file|
         file.source = File.join(common_templates_dir, 'dotgitignore')
         file.destination = ".gitignore"
+      end
+
+      file :changelog do |file|
+        file.source = File.join(source_root, "CHANGELOG")
+        file.destination = "CHANGELOG"
+      end
+
+      file :rakefile do |file|
+        file.source = File.join(source_root, "Rakefile")
+        file.destination = "Rakefile"
+      end
+
+      file :todo do |file|
+        file.source = File.join(source_root, "TODO")
+        file.destination = "TODO"
       end
 
       template :config do |template|
@@ -63,25 +76,31 @@ module Merb
         template.destination = "README.textile"
       end
 
-      #
-      # ==== Layout specific things
-      #
+      template :js_init_file do |template|
+        template.source = File.join(source_root, "initializer.js")
+        template.destination = "initializers/#{name}.js"
+      end
 
-      # empty array means all files are considered to be just
-      # files, not templates
-      glob! "app"
-      glob! "autotest"
-      glob! "config"
-      glob! "doc",      []
-      glob! "public"
-      glob! "lib"
-      glob! "merb"
+      template :css_init_file do |template|
+        template.source = File.join(source_root, "initializer.css")
+        template.destination = "initializers/#{name}.css"
+      end
 
-      invoke :layout do |generator|
-        generator.new(destination_root, options, 'application')
+      template :javascript do |template|
+        template.source = File.join(source_root, "javascript.js")
+        template.destination = "javascripts/#{name}.js"
+      end
+
+      template :stylesheet do |template|
+        template.source = File.join(source_root, "stylesheet.css")
+        template.destination = "stylesheets/#{name}.css"
+      end
+
+
+      def after_generation
+        STDOUT.puts "\nDon't forget to add 'pupu :#{name}' to your layout."
       end
     end
-
     add 'pupu', PupuGenerator
   end
 end
