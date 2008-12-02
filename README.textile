@@ -1,0 +1,104 @@
+h1. About
+
+Merb_pupu is a plugin system for merb's public stuff like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such pupus into your app.
+
+h1. Why I wrote it
+
+In my apps the public/ stuff always get bloated and messy when I have all javascripts in public/javascripts, all stylesheets in public/stylesheets etc. It's nearly imposible to remove some stuff related with let's say some mootools plugin. It has it's own javascripts, stylesheets, few images + code which is required for initialization. And of course it is really bad idea to put your own code to directory with such things as javascript framework is.
+
+Another thing which really annoyed me was the bloody <code>js_include_tag</code> and <code>css_include_tag</code>. There are so stupid that they do not throw exception when the JS or CSS file do not exists! So you are surprised why you fancy script do not work and then you realized that it's not correctly included at all!
+
+h1. What can be presented in pupu?
+
+Everything what can be putted into public directory. Some examples: blueprint css, mootools, autocompleter for mootools, icon set ...
+
+h1. CLI interface
+
+<pre>
+# install autocompleter and its dependencies from my github repo
+pupu install botanicus/autocompleter
+
+# or uninstall, it's the same
+pupu remove autocompleter
+
+# list all installed pupus
+pupu list
+</pre>
+
+h1. Views
+
+In your views you can include all the plugin-related files this way:
+
+<pre>
+pupu :autocompleter
+</pre>
+
+If pupu has optional arguments, you can specify them, it will modify its behaviour (including extra files etc).
+
+<pre>
+# this will include not just basic autocompleter files, but script for local requests too
+pupu :autocompleter, :request => "local"
+</pre>
+
+There is some helpers for getting path to pupu's files:
+
+<pre>
+Plugin[:autocompleter].image("spinner.gif")
+</pre>
+
+h1. Initializers
+
+Initializers are the only part of merb_pupu which are not stored in <code>public/pupu</code>, but are copyied to <code>public/javascripts/initializers</code> and <code>public/stylesheets/initializers</code>. In contrary of files in <code>public/pupu</code>, initializers are intended for user editing.
+
+<pre>
+window.addEvent("domready", function() {
+  // do the init stuff
+})
+</pre>
+
+h1. Available pupus
+
+* MooTools <code>pupu :mootools, :more => true</code>
+* Autocompleter
+* Squeezebox
+* Blueprint CSS
+* Mooeditable
+* Tips
+* Growl
+* icon sets
+
+h1. I'd like to write my own pupu!
+
+h2. Plugin generator
+
+<pre>
+merb-gen pupu chunky_bacon
+# chunky_bacon/README
+# chunky_bacon/LICENSE
+# chunky_bacon/initializers/chunky_bacon.js
+# chunky_bacon/initializers/chunky_bacon.css
+# chunky_bacon/lib
+# chunky_bacon/lib/chunky_bacon.js
+# chunky_bacon/stylesheets
+# chunky_bacon/stylesheets/chunky_bacon.css
+</pre>
+
+<pre>
+merb-gen pupu chunky_bacon helpers.js blue.css
+</pre>
+
+h2. Configuration file
+
+File config.rb in your pupu root is intended to put package metadata there. You can define dependencies of pupu, arguments of pupu method and define which javascripts and stylesheets will be included in which order.
+
+<pre>
+# autocompleter depends on mootools
+dependencies :mootools
+
+# javascripts for loading
+javascripts "observer", "autocompleter", :in => "lib"
+
+parameter :request, :optional => ["local", "ajax"] do |type|
+  javascript "lib/autocompleter.#{type}"
+end
+</pre>

@@ -1,0 +1,3 @@
+- Rakefile
+- maybe js.erb which generates .js after installation (image paths problem)
+- what about versions? See RubyGems.
