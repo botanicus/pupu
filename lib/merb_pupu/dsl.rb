@@ -30,8 +30,10 @@ module Merb
         end
       end
 
-      def parameter(name, params = Hash.new)
-        #
+      def parameter(name, params = Hash.new, &block)
+        if @plugin.params.key?(name)
+          block.call(@plugin.params[name])
+        end
       end
 
       def output

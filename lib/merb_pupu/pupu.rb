@@ -47,7 +47,8 @@ module Merb
         end
       end
 
-      def initialize(name, params = nil)
+      attr_reader :params
+      def initialize(name, params = Hash.new)
         @path   = name.to_s
         @params = params
       end
@@ -81,9 +82,9 @@ module Merb
         when :all
           [self.initializer(:javascript), self.initializer(:stylesheet)]
         when :javascript
-          file("#{@path}.js", "/javascripts/initializers")
+          file("#{@path}.js", "public/javascripts/initializers") rescue nil
         when :stylesheet
-          file("#{@path}.css", "/stylesheets/initializers")
+          file("#{@path}.css", "public/stylesheets/initializers") rescue nil
         end
       end
 
