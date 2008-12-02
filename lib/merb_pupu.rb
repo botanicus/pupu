@@ -1,9 +1,11 @@
 # make sure we're running inside Merb
 if defined?(Merb::Plugins)
+  require "merb_pupu/helpers"
+  Merb::Controller.send(:include, Merb::Plugins::PupuHelpersMixin)
 
   # Merb gives you a Merb::Plugins.config hash...feel free to put your stuff in your piece of it
-  Merb::Plugins.config[:merb_pupu] = {
-    :chickens => false
+  Merb::Plugins.config[:pupu] = {
+    :root => ""
   }
   
   Merb::BootLoader.before_app_loads do
@@ -11,7 +13,6 @@ if defined?(Merb::Plugins)
   end
   
   Merb::BootLoader.after_app_loads do
-    # code that can be required after the application loads
   end
   
   Merb::Plugins.add_rakefiles "merb_pupu/merbtasks"

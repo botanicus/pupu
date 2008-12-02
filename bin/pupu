@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+gem "merb_pupu"
+require "merb_pupu/pupu"
+
+case ARGV.shift
+when "install"
+  # pupu install autocompleter
+  # pupu install botanicus/autocompleter
+  Pupu::GitHub.install(*ARGV)
+when "remove", "uninstall"
+  # pupu uninstall autocompleter
+  ARGV.each do |item|
+    Pupu[item].uninstall
+  end
+when "list"
+  Pupu.root.entries.each do |item|
+    puts(- "#{item}")
+  end
+else
+  puts "=== Usage ==="
+  puts "pupu install autocompleter ... install autocompleter pupu from current user's repo"
+  puts "pupu install botanicus/autocompleter ... install autocompleter pupu from botanicus's repo"
+  puts "pupu uninstall autocompleter ... uninstall autocompleter pupu"
+  puts "pupu list ... list all installed pupus"
+end

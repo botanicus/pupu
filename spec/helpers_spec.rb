@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/spec_helper'
+require "merb_pupu/helpers"
+include Merb::Plugins
 
-describe PluginHelpers do
+describe PupuHelpersMixin do
   describe "plugin" do
     it "should return Plugin object" do
       plugin(:autocompleter)
@@ -11,7 +13,7 @@ describe PluginHelpers do
     end
 
     it "should return nil if plugin do not exists" do
-      plugin(:autocompleter), :request => "local"
+      plugin(:autocompleter, :request => "local")
     end
   end
 end
