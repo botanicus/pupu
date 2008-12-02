@@ -37,7 +37,7 @@ If pupu has optional arguments, you can specify them, it will modify its behavio
 
 <pre>
 # this will include not just basic autocompleter files, but script for local requests too
-pupu :autocompleter, :request => "local"
+pupu :autocompleter, :type => "local"
 </pre>
 
 There is some helpers for getting path to pupu's files:
@@ -58,13 +58,14 @@ window.addEvent("domready", function() {
 
 h1. Available pupus
 
-* MooTools <code>pupu :mootools, :more => true</code>
-* Autocompleter
-* Squeezebox
-* Blueprint CSS
-* Mooeditable
-* Tips
-* Growl
+* "MooTools":http://github.com/botanicus/pupu-mootools
+* "Autocompleter":http://github.com/botanicus/pupu-autocompleter
+* "Squeezebox":http://github.com/botanicus/pupu-squeezebox
+* "Blueprint CSS":http://github.com/botanicus/pupu-blueprint
+* "Mooeditable":http://github.com/botanicus/pupu-mooeditable
+* "Tips":http://github.com/botanicus/pupu-tips
+* "Growl":http://github.com/botanicus/pupu-growl
+* "Ratings":http://github.com/botanicus/pupu-ratings
 * icon sets
 
 h1. I'd like to write my own pupu!
@@ -98,7 +99,7 @@ dependencies :mootools
 # javascripts for loading
 javascripts "observer", "autocompleter", :in => "lib"
 
-parameter :request, :optional => ["local", "ajax"] do |type|
+parameter :type, :optional => ["local", "request"] do |type|
   javascript "lib/autocompleter.#{type}"
 end
 </pre>
