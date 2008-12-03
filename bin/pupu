@@ -7,18 +7,15 @@ case ARGV.shift
 when "install"
   # pupu install autocompleter
   # pupu install botanicus/autocompleter
-  Pupu::GitHub.install(*ARGV)
+  CLI.install(ARGV)
 when "update"
   # update the stuff exclude initializers
+  CLI.update(ARGV)
 when "remove", "uninstall"
   # pupu uninstall autocompleter
-  ARGV.each do |item|
-    Pupu[item].uninstall
-  end
+  CLI.uninstall(ARGV)
 when "list"
-  Pupu.root.entries.each do |item|
-    puts(- "#{item}")
-  end
+  CLI.list(ARGV)
 else
   puts "=== Usage ==="
   puts "pupu install autocompleter ... install autocompleter pupu from current user's repo"

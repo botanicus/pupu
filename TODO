@@ -4,3 +4,6 @@
 - move the whole stuff into Merb::Plugins::Pupu module
 - all errors should ends with Error (as StandardError)
 - custom messages on errors
+- Rakefile is template, not just plain file (generator)
+- Create the generator rake tasks
+- blueprint pupu

@@ -1,5 +1,6 @@
 require "fileutils"
 require "yaml"
+require "ostruct"
 
 module Merb
   module Plugins
@@ -31,6 +32,13 @@ module Merb
           else
             # update all
           end
+        end
+
+        # search for pupu
+        def search(query)
+          data = YAML::load("http://github.com/api/v1/yaml/search/pupu")
+          data.map! { |result| OpenStruct.new(result) }
+          data.select { |item| item.name.match(query) }
         end
 
         protected

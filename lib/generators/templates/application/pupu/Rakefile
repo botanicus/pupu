@@ -7,6 +7,14 @@ namespace :git do
   end
 end
 
+namespace :github do
+  desc "Do the initial import"
+  task :create do
+    user = ENV["USER"]
+    repo = "pupu-<%= name %>" # TODO: add the Rakefile as erb template
+  end
+end
+
 namespace :javascripts do
   desc "Compress javascripts"
   task :compress do
