@@ -8,6 +8,8 @@ when "install"
   # pupu install autocompleter
   # pupu install botanicus/autocompleter
   Pupu::GitHub.install(*ARGV)
+when "update"
+  # update the stuff exclude initializers
 when "remove", "uninstall"
   # pupu uninstall autocompleter
   ARGV.each do |item|
@@ -22,5 +24,7 @@ else
   puts "pupu install autocompleter ... install autocompleter pupu from current user's repo"
   puts "pupu install botanicus/autocompleter ... install autocompleter pupu from botanicus's repo"
   puts "pupu uninstall autocompleter ... uninstall autocompleter pupu"
+  puts "pupu update ... update all pupu"
+  puts "pupu update autocompleter ... update autocompleter pupu"
   puts "pupu list ... list all installed pupus"
 end

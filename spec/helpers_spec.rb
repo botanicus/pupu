@@ -1,19 +1,19 @@
 require File.dirname(__FILE__) + '/spec_helper'
+require "merb_pupu/pupu"
 require "merb_pupu/helpers"
 include Merb::Plugins
+include Merb::Plugins::PupuHelpersMixin
 
-describe PupuHelpersMixin do
-  describe "plugin" do
-    it "should return Plugin object" do
-      plugin(:autocompleter)
-    end
+describe "PupuHelpersMixin#pupu" do
+  before(:each) do
+    Pupu.root = File.dirname(__FILE__) + "/data/public/pupu"
+  end
 
-    it "should return Plugin object" do
-      lambda { plugin(:autocompleter) }.should raise
-    end
+  it "should return text with assets" do
+    pupu(:autocompleter).should eql(Parser.new(:autocompleter).parse!)
+  end
 
-    it "should return nil if plugin do not exists" do
-      plugin(:autocompleter, :request => "local")
-    end
+  it "should return text with assets" do
+    pupu(:autocompleter, :type => "local").should eql(Parser.new(:autocompleter, :type => "local").parse!)
   end
 end

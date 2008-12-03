@@ -28,29 +28,6 @@ describe Pupu do
     end
   end
 
-  describe ".depends_on" do
-    it "should return Pupu object" do
-      Pupu.depends_on(:autocompleter).should # TODO
-    end
-
-    it "should return nil if pupu do not exists" do
-      Pupu.depends_on(:autocompleter).should # TODO
-    end
-  end
-
-  describe "#pathname" do
-    before(:each) do
-      @pupu = Pupu[:autocompleter]
-    end
-
-    it "should return pathname to pupu" do
-    end
-
-    it "should return nil if image do not exists" do
-      lambda { @pupu.image("missing.gif") }.should raise_error(AssetNotFound) # TODO
-    end
-  end
-
   describe "#initializers(type)" do
     before(:each) do
       @pupu = Pupu[:autocompleter]

@@ -1,26 +1,12 @@
 require "merb_pupu/exceptions"
+require "merb_pupu/metadata"
+require "merb_pupu/url"
 
 module Merb
   module Plugins
-    class URL
-      attr_reader :path
-      # URL.new(Merb.root/public/pupu/autocompleter/javascripts/autocompleter.js)
-      def initialize(path)
-        raise AssetNotFound.new(path) unless File.exist?(path)
-        @path = path.sub(%r{^(.*/)?(public/.+$)}, '\2')
-      end
-
-      def url
-        @path.sub(/^public/, '')
-      end
-
-      def inspect
-        %Q{#<Merb::Plugins::URL: @path="#{@path}" url="#{url}">}
-      end
-    end
-
     class Pupu
       class << self
+        # TODO: return Pupu object, not string
         def all
           @entries ||= Dir["#{self.root}/*"].select do |item|
             File.directory?(item)

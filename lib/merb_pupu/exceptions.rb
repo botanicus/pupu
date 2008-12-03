@@ -7,7 +7,9 @@ module Merb
     end
 
     class AssetNotFound < StandardError
+      attr_accessor :path
       def initialize(path)
+        @path = path
       end
     end
   end

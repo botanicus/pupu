@@ -8,6 +8,7 @@ module Merb
 
       def javascript(basename, params = Hash.new)
         path = @plugin.javascript(basename).url
+        p path
         tag  = "<script src='#{path}' type='text/javascript'></script>"
         @output.push(tag)
       end

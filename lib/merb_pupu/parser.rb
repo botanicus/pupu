@@ -5,7 +5,7 @@ module Merb
   module Plugins
     class Parser
       def initialize(plugin_name, plugin_params)
-        @plugin = Pupu.new(plugin_name, plugin_params)
+        @plugin = Pupu.new(plugin_name, plugin_params) # TODO: what about Pupu[name, params]?
         @dsl    = DSL.new(@plugin)
       end
 

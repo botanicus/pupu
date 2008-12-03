@@ -1,3 +1,6 @@
 - maybe js.erb which generates .js after installation (image paths problem)
 - what about versions? See RubyGems.
 - move bin/pupu into thorfile
+- move the whole stuff into Merb::Plugins::Pupu module
+- all errors should ends with Error (as StandardError)
+- custom messages on errors
