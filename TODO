@@ -7,3 +7,8 @@
 - Rakefile is template, not just plain file (generator)
 - Create the generator rake tasks
 - blueprint pupu
+- install dependencies if any
+- merb-gen pupu my-pupu --js=[jquery,prototype,plain]
+- add array with loaded plugins, do not load plugin which is already loaded
+- pupu view helper should works with dependencies (pupu :autocompleter should add mootools as well)
+- [BUG] initializers are copyied into bad directory

@@ -5,7 +5,7 @@ module Merb
     module PupuHelpersMixin
       # Use it in your layout
       # Example: pupu :autocompleter, :type => "local"
-      def pupu(name, params = nil)
+      def pupu(name, params = Hash.new)
         Parser.new(name, params).parse!
       end
     end

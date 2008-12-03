@@ -1,6 +1,7 @@
 module Merb
   module Plugins
     class DSL
+      attr_reader :output
       def initialize(plugin)
         @plugin = plugin
         @output = Array.new
@@ -8,7 +9,6 @@ module Merb
 
       def javascript(basename, params = Hash.new)
         path = @plugin.javascript(basename).url
-        p path
         tag  = "<script src='#{path}' type='text/javascript'></script>"
         @output.push(tag)
       end
@@ -35,10 +35,6 @@ module Merb
         if @plugin.params.key?(name)
           block.call(@plugin.params[name])
         end
-      end
-
-      def output
-        @output.join("\n")
       end
     end
   end
