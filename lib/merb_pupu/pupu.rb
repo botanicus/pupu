@@ -6,6 +6,7 @@ module Merb
   module Plugins
     class Pupu
       class << self
+        ROOT = Dir.pwd # must be initialized at start, otherwise Pupu.root can return bad values when it's called in Dir.chdir block
         # TODO: return Pupu object, not string
         def all
           @entries ||= Dir["#{self.root}/*"].select do |item|
@@ -13,10 +14,16 @@ module Merb
           end.map { |entry| File.basename(entry).to_s }
         end
 
-        def root
-          @root ||= File.join(Dir.pwd, "public", "pupu")
+        def root(path = :absolute)
+          case path
+          when :absolute then "#{ROOT}/public/pupu"
+          when :relative then "public/pupu"
+          else
+            # exception
+          end
         end
 
+        # TODO: reflect changes on root method
         def root=(directory)
           @root = directory
           raise PupuRootNotFound unless File.exist?(@root)
@@ -39,10 +46,17 @@ module Merb
         @params = params
       end
 
-      def root
-        @root ||= File.join(Dir.pwd, "public", "pupu", @path)
+      # TODO: reflect changes on root method
+      def root(path = :absolute)
+        case path
+        when :absolute then File.join(Pupu.root(:absolute), @path)
+        when :relative then File.join(Pupu.root(:relative), @path)
+        else
+          # exception
+        end
       end
 
+      # TODO: change root to return URL and use URL#url
       def public_root
         @public_root ||= File.join("/", "pupu", @path)
       end

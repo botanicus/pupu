@@ -1,7 +1,7 @@
-
 require "fileutils"
 require "yaml"
 require "ostruct"
+require "merb_pupu/github"
 
 # copyied from merb.thor, this part is actually my code as well :)
 module ColorfulMessages
@@ -39,7 +39,7 @@ module Merb
       class << self
         include ColorfulMessages
         def install(argv)
-          Pupu::GitHub.install(*argv)
+          GitHub.install(*argv)
         end
 
         def uninstall(argv)

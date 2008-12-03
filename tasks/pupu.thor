@@ -1,8 +1,14 @@
 #!/usr/bin/env ruby
+
+$: << "lib"
+
 require 'thor'
+require "merb_pupu/pupu"
+require "merb_pupu/cli"
 
 module Merb
   class Pupu < Thor
+    include Merb::Plugins
     desc "install [pupu(s)]", "Install given pupu(s)"
     def install(*pupus)
       CLI.install(pupus)
