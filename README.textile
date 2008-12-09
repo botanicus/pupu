@@ -66,6 +66,7 @@ h1. Available pupus
 * "Tips":http://github.com/botanicus/pupu-tips
 * "Growl":http://github.com/botanicus/pupu-growl
 * "Ratings":http://github.com/botanicus/pupu-ratings
+* "Form defaults":http://github.com/botanicus/pupu-form-defaults
 * icon sets
 
 h1. I'd like to write my own pupu!
