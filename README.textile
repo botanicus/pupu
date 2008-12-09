@@ -10,7 +10,7 @@ Another thing which really annoyed me was the bloody <code>js_include_tag</code>
 
 h1. What can be presented in pupu?
 
-Everything what can be putted into public directory. Some examples: blueprint css, mootools, autocompleter for mootools, icon set ...
+Everything what can be put into public directory. Some examples: blueprint css, mootools, autocompleter for mootools, icon set ...
 
 h1. CLI interface
 
