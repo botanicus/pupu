@@ -30,18 +30,19 @@ module Merb
           return @root
         end
 
-        def [](plugin)
+        def [](plugin, params = Hash.new)
           plugin = plugin.to_s
           if self.all.include?(plugin)
-            self.new(plugin)
+            self.new(plugin, params)
           else
             raise PluginNotFoundError
           end
         end
       end
 
-      attr_reader :params
+      attr_reader :name, :params
       def initialize(name, params = Hash.new)
+        @name   = name.to_sym
         @path   = name.to_s
         @params = params
       end
