@@ -72,7 +72,7 @@ module Merb
         end
 
         def list
-          entries = Dir["#{Pupu.root}/*"].map { |entry| File.directory?(entry) }
+          entries = Dir["#{Pupu.root}/*"].select { |entry| File.directory?(entry) }
           if File.exist?(Pupu.root) and not entries.empty?
             puts entries.map { |item| "- #{File.basename(item)}" }
           else
