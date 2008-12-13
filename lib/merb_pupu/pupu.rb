@@ -1,15 +1,17 @@
+require "yaml"
+require "ostruct"
 require "merb_pupu/exceptions"
 require "merb_pupu/metadata"
 require "merb_pupu/url"
 
 module Merb
-  module Plugins
+  module Pupu
     class Pupu
       class << self
         ROOT = Dir.pwd # must be initialized at start, otherwise Pupu.root can return bad values when it's called in Dir.chdir block
         # TODO: return Pupu object, not string
         def all
-          @entries ||= Dir["#{self.root}/*"].select do |item|
+          Dir["#{self.root}/*"].select do |item|
             File.directory?(item)
           end.map { |entry| File.basename(entry).to_s }
         end
@@ -55,6 +57,10 @@ module Merb
         else
           # exception
         end
+      end
+
+      def metadata
+        OpenStruct.new(YAML::load_file(self.file("metadata.yml").path))
       end
 
       # TODO: change root to return URL and use URL#url

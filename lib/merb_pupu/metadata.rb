@@ -1,14 +1,16 @@
 module Merb
-  module Plugins
+  module Pupu
     class Metadata
-      def load
-        Pupu.all.each do |pupu|
-          pupu.file("config.rb").path
+      class << self
+        def load
+          Pupu.all.each do |pupu|
+            pupu.file("config.rb").path
+          end
         end
-      end
 
-      def depends_on(plugin)
-        # TODO
+        def depends_on(plugin)
+          # TODO
+        end
       end
     end
   end

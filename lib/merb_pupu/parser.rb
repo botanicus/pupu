@@ -2,7 +2,7 @@ require "merb_pupu/dsl"
 require "merb_pupu/pupu"
 
 module Merb
-  module Plugins
+  module Pupu
     class Parser
       def initialize(plugin_name, plugin_params)
         @plugin    = Pupu[plugin_name, plugin_params]

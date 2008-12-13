@@ -1,9 +1,15 @@
 module Merb
-  module Plugins
+  module Pupu
     class PupuRootNotFound < StandardError
     end
 
     class PluginNotFoundError < StandardError
+    end
+
+    class PluginIsAlreadyInstalled < StandardError
+    end
+
+    class PublicDirNotExists < StandardError
     end
 
     class AssetNotFound < StandardError

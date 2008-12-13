@@ -1,7 +1,7 @@
 require "merb_pupu/parser"
 
 module Merb
-  module Plugins
+  module Pupu
     module PupuHelpersMixin
       # Use it in your layout
       # Example: pupu :autocompleter, :type => "local"

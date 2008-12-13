@@ -34,26 +34,49 @@ module ColorfulMessages
 end
 
 module Merb
-  module Plugins
+  module Pupu
     class CLI
       class << self
         include ColorfulMessages
-        def install(argv)
-          GitHub.install(*argv)
-        end
-
-        def uninstall(argv)
-          argv.each do |item|
-            Pupu[item].uninstall
+        def install(*args)
+          args.each do |pupu|
+            begin
+              GitHub.install(pupu)
+            rescue PluginIsAlreadyInstalled
+              error "Plugin #{pupu} is already installed, skipping ..."
+              next
+            end
           end
         end
 
-        def update(args)
+        def uninstall(*args)
+          args.each do |pupu|
+            #begin
+              Pupu[pupu].uninstall
+            #rescue
+              #error ""
+              #next
+            #end
+          end
         end
 
-        def list(argv)
-          Pupu.root.entries.each do |item|
-            puts(- "#{item}")
+        def update(*args)
+          args.each do |pupu|
+            begin
+              GitHub.update(pupu)
+            rescue PluginNotFoundError
+              error "Plugin not found: #{pupu}"
+              next
+            end
+          end
+        end
+
+        def list
+          entries = Dir["#{Pupu.root}/*"].map { |entry| File.directory?(entry) }
+          if File.exist?(Pupu.root) and not entries.empty?
+            puts entries.map { |item| "- #{File.basename(item)}" }
+          else
+            error "Any pupu isn't installed yet."
           end
         end
 

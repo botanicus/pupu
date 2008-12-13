@@ -1,11 +1,12 @@
 require 'rubygems'
+require 'merb_pupu'
 require 'rake/gempackagetask'
 
 require 'merb-core'
 require 'merb-core/tasks/merb'
 
 GEM_NAME = "merb_pupu"
-GEM_VERSION = "1.0.3"
+GEM_VERSION = Merb::Pupu::VERSION
 AUTHOR = "Jakub Stastny aka Botanicus"
 EMAIL = "stastny(at)101ideas.cz"
 HOMEPAGE = "http://merbivore.com/"
@@ -26,7 +27,7 @@ spec = Gem::Specification.new do |s|
   s.homepage = HOMEPAGE
   s.add_dependency('merb', '>= 1.0.3')
   s.require_path = 'lib'
-  s.files = %w(LICENSE README.textile Rakefile TODO Generators) + Dir.glob("{lib,spec}/**/*")
+  s.files = %w(LICENSE README.textile Rakefile TODO Generators) + Dir.glob("{lib,spec,tasks}/**/*")
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|

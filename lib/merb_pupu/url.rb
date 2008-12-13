@@ -1,7 +1,7 @@
 require "merb_pupu/exceptions"
 
 module Merb
-  module Plugins
+  module Pupu
     class URL
       attr_reader :path
       # URL.new(public/pupu/autocompleter/javascripts/autocompleter.js)
@@ -16,7 +16,7 @@ module Merb
       end
 
       def inspect
-        %Q{#<Merb::Plugins::URL: @path="#{@path}" url="#{url}">}
+        %Q{#<Merb::Pupu::URL: @path="#{@path}" url="#{url}">}
       end
     end
   end

@@ -1,7 +1,7 @@
 require "ostruct"
 
 module Merb
-  module Plugins
+  module Pupu
     class DSL
       attr_reader :output, :files
       def initialize(plugin)

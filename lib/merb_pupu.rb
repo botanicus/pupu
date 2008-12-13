@@ -1,7 +1,13 @@
 # make sure we're running inside Merb
+module Merb
+  module Pupu
+    VERSION = "1.0.4"
+  end
+end
+
 if defined?(Merb::Plugins)
   require "merb_pupu/helpers"
-  Merb::Controller.send(:include, Merb::Plugins::PupuHelpersMixin)
+  Merb::Controller.send(:include, Merb::Pupu::PupuHelpersMixin)
 
   # Merb gives you a Merb::Plugins.config hash...feel free to put your stuff in your piece of it
   Merb::Plugins.config[:pupu] = {
