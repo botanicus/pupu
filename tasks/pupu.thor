@@ -9,7 +9,7 @@ require "merb_pupu/pupu"
 require "merb_pupu/cli"
 
 class Pupu < Thor
-  include Merb::Pupu
+  include ::Merb::Pupu
   desc "install [pupu(s)]", "Install given pupu(s)"
   def install(*pupus)
     CLI.install(*pupus)

@@ -25,7 +25,7 @@ spec = Gem::Specification.new do |s|
   s.author = AUTHOR
   s.email = EMAIL
   s.homepage = HOMEPAGE
-  s.add_dependency('merb-core', '>= 1.0.3')
+  s.add_dependency('merb-core')
   s.require_path = 'lib'
   s.files = %w(LICENSE README.textile Rakefile TODO Generators) + Dir.glob("{lib,spec,tasks}/**/*")
 end
