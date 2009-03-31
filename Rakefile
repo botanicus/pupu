@@ -1,17 +1,18 @@
+$: << "lib"
+
 require 'rubygems'
-require 'merb_pupu'
+require 'pupu'
 require 'rake/gempackagetask'
 
 require 'merb-core'
 require 'merb-core/tasks/merb'
 
-GEM_NAME = "merb_pupu"
-GEM_VERSION = Merb::Pupu::VERSION
+GEM_NAME = "pupu"
+GEM_VERSION = Pupu::VERSION
 AUTHOR = "Jakub Stastny aka Botanicus"
 EMAIL = "stastny(at)101ideas.cz"
-HOMEPAGE = "http://merbivore.com/"
-SUMMARY = "Merb_pupu is a plugin system for merb's public stuff like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such pupus into your app.
-"
+HOMEPAGE = "http://101ideas.cz"
+SUMMARY = "Pupu is a plugin system for merb's public stuff like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such pupus into your app."
 
 spec = Gem::Specification.new do |s|
   s.rubyforge_project = 'merb'
@@ -25,7 +26,7 @@ spec = Gem::Specification.new do |s|
   s.author = AUTHOR
   s.email = EMAIL
   s.homepage = HOMEPAGE
-  s.add_dependency('merb-core')
+  s.add_dependency('term-ansicolor')
   s.require_path = 'lib'
   s.files = %w(LICENSE README.textile Rakefile TODO Generators) + Dir.glob("{lib,spec,tasks}/**/*")
 end

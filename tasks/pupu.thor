@@ -1,15 +1,12 @@
 #!/usr/bin/env ruby
 
-$: << "lib"
-
 require "thor"
-require "rubygems"
-require "merb_pupu" # for version
-require "merb_pupu/pupu"
-require "merb_pupu/cli"
+require "pupu" # for version
+require "pupu/pupu"
+require "pupu/cli"
 
 class Pupu < Thor
-  include ::Merb::Pupu
+  include ::Pupu
   desc "install [pupu(s)]", "Install given pupu(s)"
   def install(*pupus)
     CLI.install(*pupus)
@@ -35,7 +32,7 @@ class Pupu < Thor
   class Tasks < Thor
     desc "update", "Update local tasks"
     def update
-      taskfile = "#{Gem.dir}/gems/merb_pupu-#{Merb::Pupu::VERSION}/tasks/pupu.thor"
+      taskfile = "#{Gem.dir}/gems/pupu-#{Pupu::VERSION}/tasks/pupu.thor"
       File.open(__FILE__, "w") do |file|
         puts "Taskfile updated"
         file.print(File.read(taskfile).chomp)

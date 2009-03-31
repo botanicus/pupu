@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/spec_helper'
-require "merb_pupu/github"
+require "pupu/github"
 include Merb::Plugins
 
 # TODO

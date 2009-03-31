@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/spec_helper'
-require "merb_pupu/dsl"
-require "merb_pupu/pupu"
+require "pupu/dsl"
+require "pupu/pupu"
 include Merb::Plugins
 
 describe DSL do

@@ -1,6 +1,6 @@
 h1. About
 
-Merb_pupu is a plugin system for merb's public stuff like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such pupus into your app.
+Pupu is a plugin system for media like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such pupus into your app.
 
 h1. Why I wrote it
 
@@ -48,7 +48,7 @@ Plugin[:autocompleter].image("spinner.gif")
 
 h1. Initializers
 
-Initializers are the only part of merb_pupu which are not stored in <code>public/pupu</code>, but are copyied to <code>public/javascripts/initializers</code> and <code>public/stylesheets/initializers</code>. In contrary of files in <code>public/pupu</code>, initializers are intended for user editing.
+Initializers are the only part of pupu which are not stored in <code>public/pupu</code>, but are copyied to <code>public/javascripts/initializers</code> and <code>public/stylesheets/initializers</code>. In contrary of files in <code>public/pupu</code>, initializers are intended for user editing.
 
 <pre>
 window.addEvent("domready", function() {
@@ -74,7 +74,7 @@ h1. I'd like to write my own pupu!
 h2. Plugin generator
 
 <pre>
-merb-gen pupu chunky_bacon
+pupu-gen pupu chunky_bacon
 # chunky_bacon/README
 # chunky_bacon/LICENSE
 # chunky_bacon/initializers/chunky_bacon.js
@@ -86,7 +86,7 @@ merb-gen pupu chunky_bacon
 </pre>
 
 <pre>
-merb-gen pupu chunky_bacon helpers.js blue.css
+pupu-gen pupu chunky_bacon helpers.js blue.css
 </pre>
 
 h2. Configuration file

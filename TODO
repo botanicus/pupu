@@ -1,9 +1,11 @@
+- media vs. public vs. custom
+- pupu-gen
+- Rakefile -> Thorfile & without any merb-related stuff
 - maybe js.erb which generates .js after installation (image paths problem)
 - how to handle metadata? Generate metadata.yml from config.rb (dependencies) or generate it through merb-gen and write it by hand?
 - what about ruby helpers such as flash :notice, :error for flash <divs
 - what about versions? See RubyGems.
 - move bin/pupu into thorfile
-- move the whole stuff into Merb::Plugins::Pupu module
 - all errors should ends with Error (as StandardError)
 - custom messages on errors
 - Rakefile is template, not just plain file (generator)

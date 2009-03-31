@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/spec_helper'
-require "merb_pupu/pupu"
+require "pupu/pupu"
 include Merb::Plugins
 
 describe Pupu do

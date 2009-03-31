@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/spec_helper'
-require "merb_pupu/url"
+require "pupu/url"
 include Merb::Plugins
 
 describe URL do
