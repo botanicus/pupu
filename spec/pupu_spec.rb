@@ -4,7 +4,7 @@ include Merb::Plugins
 
 describe Pupu do
   before(:each) do
-    Pupu.root = File.dirname(__FILE__) + "/data/public/pupu"
+    Pupu.root = File.dirname(__FILE__) + "/data/root/pupu"
     Merb.stub!(:root).and_return(File.dirname(__FILE__) + "/data")
   end
 
@@ -20,11 +20,11 @@ describe Pupu do
 
   describe ".root=" do
     it "should return Pupu object" do
-      Pupu.root.should eql("#{Merb.root}/public/pupu")
+      Pupu.root.should eql("#{Merb.root}/root/pupu")
     end
 
     it "should return nil if pupu do not exists" do
-      lambda { Pupu.root = "#{Merb.root}/public/prefix/pupu" }.should raise_error(PupuRootNotFound)
+      lambda { Pupu.root = "#{Merb.root}/root/prefix/pupu" }.should raise_error(PupuRootNotFound)
     end
   end
 
@@ -34,15 +34,15 @@ describe Pupu do
     end
 
     it "should return pathname to pupu" do
-      @pupu.initializer.should eql("#{Merb.root}/public/pupu/autocompleter/initializer.js") # TODO: pole s 2 pathname
+      @pupu.initializer.should eql("#{Merb.root}/root/pupu/autocompleter/initializer.js") # TODO: pole s 2 pathname
     end
 
     it "should return pathname to pupu" do
-      @pupu.initializer(:script).should eql("#{Merb.root}/public/pupu/autocompleter/initializer.js")
+      @pupu.initializer(:script).should eql("#{Merb.root}/root/pupu/autocompleter/initializer.js")
     end
 
     it "should return pathname to pupu" do
-      @pupu.initializer(:stylesheet).should eql("#{Merb.root}/public/pupu/autocompleter/initializer.css")
+      @pupu.initializer(:stylesheet).should eql("#{Merb.root}/root/pupu/autocompleter/initializer.css")
     end
 
     it "should return pathname to pupu" do
@@ -54,14 +54,14 @@ describe Pupu do
     end
   end
 
-  # initializer.js will be copied into public/javascripts/initializers/[pupu-name].js
+  # initializer.js will be copied into root/javascripts/initializers/[pupu-name].js
   describe "#copy_initializers" do
     before(:each) do
       @pupu = Pupu[:autocompleter]
     end
 
     it "should return pathname to pupu" do
-      @pupu.initializer.should eql("#{Merb.root}/public/pupu/autocompleter/initializer.js")
+      @pupu.initializer.should eql("#{Merb.root}/root/pupu/autocompleter/initializer.js")
     end
 
     it "should return nil if image do not exists" do

@@ -70,19 +70,19 @@ module Pupu
       end
 
       def install_files(repo, url)
-        chdir do |public_dir|
+        chdir do |media_dir|
           raise PluginIsAlreadyInstalled if File.directory?(repo) # TODO: custom exception class
           run "git clone #{url} #{repo}"
           Dir.chdir(repo) do
             js_initializer = "initializers/#{repo}.js"
             css_initializer = "initializers/#{repo}.css"
-            if File.exist?(js_initializer) &&  (not File.exist?("#{public_dir}/javascripts/initializers/#{repo}.js"))
-              FileUtils.mkdir_p("#{public_dir}/javascripts/initializers")
-              FileUtils.mv js_initializer,  "#{public_dir}/javascripts/initializers/#{repo}.js"
+            if File.exist?(js_initializer) &&  (not File.exist?("#{media_dir}/javascripts/initializers/#{repo}.js"))
+              FileUtils.mkdir_p("#{media_dir}/javascripts/initializers")
+              FileUtils.mv js_initializer,  "#{media_dir}/javascripts/initializers/#{repo}.js"
             end
-            if File.exist?(css_initializer) && (not File.exist?("#{public_dir}/stylesheets/initializers/#{repo}.css"))
-              FileUtils.mkdir_p("#{public_dir}/stylesheets/initializers")
-              FileUtils.mv css_initializer,  "#{public_dir}/stylesheets/initializers/#{repo}.css"
+            if File.exist?(css_initializer) && (not File.exist?("#{media_dir}/stylesheets/initializers/#{repo}.css"))
+              FileUtils.mkdir_p("#{media_dir}/stylesheets/initializers")
+              FileUtils.mv css_initializer,  "#{media_dir}/stylesheets/initializers/#{repo}.css"
             end
             @pupu = Pupu[repo]
             self.save_metadata(url)
@@ -93,11 +93,10 @@ module Pupu
       end
 
       def chdir(pupu = nil, &block)
-        public_dir = File.join(Dir.pwd, "public")
-        raise PublicDirNotExists unless File.directory?(public_dir) # TODO: create example class
+        raise MediaDirectoryNotExist unless File.directory?(File.dirname(Pupu.root))
         FileUtils.mkdir_p(Pupu.root) unless File.directory?(Pupu.root)
         Dir.chdir(Pupu.root) do
-          pupu ? block.call(public_dir, pupu.root) : block.call(public_dir)
+          pupu ? block.call(pupu.root) : block.call(Pupu.root)
         end
       end
     end

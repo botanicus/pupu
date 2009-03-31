@@ -26,7 +26,7 @@ module Merb
       #
 
       desc <<-DESC
-      This generates a pupu, merb public plugin.
+      This generates a pupu, merb media plugin.
       DESC
 
       first_argument :name, :required => true, :desc => "Pupu name"

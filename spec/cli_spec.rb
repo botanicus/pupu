@@ -4,7 +4,7 @@ include Merb::Plugins
 
 describe Pupu do
   before(:each) do
-    Pupu.root = File.dirname(__FILE__) + "/data/public/pupu"
+    Pupu.root = File.dirname(__FILE__) + "/data/root/pupu"
     Merb.stub!(:root).and_return(File.dirname(__FILE__) + "/data")
   end
 

@@ -5,7 +5,7 @@ include Merb::Plugins
 
 describe DSL do
   before(:each) do
-    Pupu.root = File.dirname(__FILE__) + "/data/public/pupu"
+    Pupu.root = File.dirname(__FILE__) + "/data/root/pupu"
     @plugin = Pupu.new(:autocompleter)
     @dsl    = DSL.new(@plugin)
   end

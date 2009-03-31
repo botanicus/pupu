@@ -1,6 +1,6 @@
 h1. About pupu
 
-Merb_pupu is a plugin system for merb's public stuff like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such plugins into your app. Please see http://github.com/botanicus/pupu for more informations.
+Merb_pupu is a plugin system for merb's root stuff like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such plugins into your app. Please see http://github.com/botanicus/pupu for more informations.
 
 h1. About autocompleter
 
@@ -10,7 +10,7 @@ h1. Usage
 
 h2. Initializer
 
-Edit the public/javascripts/initializers/autocompleter.js.
+Edit the root/javascripts/initializers/autocompleter.js.
 
 h2. Layout
 

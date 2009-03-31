@@ -16,9 +16,11 @@ module Pupu
       end
 
       def root(path = :absolute)
+        # TODO: it should be configurable
+        media = ["public", "media"].find { |directory| File.directory?(directory) }
         case path
-        when :absolute then "#{ROOT}/public/pupu"
-        when :relative then "public/pupu"
+        when :absolute then "#{ROOT}/#{media}/pupu"
+        when :relative then "#{media}/pupu"
         else
           # exception
         end

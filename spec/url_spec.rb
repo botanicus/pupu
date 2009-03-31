@@ -4,8 +4,8 @@ include Merb::Plugins
 
 describe URL do
   before(:each) do
-    @fullpath = "spec/data/public/pupu/autocompleter/javascripts/autocompleter.js"
-    @relative = "public/pupu/autocompleter/javascripts/autocompleter.js"
+    @fullpath = "spec/data/root/pupu/autocompleter/javascripts/autocompleter.js"
+    @relative = "root/pupu/autocompleter/javascripts/autocompleter.js"
     @url  = URL.new(@fullpath)
   end
 
@@ -21,7 +21,7 @@ describe URL do
     end
 
     it "should cut the path to path relative from current directory" do
-      path = "#{Dir.pwd}/spec/data/public/pupu/autocompleter/javascripts/autocompleter.js"
+      path = "#{Dir.pwd}/spec/data/root/pupu/autocompleter/javascripts/autocompleter.js"
       url  = URL.new(path)
       url.path.should eql(@relative) # yep, it still should be the same as @relative
     end

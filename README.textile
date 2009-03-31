@@ -4,13 +4,13 @@ Pupu is a plugin system for media like mootools plugins, icon sets etc. It knows
 
 h1. Why I wrote it
 
-In my apps the public/ stuff always get bloated and messy when I have all javascripts in public/javascripts, all stylesheets in public/stylesheets etc. It's nearly imposible to remove some stuff related with let's say some mootools plugin. It has it's own javascripts, stylesheets, few images + code which is required for initialization. And of course it is really bad idea to put your own code to directory with such things as javascript framework is.
+In my apps the root/ stuff always get bloated and messy when I have all javascripts in root/javascripts, all stylesheets in root/stylesheets etc. It's nearly imposible to remove some stuff related with let's say some mootools plugin. It has it's own javascripts, stylesheets, few images + code which is required for initialization. And of course it is really bad idea to put your own code to directory with such things as javascript framework is.
 
 Another thing which really annoyed me was the bloody <code>js_include_tag</code> and <code>css_include_tag</code>. There are so stupid that they do not throw exception when the JS or CSS file do not exists! So you are surprised why you fancy script do not work and then you realized that it's not correctly included at all!
 
 h1. What can be presented in pupu?
 
-Everything what can be put into public directory. Some examples: blueprint css, mootools, autocompleter for mootools, icon set ...
+Everything what can be put into root directory. Some examples: blueprint css, mootools, autocompleter for mootools, icon set ...
 
 h1. CLI interface
 
@@ -48,7 +48,7 @@ Plugin[:autocompleter].image("spinner.gif")
 
 h1. Initializers
 
-Initializers are the only part of pupu which are not stored in <code>public/pupu</code>, but are copyied to <code>public/javascripts/initializers</code> and <code>public/stylesheets/initializers</code>. In contrary of files in <code>public/pupu</code>, initializers are intended for user editing.
+Initializers are the only part of pupu which are not stored in <code>root/pupu</code>, but are copyied to <code>root/javascripts/initializers</code> and <code>root/stylesheets/initializers</code>. In contrary of files in <code>root/pupu</code>, initializers are intended for user editing.
 
 <pre>
 window.addEvent("domready", function() {

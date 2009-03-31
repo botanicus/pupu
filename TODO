@@ -1,4 +1,4 @@
-- media vs. public vs. custom
+- media vs. root vs. custom
 - pupu-gen
 - Rakefile -> Thorfile & without any merb-related stuff
 - maybe js.erb which generates .js after installation (image paths problem)

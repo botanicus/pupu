@@ -6,7 +6,7 @@ include Merb::Plugins::PupuHelpersMixin
 
 describe "PupuHelpersMixin#pupu" do
   before(:each) do
-    Pupu.root = File.dirname(__FILE__) + "/data/public/pupu"
+    Pupu.root = File.dirname(__FILE__) + "/data/root/pupu"
   end
 
   it "should return text with assets" do

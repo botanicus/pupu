@@ -1,4 +1,5 @@
-$: << "lib"
+root = File.dirname(__FILE__)
+$: << File.join(root, "lib")
 
 require 'rubygems'
 require 'pupu'
@@ -10,12 +11,12 @@ require 'merb-core/tasks/merb'
 GEM_NAME = "pupu"
 GEM_VERSION = Pupu::VERSION
 AUTHOR = "Jakub Stastny aka Botanicus"
-EMAIL = "stastny(at)101ideas.cz"
+EMAIL = "knava.bestvinensis(at)gmail.com"
 HOMEPAGE = "http://101ideas.cz"
-SUMMARY = "Pupu is a plugin system for merb's public stuff like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such pupus into your app."
+SUMMARY = "Pupu is a plugin system for merb's root stuff like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such pupus into your app."
 
 spec = Gem::Specification.new do |s|
-  s.rubyforge_project = 'merb'
+  s.rubyforge_project = 'pupu'
   s.name = GEM_NAME
   s.version = GEM_VERSION
   s.platform = Gem::Platform::RUBY
