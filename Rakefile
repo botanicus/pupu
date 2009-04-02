@@ -1,19 +1,15 @@
 root = File.dirname(__FILE__)
 $: << File.join(root, "lib")
 
-require 'rubygems'
 require 'pupu'
 require 'rake/gempackagetask'
-
-require 'merb-core'
-require 'merb-core/tasks/merb'
 
 GEM_NAME = "pupu"
 GEM_VERSION = Pupu::VERSION
 AUTHOR = "Jakub Stastny aka Botanicus"
 EMAIL = "knava.bestvinensis(at)gmail.com"
 HOMEPAGE = "http://101ideas.cz"
-SUMMARY = "Pupu is a plugin system for merb's root stuff like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such pupus into your app."
+SUMMARY = "Pupu is a plugin system for media stuff like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such pupus into your app."
 
 spec = Gem::Specification.new do |s|
   s.rubyforge_project = 'pupu'
@@ -34,16 +30,6 @@ end
 
 Rake::GemPackageTask.new(spec) do |pkg|
   pkg.gem_spec = spec
-end
-
-desc "install the plugin as a gem"
-task :install do
-  Merb::RakeHelper.install(GEM_NAME, :version => GEM_VERSION)
-end
-
-desc "Uninstall the gem"
-task :uninstall do
-  Merb::RakeHelper.uninstall(GEM_NAME, :version => GEM_VERSION)
 end
 
 desc "Create a gemspec file"

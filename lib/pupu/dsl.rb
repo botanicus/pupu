@@ -1,5 +1,11 @@
 require "ostruct"
 
+class Hash
+  def to_html_attrs
+    self.map { |key, value| "#{key}='#{value}'" }.join(" ")
+  end
+end
+
 module Pupu
   class DSL
     attr_reader :output, :files
@@ -36,7 +42,9 @@ module Pupu
 
     def stylesheet(basename, params = Hash.new)
       path = @plugin.stylesheet(basename).url
-      tag  = "<link href='#{path}' media='screen' rel='stylesheet' type='text/css' />"
+      default = {media: 'screen', rel: 'stylesheet', type: 'text/css'}
+      params = default.merge(params)
+      tag  = "<link href='#{path}' #{params.to_html_attrs} />"
       @files.push(path)
       @output.push(tag)
     end

@@ -6,8 +6,9 @@ require "pupu/url"
 
 module Pupu
   class Pupu
+    PROJECT_ROOT = Dir.pwd # must be initialized at start, otherwise Pupu.root can return bad values when it's called in Dir.chdir block
+    MEDIA_DIRECTORY = ["public", "media"].find { |directory| File.directory?(directory) }
     class << self
-      ROOT = Dir.pwd # must be initialized at start, otherwise Pupu.root can return bad values when it's called in Dir.chdir block
       # TODO: return Pupu object, not string
       def all
         Dir["#{self.root}/*"].select do |item|
@@ -17,10 +18,11 @@ module Pupu
 
       def root(path = :absolute)
         # TODO: it should be configurable
-        media = ["public", "media"].find { |directory| File.directory?(directory) }
+        root = Dir.pwd.sub(%r[#{Regexp::quote(PROJECT_ROOT)}], '').chomp("/")
+        root = "./" if root.empty?
         case path
-        when :absolute then "#{ROOT}/#{media}/pupu"
-        when :relative then "#{media}/pupu"
+        when :absolute then File.join(root, MEDIA_DIRECTORY, "pupu")
+        when :relative then File.join(MEDIA_DIRECTORY, "pupu")
         else
           # exception
         end
@@ -50,14 +52,8 @@ module Pupu
       @params = params
     end
 
-    # TODO: reflect changes on root method
     def root(path = :absolute)
-      case path
-      when :absolute then File.join(Pupu.root(:absolute), @path)
-      when :relative then File.join(Pupu.root(:relative), @path)
-      else
-        # exception
-      end
+      File.join(Pupu.root(path), @path)
     end
 
     def metadata
@@ -90,9 +86,9 @@ module Pupu
       when :all
         [self.initializer(:javascript), self.initializer(:stylesheet)]
       when :javascript
-        file("#{@path}.js", "public/javascripts/initializers") rescue nil
+        file("#{@path}.js", "media/javascripts/initializers") rescue nil # TODO: fix media
       when :stylesheet
-        file("#{@path}.css", "public/stylesheets/initializers") rescue nil
+        file("#{@path}.css", "media/stylesheets/initializers") rescue nil # TODO: fix media
       end
     end
 
