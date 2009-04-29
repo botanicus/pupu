@@ -5,9 +5,14 @@ require "pupu/metadata"
 require "pupu/url"
 
 module Pupu
+  # this must be set in adapters
+  class << self
+    attr_accessor :root
+    attr_accessor :media_root
+    attr_accessor :media_prefix
+  end
+
   class Pupu
-    PROJECT_ROOT = Dir.pwd # must be initialized at start, otherwise Pupu.root can return bad values when it's called in Dir.chdir block
-    MEDIA_DIRECTORY = ["public", "media"].find { |directory| File.directory?(directory) }
     class << self
       # TODO: return Pupu object, not string
       def all
@@ -18,11 +23,11 @@ module Pupu
 
       def root(path = :absolute)
         # TODO: it should be configurable
-        root = Dir.pwd.sub(%r[#{Regexp::quote(PROJECT_ROOT)}], '').chomp("/")
-        root = "./" if root.empty?
+        root = ::Pupu.root.sub(%r[#{Regexp::quote(::Pupu.root)}], '').chomp("/")
+        # root = "./" if root.empty?
         case path
-        when :absolute then File.join(root, MEDIA_DIRECTORY, "pupu")
-        when :relative then File.join(MEDIA_DIRECTORY, "pupu")
+        when :absolute then File.join(root, ::Pupu.media_root, "pupu")
+        when :relative then File.join(::Pupu.media_root, "pupu")
         else
           # exception
         end

@@ -1,6 +1,6 @@
 - media vs. root vs. custom
 - pupu-gen
-- url prefix as MEDIA_PREFIX in Django
+- url prefix as Pupu.media_prefix in Django
 - Rakefile -> Thorfile & without any merb-related stuff
 - maybe js.erb which generates .js after installation (image paths problem)
 - how to handle metadata? Generate metadata.yml from config.rb (dependencies) or generate it through merb-gen and write it by hand?

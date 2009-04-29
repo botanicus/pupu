@@ -6,13 +6,14 @@ module Pupu
     # URL.new(root/pupu/autocompleter/javascripts/autocompleter.js)
     # URL.new(Merb.root/root/pupu/autocompleter/javascripts/autocompleter.js)
     def initialize(path)
-      path = File.expand_path(path).sub(%r[^#{Regexp::quote(Pupu::PROJECT_ROOT)}/], '')
+      path = File.expand_path(path).sub(%r[^#{Regexp::quote(Pupu::Pupu.root)}/], '')
       raise AssetNotFound.new(path) unless File.exist?(path)
       @path = path.sub(%r{^(.*/)?(root/.+$)}, '\2')
     end
 
     def url
-      @path.sub(%r[^#{Regexp::quote(Pupu::MEDIA_DIRECTORY)}], '')
+      url = @path.sub(%r[^#{Regexp::quote(Pupu::Pupu.media_root)}], Regexp::quote(Pupu::Pupu.media_prefix))
+      "/#{url}"
     end
 
     def inspect
