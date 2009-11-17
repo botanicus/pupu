@@ -1,5 +1,6 @@
 require "yaml"
 require "ostruct"
+require "path"
 require "pupu/exceptions"
 require "pupu/metadata"
 
@@ -7,21 +8,22 @@ module Pupu
   # this must be set in adapters
   class << self
     attr_accessor :root
-    
-    # @example Pupu.media_prefix "media"
-    #   => /media/pupu/autocompleter/javascripts/autocompleter.js
-    def media_prefix(prefix)
+
+    # @example Pupu.media_prefix("media").url
+    #   => "/media/pupu/autocompleter/javascripts/autocompleter.js"
+    def media_prefix=(prefix)
       Path.rewrite { |path| File.join(prefix, path) }
     end
 
     # TODO: media_root or media_directory?
-    def media_root(path)
+    def media_root=(path)
       Path.media_directory = path
       @media_root = path
     end
+    attr_reader :media_root
 
-    # @example Pupu.rewrite { |path| "http://media.domain.org/#{path}" }
-    #   # => http://media.domain.org/pupu/autocompleter/javascripts/autocompleter.js
+    # @example Pupu.rewrite { |path| "http://media.domain.org/#{path}" }.url
+    #   # => "http://media.domain.org/pupu/autocompleter/javascripts/autocompleter.js"
     def rewrite(&block)
       Path.rewrite(&block)
     end
@@ -38,7 +40,7 @@ module Pupu
 
       def root
         # TODO: it should be configurable
-        root = ::Pupu.root.sub(%r[#{Regexp::quote(::Pupu.root)}], '').chomp("/")
+        # root = ::Pupu.root.sub(%r[#{Regexp::quote(::Pupu.root)}], '').chomp("/")
         # root = "./" if root.empty?
         # case path
         #  when :absolute then File.join(root, ::Pupu.media_root, "pupu")
@@ -46,12 +48,12 @@ module Pupu
         #  else
         #    # exception
         #  end
-        Path.new(File.join(root, ::Pupu.media_root, "pupu"))
+        @root ||= Path.new(File.join(::Pupu.media_root, "pupu"))
       end
 
       # TODO: reflect changes on root method
       def root=(directory)
-        @root = directory
+        @root = Path.new(directory)
         raise PupuRootNotFound unless File.exist?(@root)
         return @root
       end
@@ -79,11 +81,6 @@ module Pupu
 
     def metadata
       OpenStruct.new(YAML::load_file(self.file("metadata.yml").path))
-    end
-
-    # TODO: change root to return URL and use URL#url
-    def public_root
-      @public_root ||= File.join("/", "pupu", @path)
     end
 
     def javascript(basename)
@@ -114,7 +111,7 @@ module Pupu
     end
 
     def file(path, root = self.root)
-      Path.new(File.join(root, path))
+      root.join(path)
     end
   end
 end

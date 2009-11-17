@@ -17,6 +17,10 @@ module Pupu
       @dependencies = Array.new
     end
 
+    def output
+      @output.join("\n")
+    end
+
     def dependency(pupu, params = Hash.new)
       struct = OpenStruct.new
       struct.name = pupu
@@ -72,7 +76,7 @@ module Pupu
     def parameter(name, params = Hash.new, &block)
       # pupu :autocompleter, :type => "request"
       # @plugin.params: { :type => "request" }
-      
+
       # pupu :mootools, :more => true
       # @plugin.params: { :more => true }
       if @plugin.params.key?(name)

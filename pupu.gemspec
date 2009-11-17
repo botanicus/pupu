@@ -27,17 +27,17 @@ Gem::Specification.new do |s|
   s.executables = ["pupu"]
   s.default_executable = "pupu"
   s.require_paths = ["lib"]
-  
+
   # Ruby version
   s.required_ruby_version = ::Gem::Requirement.new(">= 1.9.1")
-  
+
   # runtime dependencies
   s.add_dependency "path"
 
   # development dependencies
   # use gem install pupu --development if you want to install them
   s.add_development_dependency "simple-templater"
-  
+
   # RubyForge
   s.rubyforge_project = "pupu"
 end

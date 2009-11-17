@@ -30,7 +30,7 @@ describe Pupu::DSL do
     it "should return <script> tag with correct src attribute" do
       src = @plugin.javascript("autocompleter").url
       @dsl.javascripts("autocompleter")
-      @dsl.output.scan(/#{Regexp::quote(src)}/).length.should eql(3)
+      @dsl.output.scan(/#{Regexp::quote(src)}/).length.should eql(1)
     end
   end
 
@@ -39,7 +39,7 @@ describe Pupu::DSL do
     it "should return <link> tag with correct src attribute" do
       path = @plugin.stylesheet("autocompleter").url
       @dsl.stylesheets("autocompleter")
-      @dsl.output.scan(/#{Regexp::quote(path)}/).length.should eql(3)
+      @dsl.output.scan(/#{Regexp::quote(path)}/).length.should eql(1)
     end
   end
 

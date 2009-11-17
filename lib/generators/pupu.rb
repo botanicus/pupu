@@ -20,7 +20,7 @@ module Merb
       def common_templates_dir
         self.class.common_templates_dir
       end
-      
+
       #
       # ==== Generator options
       #

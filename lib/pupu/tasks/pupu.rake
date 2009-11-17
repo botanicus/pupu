@@ -8,22 +8,22 @@ namespace :pupu do
   task :install do |task, args|
     CLI.install(*args)
   end
-  
+
   desc "Uninstall given pupus"
   task :uninstall do |task, args|
     CLI.uninstall(*args)
   end
-  
+
   desc "Update given pupus"
   task :update do |task, args|
     CLI.install(*args)
   end
-  
+
   desc "List installed pupus"
   task :list do |task, args|
     CLI.list
   end
-  
+
   # TODO: this isn't the right approach I guess
   namespace :tasks do
     desc "Update these tasks"
