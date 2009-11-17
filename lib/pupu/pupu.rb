@@ -2,14 +2,29 @@ require "yaml"
 require "ostruct"
 require "pupu/exceptions"
 require "pupu/metadata"
-require "pupu/url"
 
 module Pupu
   # this must be set in adapters
   class << self
     attr_accessor :root
-    attr_accessor :media_root
-    attr_accessor :media_prefix
+    
+    # @example Pupu.media_prefix "media"
+    #   => /media/pupu/autocompleter/javascripts/autocompleter.js
+    def media_prefix(prefix)
+      Path.rewrite { |path| File.join(prefix, path) }
+    end
+
+    # TODO: media_root or media_directory?
+    def media_root(path)
+      Path.media_directory = path
+      @media_root = path
+    end
+
+    # @example Pupu.rewrite { |path| "http://media.domain.org/#{path}" }
+    #   # => http://media.domain.org/pupu/autocompleter/javascripts/autocompleter.js
+    def rewrite(&block)
+      Path.rewrite(&block)
+    end
   end
 
   class Pupu
@@ -21,16 +36,17 @@ module Pupu
         end.map { |entry| File.basename(entry).to_s }
       end
 
-      def root(path = :absolute)
+      def root
         # TODO: it should be configurable
         root = ::Pupu.root.sub(%r[#{Regexp::quote(::Pupu.root)}], '').chomp("/")
         # root = "./" if root.empty?
-        case path
-        when :absolute then File.join(root, ::Pupu.media_root, "pupu")
-        when :relative then File.join(::Pupu.media_root, "pupu")
-        else
-          # exception
-        end
+        # case path
+        #  when :absolute then File.join(root, ::Pupu.media_root, "pupu")
+        #  when :relative then File.join(::Pupu.media_root, "pupu")
+        #  else
+        #    # exception
+        #  end
+        Path.new(File.join(root, ::Pupu.media_root, "pupu"))
       end
 
       # TODO: reflect changes on root method
@@ -57,8 +73,8 @@ module Pupu
       @params = params
     end
 
-    def root(path = :absolute)
-      File.join(Pupu.root(path), @path)
+    def root
+      self.class.root.join(@path)
     end
 
     def metadata
@@ -98,7 +114,7 @@ module Pupu
     end
 
     def file(path, root = self.root)
-      URL.new(File.join(root, path))
+      Path.new(File.join(root, path))
     end
   end
 end

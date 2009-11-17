@@ -1,3 +1,4 @@
+require "path"
 require "pupu/exceptions"
 require "pupu/pupu"
 

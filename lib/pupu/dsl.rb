@@ -1,4 +1,5 @@
 require "ostruct"
+require "path"
 
 class Hash
   def to_html_attrs

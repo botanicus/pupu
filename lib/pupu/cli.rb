@@ -1,6 +1,7 @@
 require "fileutils"
 require "yaml"
 require "ostruct"
+require "path"
 require "pupu"
 require "pupu/github"
 

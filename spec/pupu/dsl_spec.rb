@@ -4,7 +4,7 @@ require "pupu/pupu"
 
 describe Pupu::DSL do
   before(:each) do
-    Pupu.root = File.dirname(__FILE__) + "/data/root/pupu"
+    Pupu.root = PUPU_ROOT
     @plugin = Pupu::Pupu.new(:autocompleter)
     @dsl    = Pupu::DSL.new(@plugin)
   end
@@ -28,7 +28,7 @@ describe Pupu::DSL do
   # TODO
   describe "#javascripts" do
     it "should return <script> tag with correct src attribute" do
-      src = @plugin.javascripts("autocompleter").url
+      src = @plugin.javascript("autocompleter").url
       @dsl.javascripts("autocompleter")
       @dsl.output.scan(/#{Regexp::quote(src)}/).length.should eql(3)
     end
@@ -37,7 +37,7 @@ describe Pupu::DSL do
   # TODO
   describe "#stylesheets" do
     it "should return <link> tag with correct src attribute" do
-      path = @plugin.stylesheets("autocompleter").url
+      path = @plugin.stylesheet("autocompleter").url
       @dsl.stylesheets("autocompleter")
       @dsl.output.scan(/#{Regexp::quote(path)}/).length.should eql(3)
     end
