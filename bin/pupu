@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby1.9
+# encoding: utf-8
+
+base   = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
+libdir = File.expand_path(File.join(File.dirname(base), "..", "lib"))
+
+vendor = File.join(File.dirname(__FILE__), "..", "vendor")
+if File.directory?(vendor)
+  Dir["#{vendor}/*"].each do |path|
+    if File.directory?(path) && Dir["#{path}/*"].empty?
+      warn "Dependency #{File.basename(path)} in vendor seems to be empty. Run git submodule init && git submodule update to checkout it."
+    elsif File.directory?(path) && File.directory?(File.join(path, "lib"))
+      $:.unshift(File.join(path, "lib"))
+    end
+  end
+end
+
+# because of system installation, there is bin/../lib, but not bin/../lib/pupu
+if File.directory?(File.join(libdir, "pupu"))
+  $:.unshift(libdir) unless $:.include?(libdir)
+end
+
+# === Helpers === #
+# TODO: Generators.each { |generator| puts generator.help }
+def usage
+<<-HELP
+=== Usage ===
+pupu create project mycoolproject    Generate new site
+pupu create app mycoolapp            Generate new application
+HELP
+end
+
+case command = ARGV.shift
+when "create"
+  # we can't use require_relative because it can be symlinked to
+  # /usr/bin or just be located in different place than we expect
+  require "simple-templater"
+  require "pupu"
+  begin
+    SimpleTemplater::Generator.new(*ARGV).create
+  rescue ArgumentError => exception
+    abort [exception.inspect, "", usage].join("\n")
+  end
+else
+  abort usage
+end
