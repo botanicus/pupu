@@ -1,47 +1,46 @@
 require_relative "../spec_helper"
 require "pupu/pupu"
 
-describe Pupu do
+describe Pupu::Pupu do
   before(:each) do
-    Pupu.root = File.dirname(__FILE__) + "/data/root/pupu"
-    @root = File.dirname(__FILE__) + "/data"
+    # Pupu.root = File.dirname(__FILE__) + "/data/root/pupu"
   end
 
   describe "[]" do
-    it "should return Pupu object" do
-      Pupu[:autocompleter].should be_kind_of(Pupu)
+    it "should return Pupu::Pupu object" do
+      Pupu::Pupu[:autocompleter].should be_kind_of(Pupu::Pupu)
     end
 
     it "should return nil if pupu do not exists" do
-      lambda { Pupu[:non_existing_pupu] }.should raise_error(PluginNotFoundError)
+      lambda { Pupu::Pupu[:non_existing_pupu] }.should raise_error(Pupu::PluginNotFoundError)
     end
   end
 
   describe ".root=" do
-    it "should return Pupu object" do
-      Pupu.root.should eql("#{@root}/root/pupu")
+    it "should return Pupu::Pupu object" do
+      Pupu.root.should eql(PROJECT_ROOT)
     end
 
     it "should return nil if pupu do not exists" do
-      lambda { Pupu.root = "#{@root}/root/prefix/pupu" }.should raise_error(PupuRootNotFound)
+      lambda { Pupu.root = "#{PROJECT_ROOT}/root/prefix/pupu" }.should raise_error(Pupu::PupuRootNotFound)
     end
   end
 
   describe "#initializers(type)" do
     before(:each) do
-      @pupu = Pupu[:autocompleter]
+      @pupu = Pupu::Pupu[:autocompleter]
     end
 
     it "should return pathname to pupu" do
-      @pupu.initializer.should eql("#{@root}/root/pupu/autocompleter/initializer.js") # TODO: pole s 2 pathname
+      @pupu.initializer.should eql("#{PROJECT_ROOT}/root/pupu/autocompleter/initializer.js") # TODO: pole s 2 pathname
     end
 
     it "should return pathname to pupu" do
-      @pupu.initializer(:script).should eql("#{@root}/root/pupu/autocompleter/initializer.js")
+      @pupu.initializer(:script).should eql("#{PROJECT_ROOT}/root/pupu/autocompleter/initializer.js")
     end
 
     it "should return pathname to pupu" do
-      @pupu.initializer(:stylesheet).should eql("#{@root}/root/pupu/autocompleter/initializer.css")
+      @pupu.initializer(:stylesheet).should eql("#{PROJECT_ROOT}/root/pupu/autocompleter/initializer.css")
     end
 
     it "should return pathname to pupu" do
@@ -56,11 +55,11 @@ describe Pupu do
   # initializer.js will be copied into root/javascripts/initializers/[pupu-name].js
   describe "#copy_initializers" do
     before(:each) do
-      @pupu = Pupu[:autocompleter]
+      @pupu = Pupu::Pupu[:autocompleter]
     end
 
     it "should return pathname to pupu" do
-      @pupu.initializer.should eql("#{@root}/root/pupu/autocompleter/initializer.js")
+      @pupu.initializer.should eql("#{PROJECT_ROOT}/root/pupu/autocompleter/initializer.js")
     end
 
     it "should return nil if image do not exists" do
@@ -70,7 +69,7 @@ describe Pupu do
 
   describe "#uninstall" do
     before(:each) do
-      #@pupu = Pupu[:autocompleter]
+      #@pupu = Pupu::Pupu[:autocompleter]
     end
 
     it "should return path to image" do
@@ -84,7 +83,7 @@ describe Pupu do
 
   describe "#image" do
     before(:each) do
-      @pupu = Pupu[:autocompleter]
+      @pupu = Pupu::Pupu[:autocompleter]
     end
 
     it "should return path to image" do
@@ -98,7 +97,7 @@ describe Pupu do
 
   describe "#javascript" do
     before(:each) do
-      @pupu = Pupu[:autocompleter]
+      @pupu = Pupu::Pupu[:autocompleter]
     end
 
     it "should return path to javascript" do
@@ -112,7 +111,7 @@ describe Pupu do
 
   describe "#stylesheet" do
     before(:each) do
-      @pupu = Pupu[:autocompleter]
+      @pupu = Pupu::Pupu[:autocompleter]
     end
 
     it "should return path to image" do
