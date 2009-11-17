@@ -27,6 +27,7 @@ module Pupu
       CLI.list
     end
 
+    # TODO: this isn't the right approach I guess
     class Tasks < Thor
       desc "update", "Update local tasks"
       def update
