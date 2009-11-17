@@ -1,11 +1,10 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require "pupu/cli"
-include Merb::Plugins
 
 describe Pupu do
   before(:each) do
     Pupu.root = File.dirname(__FILE__) + "/data/root/pupu"
-    Merb.stub!(:root).and_return(File.dirname(__FILE__) + "/data")
+    @root = File.dirname(__FILE__) + "/data"
   end
 
   describe ".depends_on" do

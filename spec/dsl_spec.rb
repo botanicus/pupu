@@ -1,9 +1,8 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require "pupu/dsl"
 require "pupu/pupu"
-include Merb::Plugins
 
-describe DSL do
+describe Pupu::DSL do
   before(:each) do
     Pupu.root = File.dirname(__FILE__) + "/data/root/pupu"
     @plugin = Pupu.new(:autocompleter)

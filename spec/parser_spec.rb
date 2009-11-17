@@ -1,9 +1,8 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require "pupu/parser"
-include Merb::Plugins
 
 # TODO
-describe Parser do
+describe Pupu::Parser do
   describe "plugin" do
     it "should return Plugin object" do
       plugin(:autocompleter)

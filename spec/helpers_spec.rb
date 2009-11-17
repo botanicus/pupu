@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require "pupu/pupu"
 require "pupu/helpers"
-include Merb::Plugins
-include Merb::Plugins::PupuHelpersMixin
+include Pupu::PupuHelpersMixin
 
 describe "PupuHelpersMixin#pupu" do
   before(:each) do

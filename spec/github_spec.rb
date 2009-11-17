@@ -1,16 +1,15 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require "pupu/github"
-include Merb::Plugins
 
 # TODO
-describe Parser do
+describe Pupu::GitHub do
   describe "plugin" do
     it "should return Plugin object" do
       plugin(:autocompleter)
     end
 
     it "should return Plugin object" do
-      lambda { plugin(:autocompleter) }.should raise
+      lambda { plugin(:autocompleter) }.should raise_error
     end
 
     it "should return nil if plugin do not exists" do

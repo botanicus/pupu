@@ -1,14 +1,13 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require "pupu/exceptions"
-include Merb::Plugins
 
-describe PupuRootNotFound do
+describe Pupu::PupuRootNotFound do
 end
 
-describe PluginNotFoundError do
+describe Pupu::PluginNotFoundError do
 end
 
-describe AssetNotFound do
+describe Pupu::AssetNotFound do
   it "should take one argument" do
     lambda { AssetNotFound.new("foo") }.should_not raise_error(ArgumentError)
   end

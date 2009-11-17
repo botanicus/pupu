@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require "pupu/url"
-include Merb::Plugins
 
-describe URL do
+describe Pupu::URL do
   before(:each) do
     @fullpath = "spec/data/root/pupu/autocompleter/javascripts/autocompleter.js"
     @relative = "root/pupu/autocompleter/javascripts/autocompleter.js"
@@ -29,7 +28,7 @@ describe URL do
 
   describe "#inspect" do
     it "should show @fullpath and url" do
-      @url.inspect.should eql(%Q{#<Merb::Plugins::URL: @path="#{@relative}" url="/pupu/autocompleter/javascripts/autocompleter.js">})
+      @url.inspect.should eql(%Q{#<URL: @path="#{@relative}" url="/pupu/autocompleter/javascripts/autocompleter.js">})
     end
   end
 end
