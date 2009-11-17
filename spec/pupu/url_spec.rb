@@ -3,14 +3,15 @@ require "pupu/url"
 
 describe Pupu::URL do
   before(:each) do
-    @fullpath = "spec/data/root/pupu/autocompleter/javascripts/autocompleter.js"
-    @relative = "root/pupu/autocompleter/javascripts/autocompleter.js"
-    @url  = URL.new(@fullpath)
+    @fullpath = "spec/data/public/pupu/autocompleter/javascripts/autocompleter.js"
+    @relative = "data/public/pupu/autocompleter/javascripts/autocompleter.js"
+    Pupu.root = File.dirname(__FILE__) + "/data/public/root/pupu"
+    @url  = Pupu::URL.new(@fullpath)
   end
 
   describe "#initialize" do
     it "should raise AssetNotFound if given path do not exist" do
-      lambda { URL.new("i/do/not/exists") }.should raise_error(AssetNotFound)
+      lambda { Pupu::URL.new("i/do/not/exists") }.should raise_error(Pupu::AssetNotFound)
     end
   end
 
@@ -20,8 +21,8 @@ describe Pupu::URL do
     end
 
     it "should cut the path to path relative from current directory" do
-      path = "#{Dir.pwd}/spec/data/root/pupu/autocompleter/javascripts/autocompleter.js"
-      url  = URL.new(path)
+      path = "#{Dir.pwd}/spec/data/public/pupu/autocompleter/javascripts/autocompleter.js"
+      url  = Pupu::URL.new(path)
       url.path.should eql(@relative) # yep, it still should be the same as @relative
     end
   end

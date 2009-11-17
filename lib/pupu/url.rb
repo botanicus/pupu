@@ -1,3 +1,4 @@
+require "pupu/pupu"
 require "pupu/exceptions"
 
 module Pupu
