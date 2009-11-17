@@ -1,6 +1,6 @@
 - simple templater
 - specs for everything
-- adapters for each framework (tasks, helpers)
+- adapters for Rango, Merb, Rails (tasks, helpers)
 - media vs. root vs. custom
 - url prefix as Pupu.media_prefix in Django
 - maybe js.erb which generates .js after installation (image paths problem)

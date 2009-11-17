@@ -104,3 +104,9 @@ parameter :type, :optional => ["local", "request"] do |type|
   javascript "lib/autocompleter.#{type}"
 end
 </pre>
+
+h1. Links
+
+- "Wiki":http://wiki.github.com/botanicus/pupu
+- "Source Code":http://github.com/botanicus/pupu
+- "API Documentation":http://rdoc.info/projects/botanicus/pupu
