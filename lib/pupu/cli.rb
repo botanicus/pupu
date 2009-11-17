@@ -1,10 +1,10 @@
 require "fileutils"
 require "yaml"
 require "ostruct"
+require "pupu"
 require "pupu/github"
 
 # copyied from merb.thor, this part is actually my code as well :)
-# TODO: replace by term-ansicolor
 module ColorfulMessages
   # red
   def error(*messages)
