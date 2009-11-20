@@ -1,4 +1,4 @@
-require "path"
+require "media-path"
 require "pupu/exceptions"
 require "pupu/pupu"
 

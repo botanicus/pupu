@@ -1,6 +1,6 @@
 require "yaml"
 require "ostruct"
-require "path"
+require "media-path"
 require "pupu/exceptions"
 require "pupu/metadata"
 
@@ -12,12 +12,12 @@ module Pupu
     # @example Pupu.media_prefix("media").url
     #   => "/media/pupu/autocompleter/javascripts/autocompleter.js"
     def media_prefix=(prefix)
-      Path.rewrite { |path| File.join(prefix, path) }
+      MediaPath.rewrite { |path| File.join(prefix, path) }
     end
 
     # TODO: media_root or media_directory?
     def media_root=(path)
-      Path.media_directory = path
+      MediaPath.media_directory = path
       @media_root = path
     end
     attr_reader :media_root
@@ -25,7 +25,7 @@ module Pupu
     # @example Pupu.rewrite { |path| "http://media.domain.org/#{path}" }.url
     #   # => "http://media.domain.org/pupu/autocompleter/javascripts/autocompleter.js"
     def rewrite(&block)
-      Path.rewrite(&block)
+      MediaPath.rewrite(&block)
     end
   end
 
@@ -48,12 +48,12 @@ module Pupu
         #  else
         #    # exception
         #  end
-        @root ||= Path.new(File.join(::Pupu.media_root, "pupu"))
+        @root ||= MediaPath.new(File.join(::Pupu.media_root, "pupu"))
       end
 
       # TODO: reflect changes on root method
       def root=(directory)
-        @root = Path.new(directory)
+        @root = MediaPath.new(directory)
         raise PupuRootNotFound unless File.exist?(@root)
         return @root
       end

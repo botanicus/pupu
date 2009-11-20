@@ -1,13 +1,9 @@
 === Version 0.1 ===
 - adapters for Rango, Merb, Rails (tasks, helpers)
 - media vs. root vs. custom
-- url prefix as Pupu.media_prefix in Django
-- maybe js.erb which generates .js after installation (image paths problem)
 - how to handle metadata? Generate metadata.yml from config.rb (dependencies) or generate it through merb-gen and write it by hand?
 - what about ruby helpers such as flash :notice, :error for flash <divs
 - custom messages on errors
-- Rakefile is a template, not just plain file (generator)
-- blueprint pupu
 - install dependencies if any
 - add array with loaded plugins, do not load plugin which is already loaded
 - pupu view helper should works with dependencies (pupu :autocompleter should add mootools as well)

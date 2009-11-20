@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ::Gem::Requirement.new(">= 1.9.1")
 
   # runtime dependencies
-  s.add_dependency "path"
+  s.add_dependency "media-path"
 
   # development dependencies
   # use gem install pupu --development if you want to install them

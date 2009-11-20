@@ -1,5 +1,5 @@
 require "ostruct"
-require "path"
+require "media-path"
 
 class Hash
   def to_html_attrs
