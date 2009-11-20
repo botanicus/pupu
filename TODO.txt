@@ -1,5 +1,6 @@
 === Version 0.1 ===
-- adapters for Rango, Merb, Rails (tasks, helpers)
+- adapters for Rango, Merb, Rails (helpers registration)
+- git submodules vs rm -rf pupu/.git
 - media vs. root vs. custom
 - how to handle metadata? Generate metadata.yml from config.rb (dependencies) or generate it through merb-gen and write it by hand?
 - what about ruby helpers such as flash :notice, :error for flash <divs

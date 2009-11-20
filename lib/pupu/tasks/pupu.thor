@@ -1,42 +1,47 @@
-require "pupu" # for version
-require "pupu/pupu"
-require "pupu/cli"
+# encoding: utf-8
+
+# Pupu::Tasks.class_eval do
+#   def setup
+#     load "config/environment.rb"
+#   end
+# end
 
 module Pupu
   class Tasks < Thor
+    def initialize
+      require "pupu/cli"
+      self.setup
+    end
+
+    # you may want to redefine this method
+    def setup
+      load "config/pupu.rb"
+    end
+
     # self.namespace = "pupu" # TODO: patch thor
-    desc "install [pupu(s)]", "Install given pupu(s)"
+    desc "install [*pupu]", "Install given pupu(s)"
     def install(*pupus)
       CLI.install(*pupus)
     end
 
-    desc "update [pupu(s)]", "Update installed pupus or update all if pupu(s) isn't given"
+    desc "update [*pupu]", "Update installed pupus or update all if pupu(s) isn't given"
     def update(*pupus)
       CLI.update(*pupus)
     end
 
-    desc "uninstall [pupu(s)]", "Uninstall given pupu(s)"
+    desc "uninstall [*pupu]", "Uninstall given pupu(s)"
     def uninstall(*pupus)
       CLI.uninstall(*pupus)
     end
-
-    alias_method :remove, :uninstall
 
     desc "list", "Show installed pupus"
     def list
       CLI.list
     end
 
-    # TODO: this isn't the right approach I guess
-    class Tasks < Thor
-      desc "update", "Update local tasks"
-      def update
-        taskfile = "#{Gem.dir}/gems/pupu-#{Pupu::VERSION}/tasks/pupu.thor"
-        File.open(__FILE__, "w") do |file|
-          puts "Taskfile updated"
-          file.print(File.read(taskfile).chomp)
-        end
-      end
+    desc "search", "Search remote pupus"
+    def search(pattern = nil)
+      CLI.search(pattern)
     end
   end
 end

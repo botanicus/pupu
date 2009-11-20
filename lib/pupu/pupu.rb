@@ -1,5 +1,6 @@
 require "yaml"
 require "ostruct"
+require "fileutils"
 require "media-path"
 require "pupu/exceptions"
 require "pupu/metadata"
@@ -15,9 +16,9 @@ module Pupu
       MediaPath.rewrite { |path| File.join(prefix, path) }
     end
 
-    # TODO: media_root or media_directory?
+    # TODO: media_root or media_root?
     def media_root=(path)
-      MediaPath.media_directory = path
+      MediaPath.media_root = path
       @media_root = path
     end
     attr_reader :media_root
@@ -38,6 +39,15 @@ module Pupu
         end.map { |entry| File.basename(entry).to_s }
       end
 
+      # same as root, but doesn't raise any exception
+      def root_path
+        File.join(::Pupu.media_root, "pupu")
+      end
+
+      # strategies: submodules, copy
+      cattr_accessor :strategy
+      self.strategy = :copy
+
       def root
         # TODO: it should be configurable
         # root = ::Pupu.root.sub(%r[#{Regexp::quote(::Pupu.root)}], '').chomp("/")
@@ -48,6 +58,8 @@ module Pupu
         #  else
         #    # exception
         #  end
+        raise "Pupu.media_root has to be initialized" if ::Pupu.media_root.nil?
+        raise Errno::ENOENT, "#{::Pupu.media_root}/pupu doesn't exist, you have to create it first!" unless File.directory?File.join(::Pupu.media_root, "pupu")
         @root ||= MediaPath.new(File.join(::Pupu.media_root, "pupu"))
       end
 
@@ -80,7 +92,9 @@ module Pupu
     end
 
     def metadata
-      OpenStruct.new(YAML::load_file(self.file("metadata.yml").path))
+      @metadata = OpenStruct.new(YAML::load_file(self.file("metadata.yml").path))
+    rescue Errno::ENOENT # we might remove pupu directory, so metadata are missing, but we can get them from cache
+      @metadata
     end
 
     def javascript(basename)
@@ -96,7 +110,11 @@ module Pupu
     end
 
     def uninstall
+      FileUtils.rm_r self.root.to_s
       # TODO
+      # self.metadata.dependants.each do |dependant|
+      #   dependant.uninstall
+      # end
     end
 
     def initializer(type = :all)

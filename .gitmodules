@@ -4,3 +4,6 @@
 [submodule "vendor/media-path"]
 	path = vendor/media-path
 	url = git://github.com/botanicus/media-path
+[submodule "vendor/rubyexts"]
+	path = vendor/rubyexts
+	url = git://github.com/botanicus/rubyexts.git

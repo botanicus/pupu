@@ -47,7 +47,7 @@ begin
     Pupu::CLI.list
   when "check" # check setup & if you are in the right directory
     require "pupu/cli"
-    Pupu::CLI.check
+    Pupu::CLI.check || abort("File config/pupu.rb doesn't exist or can't be loaded")
   when "search"
     require "pupu/cli"
     Pupu::CLI.search(ARGV.first)
@@ -57,14 +57,14 @@ begin
     rescue LoadError
       abort "You have to install simple-templater first!"
     end
-    generator_name = ARGV.shift
+    # TODO: use generator set directly
     templater = SimpleTemplater.new(:pupu)
     # This enables you to create custom generators for Rango
     load File.join(File.dirname(base), "..", "simple-templater.scope") # neccesary if we run rango locally and not from RubyGems
     templater.discover!
-    generator_set = templater.find(generator_name)
+    generator_set = templater.find(:pupu)
     if generator_set.nil?
-      abort "Generator #{generator_name} doesn't exist. Available generators are: #{templater.generators.map { |set| set.name }.inspect}"
+      abort "Generator pupu doesn't exist. Available generators are: #{templater.generators.map { |set| set.name }.inspect}"
     else
       begin
         generator_set.run(ARGV)

@@ -31,14 +31,22 @@ module Pupu
       def update(pupu_name)
         if pupu_name
           pupu = Pupu[pupu_name]
-          metadata = pupu.metadata # TODO: continue here @@@@@@@@@@@@@@@@@@@@@@@
-          # TODO: check if is different revision on server (use GitHub API)
-          FileUtils.rm_r(pupu.root)
-          self.install_files(pupu_name, metadata.repozitory)
+          pupu.metadata # cache metadata
+          if Pupu.strategy.eql?(:submodules)
+            puts %(git fetch)
+            puts %(git reset origin/master --hard)
+          else
+            path = pupu.root.to_s # otherwise after we remove the path, we get error at mkdir telling us that the path doesn't exist
+            FileUtils.rm_r(path)
+            self.install_files(pupu_name, pupu.metadata.repozitory)
+          end
         else
           Pupu.all.each do |pupu_name|
             self.update(pupu_name)
           end
+        end
+        pupu.metadata.dependencies.each do |dependency|
+          self.update(dependency)
         end
       end
 
@@ -50,11 +58,16 @@ module Pupu
       end
 
       protected
-      def save_metadata(url)
+      def save_metadata(pupu, url)
         revision = %x(git log | head -1).chomp.sub(/^commit /, "")
-        dependencies = Array.new # TODO
+
+        dsl = DSL.new(pupu) # FIXME: repetitive
+        dsl.instance_eval(File.read(pupu.file("config.rb").path)) # FIXME: repetitive
+
+        dependencies = dsl.get_dependencies.map { |dependency| dependency.name }
+
         params = {:revision => revision, :repozitory => url, :dependencies => dependencies}
-        Dir.chdir(@pupu.root) do
+        Dir.chdir(@pupu.root.to_s) do
           File.open("metadata.yml", "w") do |file|
             file.puts(params.to_yaml)
           end
@@ -74,28 +87,35 @@ module Pupu
           raise PluginIsAlreadyInstalled if File.directory?(repo) # TODO: custom exception class
           run "git clone #{url} #{repo}"
           Dir.chdir(repo) do
-            js_initializer = "initializers/#{repo}.js"
-            css_initializer = "initializers/#{repo}.css"
-            if File.exist?(js_initializer) &&  (not File.exist?("#{media_dir}/javascripts/initializers/#{repo}.js"))
-              FileUtils.mkdir_p("#{media_dir}/javascripts/initializers")
-              FileUtils.mv js_initializer,  "#{media_dir}/javascripts/initializers/#{repo}.js"
-            end
-            if File.exist?(css_initializer) && (not File.exist?("#{media_dir}/stylesheets/initializers/#{repo}.css"))
-              FileUtils.mkdir_p("#{media_dir}/stylesheets/initializers")
-              FileUtils.mv css_initializer,  "#{media_dir}/stylesheets/initializers/#{repo}.css"
-            end
-            @pupu = Pupu[repo]
-            self.save_metadata(url)
-            FileUtils.rm_r ".git"
+            proceed_files(repo, url)
           end
         end
+      end
 
+      def proceed_files(repo, url)
+        js_initializer = "initializers/#{repo}.js"
+        css_initializer = "initializers/#{repo}.css"
+        if File.exist?(js_initializer) &&  (not File.exist?("javascripts/initializers/#{repo}.js"))
+          FileUtils.mkdir_p("javascripts/initializers")
+          FileUtils.mv js_initializer,  "javascripts/initializers/#{repo}.js"
+        end
+        if File.exist?(css_initializer) && (not File.exist?("stylesheets/initializers/#{repo}.css"))
+          FileUtils.mkdir_p("stylesheets/initializers")
+          FileUtils.mv css_initializer,  "stylesheets/initializers/#{repo}.css"
+        end
+        @pupu = Pupu[repo]
+        if Pupu.strategy.eql?(:copy)
+          self.save_metadata(@pupu, url)
+          FileUtils.rm_r ".git"
+        end
+      rescue Exception => exception
+        FileUtils.rm_r(repo) if File.directory?(repo)
+        raise exception
       end
 
       def chdir(pupu = nil, &block)
-        raise MediaDirectoryNotExist unless File.directory?(File.dirname(Pupu.root))
-        FileUtils.mkdir_p(Pupu.root) unless File.directory?(Pupu.root)
-        Dir.chdir(Pupu.root) do
+        FileUtils.mkdir_p(Pupu.root_path) unless File.directory?(Pupu.root_path)
+        Dir.chdir(Pupu.root.to_s) do
           pupu ? block.call(pupu.root) : block.call(Pupu.root)
         end
       end

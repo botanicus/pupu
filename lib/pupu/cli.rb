@@ -3,6 +3,7 @@ require "yaml"
 require "ostruct"
 require "media-path"
 require "pupu"
+require "pupu/pupu"
 require "pupu/github"
 
 # copyied from merb.thor, this part is actually my code as well :)
@@ -44,24 +45,25 @@ module Pupu
           begin
             GitHub.install(pupu)
           rescue PluginIsAlreadyInstalled
-            error "Plugin #{pupu} is already installed, skipping ..."
-            next
+            GitHub.update(pupu)
+            info "Plugin #{pupu} is already installed, updating"
           end
         end
       end
 
       def uninstall(*args)
         args.each do |pupu|
-          #begin
+          begin
             Pupu[pupu].uninstall
-          #rescue
-            #error ""
-            #next
-          #end
+            info "Uninstalling #{pupu}"
+          rescue
+            warning "#{pupu} isn't installed"
+          end
         end
       end
 
       def update(*args)
+        args = Pupu.all if args.empty? # update all if no pupu specified
         args.each do |pupu|
           begin
             GitHub.update(pupu)
@@ -74,15 +76,28 @@ module Pupu
 
       def list
         entries = Dir["#{Pupu.root}/*"].select { |entry| File.directory?(entry) }
-        if File.exist?(Pupu.root) and not entries.empty?
+        if File.exist?(Pupu.root_path) and not entries.empty?
           puts entries.map { |item| "- #{File.basename(item)}" }
         else
           error "Any pupu isn't installed yet."
         end
+      rescue Errno::ENOENT
+        error "Any pupu isn't installed yet."
+      end
+
+      def config_path
+        ["config/pupu.rb", "settings/pupu.rb", "pupu.rb"].find do |file|
+          File.file?(file)
+        end
+      end
+
+      def load_config
+        self.config_path && load(self.config_path)
       end
 
       def check
-        # load || exit 1
+        abort "Config file doesn't exist" unless self.config_path
+        abort "Config file #{self.config_path} can't be loaded" unless self.load_config
       end
 
       def search(pattern) # search pattern or list all the available pupus if pattern is nil
