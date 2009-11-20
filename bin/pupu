@@ -30,39 +30,28 @@ pupu create mootools  Generate pupu mootools
 HELP
 end
 
-require "pupu/pupu"
-ARGV.find do |argument|
-  if argument.match(/--media-root=(.+)/)
-    Pupu.root = Dir.pwd # TODO: ?
-    Pupu.media_root = File.expand_path($1)
-    unless File.directory?(Pupu.media_root)
-      abort "#{Pupu.media_root} doesn't exist"
-    end
-  end
-end
-
 begin
   case ARGV.shift
   when nil
     abort usage
   when "install"
     require "pupu/cli"
-    Pupu::CLI.install(*ARGV)
+    Pupu::CLI.new(ARGV).install
   when "uninstall", "remove"
     require "pupu/cli"
-    Pupu::CLI.uninstall(*ARGV)
+    Pupu::CLI.new(ARGV).uninstall
   when "update"
     require "pupu/cli"
-    Pupu::CLI.update(*ARGV)
+    Pupu::CLI.new(ARGV).update
   when "list" # list all pupus
     require "pupu/cli"
-    Pupu::CLI.list
+    Pupu::CLI.new(ARGV).list
   when "check" # check setup & if you are in the right directory
     require "pupu/cli"
-    Pupu::CLI.check || abort("File config/pupu.rb doesn't exist or can't be loaded")
+    Pupu::CLI.new(ARGV).check || abort("File config/pupu.rb doesn't exist or can't be loaded")
   when "search"
     require "pupu/cli"
-    Pupu::CLI.search(ARGV.first)
+    Pupu::CLI.new(ARGV).search(ARGV.first)
   when "create"
     begin
       require "simple-templater"

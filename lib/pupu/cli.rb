@@ -38,87 +38,114 @@ end
 
 module Pupu
   class CLI
-    class << self
-      include ColorfulMessages
-      def install(*args)
-        args.each do |pupu|
-          begin
-            GitHub.install(pupu)
-          rescue PluginIsAlreadyInstalled
-            GitHub.update(pupu)
-            info "Plugin #{pupu} is already installed, updating"
+    include ColorfulMessages
+    attr_reader :args
+    def initialize(args)
+      @args = args
+      self.load_config
+      self.parse_argv
+      note "Using media directory: #{::Pupu.media_root}"
+      note "Using strategy: #{Pupu.strategy}"
+    end
+
+    def parse_argv
+      self.args.each do |argument|
+        if argument.match(/--media-root=(.+)/)
+          self.args.delete(argument)
+          Pupu.root = Dir.pwd # TODO: ?
+          Pupu.media_root = File.expand_path($1)
+          unless File.directory?(Pupu.media_root)
+            abort "#{Pupu.media_root} doesn't exist"
+          end
+        elsif argument.match(/--strategy=(.+)/)
+          self.args.delete(argument)
+          if %[copy submodules].include?($1)
+            Pupu.strategy = $1.to_sym
+          else
+            abort "Available strategies: copy, submodules"
           end
         end
       end
+    end
 
-      def uninstall(*args)
-        args.each do |pupu|
-          begin
-            Pupu[pupu].uninstall
-            info "Uninstalling #{pupu}"
-          rescue
-            warning "#{pupu} isn't installed"
-          end
+    def install
+      self.args.each do |pupu|
+        begin
+          GitHub.install(pupu)
+        rescue PluginIsAlreadyInstalled
+          GitHub.update(pupu)
+          info "Plugin #{pupu} is already installed, updating"
         end
       end
+    end
 
-      def update(*args)
-        args = Pupu.all if args.empty? # update all if no pupu specified
-        args.each do |pupu|
-          begin
-            GitHub.update(pupu)
-          rescue PluginNotFoundError
-            error "Plugin not found: #{pupu}"
-            next
-          end
+    def uninstall
+      self.args.each do |pupu|
+        begin
+          Pupu[pupu].uninstall
+          info "Uninstalling #{pupu}"
+        rescue
+          warning "#{pupu} isn't installed"
         end
       end
+    end
 
-      def list
-        entries = Dir["#{Pupu.root}/*"].select { |entry| File.directory?(entry) }
-        if File.exist?(Pupu.root_path) and not entries.empty?
-          puts entries.map { |item| "- #{File.basename(item)}" }
-        else
-          error "Any pupu isn't installed yet."
+    def update
+      args = Pupu.all if self.args.empty? # update all if no pupu specified
+      args.each do |pupu|
+        begin
+          GitHub.update(pupu)
+        rescue PluginNotFoundError
+          error "Plugin not found: #{pupu}"
+          next
         end
-      rescue Errno::ENOENT
+      end
+    end
+
+    def list
+      entries = Dir["#{Pupu.root}/*"].select { |entry| File.directory?(entry) }
+      if File.exist?(Pupu.root_path) and not entries.empty?
+        puts entries.map { |item| "- #{File.basename(item)}" }
+      else
         error "Any pupu isn't installed yet."
       end
+    rescue Errno::ENOENT
+      error "Any pupu isn't installed yet."
+    end
 
-      def config_path
-        ["config/pupu.rb", "settings/pupu.rb", "pupu.rb"].find do |file|
-          File.file?(file)
-        end
+    def config_path
+      ["config/pupu.rb", "settings/pupu.rb", "pupu.rb"].find do |file|
+        File.file?(file)
       end
+    end
 
-      def load_config
-        self.config_path && load(self.config_path)
-      end
+    def load_config
+      self.config_path && load(self.config_path)
+    end
 
-      def check
-        abort "Config file doesn't exist" unless self.config_path
-        abort "Config file #{self.config_path} can't be loaded" unless self.load_config
-      end
+    def check
+      abort "Config file doesn't exist" unless self.config_path
+      abort "Config file #{self.config_path} can't be loaded" unless self.load_config
+    end
 
-      def search(pattern) # search pattern or list all the available pupus if pattern is nil
-        # search on github
-        require "yaml"
-        require "open-uri"
-        open("http://github.com/api/v1/yaml/search/pupu") do |stream|
-          repositories = YAML::load(stream.read)["repositories"]
-          repositories.each do |repository|
-            repository = OpenStruct.new(repository)
-            if repository.name.match(/^pupu-/)
-              if pattern.nil? || repository.name.match(pattern) # this is the convention, everything must start with pupu-
-                # name, size, followers, username, language, fork, id, type, pushed, forks, description, score, created
-                puts "[#{repository.username}/#{repository.name}] #{repository.description}#{" (fork)" if repository.fork}"
-              end
+    def search(pattern) # search pattern or list all the available pupus if pattern is nil
+      # search on github
+      require "yaml"
+      require "open-uri"
+      open("http://github.com/api/v1/yaml/search/pupu") do |stream|
+        repositories = YAML::load(stream.read)["repositories"]
+        repositories.each do |repository|
+          repository = OpenStruct.new(repository)
+          if repository.name.match(/^pupu-/)
+            if pattern.nil? || repository.name.match(pattern) # this is the convention, everything must start with pupu-
+              # name, size, followers, username, language, fork, id, type, pushed, forks, description, score, created
+              puts "[#{repository.username}/#{repository.name}] #{repository.description}#{" (fork)" if repository.fork}"
             end
           end
         end
       end
-
-      alias_method :remove, :uninstall
     end
+
+    alias_method :remove, :uninstall
   end
 end
