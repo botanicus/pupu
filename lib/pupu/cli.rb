@@ -53,8 +53,8 @@ module Pupu
         if argument.match(/--media-root=(.+)/)
           self.args.delete(argument)
           Pupu.root = Dir.pwd # TODO: ?
-          Pupu.media_root = File.expand_path($1)
-          unless File.directory?(Pupu.media_root)
+          ::Pupu.media_root = File.expand_path($1)
+          unless File.directory?(::Pupu.media_root)
             abort "#{Pupu.media_root} doesn't exist"
           end
         elsif argument.match(/--strategy=(.+)/)

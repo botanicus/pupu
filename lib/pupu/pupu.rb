@@ -66,7 +66,7 @@ module Pupu
       # TODO: reflect changes on root method
       def root=(directory)
         @root = MediaPath.new(directory)
-        raise PupuRootNotFound unless File.exist?(@root)
+        raise PupuRootNotFound unless File.exist?(@root.to_s)
         return @root
       end
 
