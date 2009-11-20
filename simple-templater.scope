@@ -1,0 +1,6 @@
+SimpleTemplater.scope(:pupu) do
+  root = File.join(File.dirname(__FILE__))
+  Dir["#{root}/stubs/*"].each do |path|
+    SimpleTemplater.register(:pupu, File.basename(path).to_sym, File.expand_path(path))
+  end
+end

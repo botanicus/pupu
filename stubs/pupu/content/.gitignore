@@ -1,0 +1,9 @@
+*~
+.*.swp
+.#*
+.svn/*
+.DS_Store
+.yardoc
+.cache
+pkg/
+nbproject/

@@ -20,27 +20,40 @@ if File.directory?(File.join(libdir, "pupu"))
   $:.unshift(libdir) unless $:.include?(libdir)
 end
 
+begin
+  require "simple-templater"
+rescue LoadError
+  abort "You have to install simple-templater first!"
+end
+
 # === Helpers === #
 # TODO: Generators.each { |generator| puts generator.help }
 def usage
 <<-HELP
 === Usage ===
-pupu create project mycoolproject    Generate new site
-pupu create app mycoolapp            Generate new application
+pupu create project mootools  Generate pupu mootools
 HELP
 end
 
-case command = ARGV.shift
-when "create"
-  # we can't use require_relative because it can be symlinked to
-  # /usr/bin or just be located in different place than we expect
-  require "simple-templater"
-  require "pupu"
-  begin
-    SimpleTemplater::Generator.new(*ARGV).create
-  rescue ArgumentError => exception
-    abort [exception.inspect, "", usage].join("\n")
+begin
+  ARGV.shift # create
+  generator_name = ARGV.shift
+  templater = SimpleTemplater.new(:pupu)
+  # This enables you to create custom generators for Rango
+  load File.join(File.dirname(base), "..", "simple-templater.scope") # neccesary if we run rango locally and not from RubyGems
+  templater.discover!
+  generator_set = templater.find(generator_name)
+  if generator_set.nil?
+    abort "Generator #{generator_name} doesn't exist. Available generators are: #{templater.generators.map { |set| set.name }.inspect}"
+  else
+    begin
+      generator_set.run(ARGV)
+    rescue SimpleTemplater::TargetDirectoryAlreadyExist => exception
+      abort exception.message
+    rescue Interrupt
+      exit
+    rescue Exception => exception
+      abort "Exception #{exception.inspect} occured during running generator #{generator_set.inspect}\n#{exception.backtrace.join("\n")}"
+    end
   end
-else
-  abort usage
 end

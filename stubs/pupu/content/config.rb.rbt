@@ -1,0 +1,20 @@
+# dependencies of the pupu
+<% @dependencies.each do |dependency| %>
+dependency :<%= dependency %>
+<% end %>
+
+# load javascripts
+<% @javascripts.each do |javascript| %>
+javascript "<%= javascript %>"
+<% end %>
+
+# load stylesheets
+<% @stylesheets.each do |stylesheet| %>
+stylesheet "<%= stylesheet %>"
+<% end %>
+
+# parameters of plugin
+# it will be blank in most cases
+#parameter :request, :optional => ["local", "ajax"] do |type|
+#  javascript "lib/autocompleter.#{type}"
+#end
