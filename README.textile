@@ -14,6 +14,10 @@ Everything what can be put into root directory. Some examples: blueprint css, mo
 
 h1. CLI interface
 
+h2. Specify @--media-root=path/to/media/directory@
+
+You don't have to do anything with environment, just specify @--media-root=path@ and it will work. Example: @pupu install mootools --media-root=media@
+
 h2. Using System @pupu@ and Configuration File
 
 - pupu executable will find it

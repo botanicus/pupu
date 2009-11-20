@@ -9,6 +9,7 @@ module ShellExtensions
   def run(command)
     puts "[bash] #{command}"
     %x(#{command})
+    $?.exitstatus == 0
   end
 end
 
@@ -85,7 +86,7 @@ module Pupu
       def install_files(repo, url)
         chdir do |media_dir|
           raise PluginIsAlreadyInstalled if File.directory?(repo) # TODO: custom exception class
-          run "git clone #{url} #{repo}"
+          run("git clone #{url} #{repo}") || abort("Git failed")
           Dir.chdir(repo) do
             proceed_files(repo, url)
           end
