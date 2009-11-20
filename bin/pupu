@@ -20,12 +20,6 @@ if File.directory?(File.join(libdir, "pupu"))
   $:.unshift(libdir) unless $:.include?(libdir)
 end
 
-begin
-  require "simple-templater"
-rescue LoadError
-  abort "You have to install simple-templater first!"
-end
-
 # === Helpers === #
 # TODO: Generators.each { |generator| puts generator.help }
 def usage
@@ -36,24 +30,51 @@ HELP
 end
 
 begin
-  ARGV.shift # create
-  generator_name = ARGV.shift
-  templater = SimpleTemplater.new(:pupu)
-  # This enables you to create custom generators for Rango
-  load File.join(File.dirname(base), "..", "simple-templater.scope") # neccesary if we run rango locally and not from RubyGems
-  templater.discover!
-  generator_set = templater.find(generator_name)
-  if generator_set.nil?
-    abort "Generator #{generator_name} doesn't exist. Available generators are: #{templater.generators.map { |set| set.name }.inspect}"
-  else
+  case ARGV.shift
+  when nil
+    abort usage
+  when "install"
+    require "pupu/cli"
+    Pupu::CLI.install(*ARGV)
+  when "uninstall", "remove"
+    require "pupu/cli"
+    Pupu::CLI.uninstall(*ARGV)
+  when "update"
+    require "pupu/cli"
+    Pupu::CLI.update(*ARGV)
+  when "list" # list all pupus
+    require "pupu/cli"
+    Pupu::CLI.list
+  when "check" # check setup & if you are in the right directory
+    require "pupu/cli"
+    Pupu::CLI.check
+  when "search"
+    require "pupu/cli"
+    Pupu::CLI.search(ARGV.first)
+  when "create"
     begin
-      generator_set.run(ARGV)
-    rescue SimpleTemplater::TargetDirectoryAlreadyExist => exception
-      abort exception.message
-    rescue Interrupt
-      exit
-    rescue Exception => exception
-      abort "Exception #{exception.inspect} occured during running generator #{generator_set.inspect}\n#{exception.backtrace.join("\n")}"
+      require "simple-templater"
+    rescue LoadError
+      abort "You have to install simple-templater first!"
+    end
+    generator_name = ARGV.shift
+    templater = SimpleTemplater.new(:pupu)
+    # This enables you to create custom generators for Rango
+    load File.join(File.dirname(base), "..", "simple-templater.scope") # neccesary if we run rango locally and not from RubyGems
+    templater.discover!
+    generator_set = templater.find(generator_name)
+    if generator_set.nil?
+      abort "Generator #{generator_name} doesn't exist. Available generators are: #{templater.generators.map { |set| set.name }.inspect}"
+    else
+      begin
+        generator_set.run(ARGV)
+      rescue SimpleTemplater::TargetDirectoryAlreadyExist => exception
+        abort exception.message
+      rescue Interrupt
+        exit
+      rescue Exception => exception
+        abort "Exception #{exception.inspect} occured during running generator #{generator_set.inspect}\n#{exception.backtrace.join("\n")}"
+      end
     end
   end
 end

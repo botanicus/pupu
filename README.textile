@@ -1,6 +1,6 @@
 h1. About
 
-Pupu is a plugin system for media like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such pupus into your app.
+Pupu is a plugin system for media stuff like JS & CSS frameworks, plugins for the JS & CSS frameworks, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such plugins into your app.
 
 h1. Why I wrote it
 

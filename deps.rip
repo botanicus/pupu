@@ -3,3 +3,4 @@
 # Syntax:
 # repository [tag or commit to install]
 git://github.com/botanicus/media-path.git
+git://github.com/botanicus/simple-templater.git

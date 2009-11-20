@@ -81,6 +81,28 @@ module Pupu
         end
       end
 
+      def check
+        # load || exit 1
+      end
+
+      def search(pattern) # search pattern or list all the available pupus if pattern is nil
+        # search on github
+        require "yaml"
+        require "open-uri"
+        open("http://github.com/api/v1/yaml/search/pupu") do |stream|
+          repositories = YAML::load(stream.read)["repositories"]
+          repositories.each do |repository|
+            repository = OpenStruct.new(repository)
+            if repository.name.match(/^pupu-/)
+              if pattern.nil? || repository.name.match(pattern) # this is the convention, everything must start with pupu-
+                # name, size, followers, username, language, fork, id, type, pushed, forks, description, score, created
+                puts "[#{repository.username}/#{repository.name}] #{repository.description}#{" (fork)" if repository.fork}"
+              end
+            end
+          end
+        end
+      end
+
       alias_method :remove, :uninstall
     end
   end
