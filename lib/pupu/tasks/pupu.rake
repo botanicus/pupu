@@ -1,5 +1,8 @@
 # encoding: utf-8
 
+# == How Rake Works with Arguments ==
+# http://rubyforge.org/pipermail/rake-devel/2007-December/000352.html
+
 # == Setup ==
 # task "pupu:setup" => :environment
 namespace :pupu do
