@@ -1,5 +1,4 @@
-- simple templater
-- specs for everything
+=== Version 0.1 ===
 - adapters for Rango, Merb, Rails (tasks, helpers)
 - media vs. root vs. custom
 - url prefix as Pupu.media_prefix in Django
@@ -12,4 +11,12 @@
 - install dependencies if any
 - add array with loaded plugins, do not load plugin which is already loaded
 - pupu view helper should works with dependencies (pupu :autocompleter should add mootools as well)
-- [BUG] initializers are copyied into bad directory
+
+=== Version 0.2 ===
+
+=== Version 0.3 ===
+- bin/pupu
+
+=== Version 0.4 ===
+- 100% specs coverage & refactoring
+- YARD Code Documentation
