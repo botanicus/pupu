@@ -1,0 +1,9 @@
+- extends "base.html"
+
+- block(:content) do
+  %a{href:"/examples/simple"} Simple Example
+  |
+  %a{href:"/examples/dependencies"} Example With Dependencies
+  |
+  %a{href:"/examples/arguments"} Example With Arguments
+  %pre#block.code.html~ block(:head)

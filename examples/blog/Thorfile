@@ -5,8 +5,5 @@
 #   Dir["models/*.rb"].each(&method(:require))
 # end
 
-load "rango/tasks/bundle.thor"
+require_relative "init"
 load "pupu/tasks/pupu.thor"
-load "rango/orm/adapters/datamapper/tasks.thor"
-
-# add your tasks to the tasks directory and give them ".thor" suffix

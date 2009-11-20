@@ -1,34 +1,22 @@
 #!/usr/bin/env rackup -s thin -p 4000
 # encoding: utf-8
 
-# TODO: how to change environment from CLI?
 require_relative "init"
 
-use Rango::Basic
+require "rango"
+require "pupu/helpers"
+require "rango/generic_views"
 
-# warden authentication
-# wiki.github.com/hassox/warden/setup
-require "warden"
+Rango::Router.use(:usher)
 
-use Warden::Manager do |manager|
-  manager.default_strategies :password
-  # Rango::Controller has class method call which will call Rango::Controller.reroute(action),
-  # for example Login.route_to(:login) which will set login action of Login controller as default
-  # Internally it just rewrites env["rango.controller"] and env["rango.action"] to "Login", resp. "login"
-  manager.failure_app = Login
+# register helpers
+Rango::GV.extend(Pupu::PupuHelpersMixin)
+
+use Rack::Static, :urls => ["/javascripts", "/pupu"], :root => "media"
+
+Project.router = Usher::Interface.for(:rack) do
+  get("/").to(Rango::GV.static("index"))
+  get("/examples/:template").to(Rango::GV.static)
 end
 
-# See also wiki.github.com/hassox/warden/callbacks
-Warden::Manager.serialize_into_session { |user| user.id }
-Warden::Manager.serialize_from_session { |key| User.get(id) }
-
-# Go to login
-Warden::Manager.before_failure do |env, opts|
-  Login.route_to env, "login"
-end
-
-Warden::Strategies.add(:password) do
-  def authenticate!
-    User.new # TODO
-  end
-end
+run Project.router

@@ -8,7 +8,7 @@ require "rango"
 # init.rb production
 Rango.boot(environment: ARGV.shift)
 
-pupu_libdir = File.expand_path("../../../lib")
+pupu_libdir = File.expand_path("../../lib")
 raise Errno::ENOENT, "#{pupu_libdir} doesn't exist" unless File.directory?(pupu_libdir)
 $:.unshift(pupu_libdir)
 
