@@ -1,0 +1,5 @@
+---
+:revision: 99d24029e6842ee43b456230d7fbde7dbb71b830
+:repozitory: git://github.com/botanicus/pupu-ratings.git
+:dependencies:
+- :mootools
