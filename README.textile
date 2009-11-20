@@ -69,6 +69,10 @@ pupu remove autocompleter
 pupu list
 </pre>
 
+h1. Storing Pupus in Your Project
+
+copy/submodules
+
 h1. Views
 
 In your views you can include all the plugin-related files this way:

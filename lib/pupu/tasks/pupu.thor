@@ -13,23 +13,18 @@ module Pupu
       self.setup
     end
 
-    # you may want to redefine this method
-    def setup
-      load "config/pupu.rb"
-    end
-
     # self.namespace = "pupu" # TODO: patch thor
-    desc "install [*pupu]", "Install given pupu(s)"
+    desc "install [*pupu]", "Install given pupu"
     def install(*pupus)
       CLI.install(*pupus)
     end
 
-    desc "update [*pupu]", "Update installed pupus or update all if pupu(s) isn't given"
+    desc "update [*pupu]", "Update given pupu if an argument given, otherwise update all pupus"
     def update(*pupus)
       CLI.update(*pupus)
     end
 
-    desc "uninstall [*pupu]", "Uninstall given pupu(s)"
+    desc "uninstall [*pupu]", "Uninstall given pupu"
     def uninstall(*pupus)
       CLI.uninstall(*pupus)
     end
@@ -39,9 +34,15 @@ module Pupu
       CLI.list
     end
 
-    desc "search", "Search remote pupus"
+    desc "search [pattern]", "Search remote pupus"
     def search(pattern = nil)
       CLI.search(pattern)
+    end
+
+    protected
+    # Setup hook for tasks which require to have Pupu.root and Pupu.media_root set
+    def setup
+      load "config/pupu.rb"
     end
   end
 end

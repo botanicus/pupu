@@ -9,12 +9,20 @@ end
 
 module Pupu
   class DSL
-    attr_reader :output, :files
-    def initialize(plugin)
-      @plugin = plugin
+    attr_reader :output, :files, :path
+    def initialize(pupu)
+      @pupu = pupu
       @output = Array.new
       @files  = Array.new
       @dependencies = Array.new
+      @path = pupu.file("config.rb")
+    end
+
+    def evaluate
+      content = File.read(self.path.to_s)
+      self.instance_eval(content)
+    rescue Exception => exception
+      abort "Exception during parsing #{self.path} in #{pupu.inspect}:\n#{exception.inspect}\n#{exception.backtrace.join("\n")}"
     end
 
     def output
@@ -39,14 +47,14 @@ module Pupu
     end
 
     def javascript(basename, params = Hash.new)
-      path = @plugin.javascript(basename).url
+      path = @pupu.javascript(basename).url
       tag  = "<script src='#{path}' type='text/javascript'></script>"
       @files.push(path)
       @output.push(tag)
     end
 
     def stylesheet(basename, params = Hash.new)
-      path = @plugin.stylesheet(basename).url
+      path = @pupu.stylesheet(basename).url
       default = {media: 'screen', rel: 'stylesheet', type: 'text/css'}
       params = default.merge(params)
       tag  = "<link href='#{path}' #{params.to_html_attrs} />"
@@ -75,12 +83,12 @@ module Pupu
     # end
     def parameter(name, params = Hash.new, &block)
       # pupu :autocompleter, :type => "request"
-      # @plugin.params: { :type => "request" }
+      # @pupu.params: { :type => "request" }
 
       # pupu :mootools, :more => true
-      # @plugin.params: { :more => true }
-      if @plugin.params.key?(name)
-        block.call(@plugin.params[name])
+      # @pupu.params: { :more => true }
+      if @pupu.params.key?(name)
+        block.call(@pupu.params[name])
       end
     end
   end

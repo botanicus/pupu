@@ -44,6 +44,7 @@ module Pupu
       @args = args
       self.load_config
       self.parse_argv
+      self.detect
       note "Using media directory: #{::Pupu.media_root}"
       note "Using strategy: #{Pupu.strategy}"
     end
@@ -66,6 +67,15 @@ module Pupu
           end
         end
       end
+    end
+
+    def detect
+      pupu_dir = Dir["media/pupu", "public/pupu"].first
+      path = pupu_dir ? File.expand_path(File.dirname(pupu_dir)) : nil
+      path ||= ["media", "public"].find { |directory| File.directory?(directory) }
+      return if path.nil?
+      ::Pupu.media_root = File.expand_path(path)
+      Pupu.strategy ||= :copy
     end
 
     def install

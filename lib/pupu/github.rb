@@ -32,12 +32,12 @@ module Pupu
       def update(pupu_name)
         if pupu_name
           pupu = Pupu[pupu_name]
-          pupu.metadata # cache metadata
           if Pupu.strategy.eql?(:submodules)
             puts %(git fetch)
             puts %(git reset origin/master --hard)
           else
             path = pupu.root.to_s # otherwise after we remove the path, we get error at mkdir telling us that the path doesn't exist
+            pupu.metadata # cache metadata
             FileUtils.rm_r(path)
             self.install_files(pupu_name, pupu.metadata.repozitory)
           end
@@ -61,12 +61,8 @@ module Pupu
       protected
       def save_metadata(pupu, url)
         revision = %x(git log | head -1).chomp.sub(/^commit /, "")
-
-        dsl = DSL.new(pupu) # FIXME: repetitive
-        dsl.instance_eval(File.read(pupu.file("config.rb").path)) # FIXME: repetitive
-
+        dsl = DSL.new(pupu)
         dependencies = dsl.get_dependencies.map { |dependency| dependency.name }
-
         params = {:revision => revision, :repozitory => url, :dependencies => dependencies}
         Dir.chdir(@pupu.root.to_s) do
           File.open("metadata.yml", "w") do |file|
@@ -96,19 +92,19 @@ module Pupu
       def proceed_files(repo, url)
         js_initializer = "initializers/#{repo}.js"
         css_initializer = "initializers/#{repo}.css"
-        if File.exist?(js_initializer) &&  (not File.exist?("javascripts/initializers/#{repo}.js"))
-          FileUtils.mkdir_p("javascripts/initializers")
-          FileUtils.mv js_initializer,  "javascripts/initializers/#{repo}.js"
+        if File.exist?(js_initializer) &&  (not File.exist?("#{::Pupu.media_root}/javascripts/initializers/#{repo}.js"))
+          puts "Creating JS initializer"
+          FileUtils.mkdir_p("#{::Pupu.media_root}/javascripts/initializers")
+          FileUtils.mv js_initializer, "#{::Pupu.media_root}/javascripts/initializers/#{repo}.js"
         end
-        if File.exist?(css_initializer) && (not File.exist?("stylesheets/initializers/#{repo}.css"))
-          FileUtils.mkdir_p("stylesheets/initializers")
-          FileUtils.mv css_initializer,  "stylesheets/initializers/#{repo}.css"
+        if File.exist?(css_initializer) && (not File.exist?("#{::Pupu.media_root}/stylesheets/initializers/#{repo}.css"))
+          puts "Creating CSS initializer"
+          FileUtils.mkdir_p("#{::Pupu.media_root}/stylesheets/initializers")
+          FileUtils.mv css_initializer, "#{::Pupu.media_root}/stylesheets/initializers/#{repo}.css"
         end
         @pupu = Pupu[repo]
-        if Pupu.strategy.eql?(:copy)
-          self.save_metadata(@pupu, url)
-          FileUtils.rm_r ".git"
-        end
+        self.save_metadata(@pupu, url)
+        FileUtils.rm_r(".git") if Pupu.strategy.eql?(:copy)
       rescue Exception => exception
         FileUtils.rm_r(repo) if File.directory?(repo)
         raise exception

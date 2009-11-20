@@ -10,7 +10,8 @@ Dir[File.join(File.dirname(__FILE__), "vendor", "*")].each do |path|
 end
 
 # NOTE: we can't use require_relative because when we run gem build, it use eval for executing this file
-require File.join(File.dirname(__FILE__), "lib", "pupu")
+$:.unshift File.join(File.dirname(__FILE__), "lib")
+require "pupu"
 
 Gem::Specification.new do |s|
   s.name = "pupu"

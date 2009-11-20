@@ -24,8 +24,8 @@ module Pupu
     def add_initializers
       js_initializer  = @plugin.initializer(:javascript)
       css_initializer = @plugin.initializer(:stylesheet)
-      @dsl.output.push("<link href='#{css_initializer.url}' media='screen' rel='stylesheet' type='text/css' />") if css_initializer
-      @dsl.output.push("<script src='#{js_initializer.url}' type='text/javascript'></script>") if js_initializer
+      @output.push("<link href='#{css_initializer.url}' media='screen' rel='stylesheet' type='text/css' />") if css_initializer
+      @output.push("<script src='#{js_initializer.url}' type='text/javascript'></script>") if js_initializer
     end
 
     def add_dependencies
@@ -37,10 +37,11 @@ module Pupu
 
     def parse!
       @dsl.instance_eval(File.read(@plugin.file("config.rb").path))
-      self.add_initializers
       self.add_dependencies
       @@loaded[@plugin.name].push(*@dsl.files)
-      return @output.join("\n") + @dsl.output.join("\n")
+      @output.push(@dsl.output)
+      self.add_initializers
+      return @output.join("\n")
     end
   end
 end

@@ -46,7 +46,6 @@ module Pupu
 
       # strategies: submodules, copy
       cattr_accessor :strategy
-      self.strategy = :copy
 
       def root
         # TODO: it should be configurable
@@ -92,7 +91,10 @@ module Pupu
     end
 
     def metadata
-      @metadata = OpenStruct.new(YAML::load_file(self.file("metadata.yml").path))
+      return @metadata if @metadata
+      path = self.file("metadata.yml").path
+      hash = YAML::load_file(path)
+      @metadata = OpenStruct.new(hash)
     rescue Errno::ENOENT # we might remove pupu directory, so metadata are missing, but we can get them from cache
       @metadata
     end
@@ -122,13 +124,18 @@ module Pupu
       when :all
         [self.initializer(:javascript), self.initializer(:stylesheet)]
       when :javascript
-        file("#{@path}.js", "media/javascripts/initializers") rescue nil # TODO: fix media
+        file("#{@path}.js", "#{::Pupu.media_root}/javascripts/initializers") rescue nil # TODO: fix media
       when :stylesheet
-        file("#{@path}.css", "media/stylesheets/initializers") rescue nil # TODO: fix media
+        file("#{@path}.css", "#{::Pupu.media_root}/stylesheets/initializers") rescue nil # TODO: fix media
       end
     end
 
+    def soft_file(path, root = self.root)
+      File.join(root.to_s, path.to_s) # for files which doesn't exist so far
+    end
+
     def file(path, root = self.root)
+      root = MediaPath.new(root) if root.is_a?(String)
       root.join(path)
     end
   end
