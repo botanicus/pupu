@@ -1,9 +1,0 @@
-# encoding: utf-8
-
-# Init hooks
-# Rango::Tasks.hook do
-#   Dir["models/*.rb"].each(&method(:require))
-# end
-
-require_relative "init"
-load "pupu/tasks/pupu.thor"
