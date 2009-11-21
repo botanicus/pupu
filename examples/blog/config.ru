@@ -4,19 +4,19 @@
 require_relative "init"
 
 require "rango"
+require "rango/gv"
 require "pupu/helpers"
-require "rango/generic_views"
 
 Rango::Router.use(:usher)
 
 # register helpers
-Rango::GV.extend(Pupu::PupuHelpersMixin)
+Rango::GV::View.send(:include, Pupu::Helpers)
 
-use Rack::Static, :urls => ["/javascripts", "/pupu"], :root => "media"
+use Rango::Middlewares::Basic
 
 Project.router = Usher::Interface.for(:rack) do
-  get("/").to(Rango::GV.static("index"))
-  get("/examples/:template").to(Rango::GV.static)
+  get("/").to(Rango::GV.static {"index"})
+  get("/examples/:template").to(Rango::GV.static { |template| "examples/#{template}" })
 end
 
 run Project.router

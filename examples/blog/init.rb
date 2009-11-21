@@ -6,7 +6,7 @@ require "rango"
 # === Usage === #
 # init.rb
 # init.rb production
-Rango.boot(environment: ARGV.shift)
+Rango.boot(environment: "development")
 
 pupu_libdir = File.expand_path("../../lib")
 raise Errno::ENOENT, "#{pupu_libdir} doesn't exist" unless File.directory?(pupu_libdir)

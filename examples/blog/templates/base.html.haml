@@ -2,12 +2,8 @@
 %html{html_attrs("en")}
   %head
     %title= block(:title)
-    != pupu :lighter, syntax: "html", theme: "standard"
+    
     != block(:head)
-    :javascript
-      window.addEvent("domready", function() {
-        lighter = new Lighter('block', {altLines: 'hover'});
-      })
         
   %body
     %h1= block(:title)
