@@ -1,6 +1,6 @@
 h1. Rango Example
 
-* Dependencies for running: @rango@, @usher@
+* Dependencies for running: @rango@, @usher@, @haml@
 * Run with @./config.ru@ (will start at @http://localhost:4000@)
 
 * Dependencies for testing: @rspec@, @webrat@, @rack-test@
