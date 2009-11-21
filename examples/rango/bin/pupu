@@ -1,4 +1,0 @@
-#!init.rb
-
-puts "We loaded init.rb, so our environment is loaded and now we can run the original bin/pupu from the pupu gem"
-load File.join("../../bin/pupu")

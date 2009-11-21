@@ -1,7 +1,6 @@
 require "pupu"
 require "pupu/helpers"
 
-# TODO: Mixins::Controller instead of Controller ... or better helpers
 Rango.after_boot(:register_pupu) do
   Pupu.root = Project.root
   Pupu.media_prefix = Project.settings.media_prefix

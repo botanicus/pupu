@@ -42,9 +42,10 @@ module Pupu
     attr_reader :args
     def initialize(args)
       @args = args
+      self.detect
       self.load_config
       self.parse_argv
-      self.detect
+      self.check_setup
       note "Using media directory: #{::Pupu.media_root}"
       note "Using strategy: #{Pupu.strategy}"
     end
@@ -78,13 +79,16 @@ module Pupu
       Pupu.strategy ||= :copy
     end
 
+    def check_setup
+      abort "You have to provide media directory (use --media-root=path)" unless ::Pupu.media_root
+    end
+
     def install
       self.args.each do |pupu|
         begin
           GitHub.install(pupu)
         rescue PluginIsAlreadyInstalled
-          GitHub.update(pupu)
-          info "Plugin #{pupu} is already installed, updating"
+          info "Plugin #{pupu} is already installed, skipping"
         end
       end
     end

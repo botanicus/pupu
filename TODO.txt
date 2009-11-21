@@ -1,15 +1,20 @@
 === Version 0.1 ===
-metadata vzdycky, dat je do ignore
-pupu has a license, but the stuff we want to put into pupu probably has also a license (MooTools is under MIT etc)
+- Pupu.framework_root: "."
+- Pupu.media_root: "media"
+- Pupu.root: "media/pupu"
+- @pupu.root: "media/pupu/mootools"
+
+- rango & merb apps: both with same functionality include specs
+
+- install each dependency just once
+- how to handle metadata if we have it as submodules? (suggestions: media/pupu/metadata.yml for all)
+- pupu has a license, but the stuff we want to put into pupu probably has also a license (MooTools is under MIT etc)
 - media support (.swf): media helper
-- adapters for Rango, Merb, Rails (helpers registration)
+- adapters for Merb, Rails (helpers registration)
 - media vs. root vs. custom
 - how to handle metadata? Generate metadata.yml from config.rb (dependencies) or generate it through merb-gen and write it by hand?
 - what about ruby helpers such as flash :notice, :error for flash <divs
-- custom messages on errors
-- install dependencies if any
 - add array with loaded plugins, do not load plugin which is already loaded
-- pupu view helper should works with dependencies (pupu :autocompleter should add mootools as well)
 
 === Version 0.2 ===
 

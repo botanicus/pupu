@@ -7,7 +7,7 @@ require "pupu/exceptions"
 
 module ShellExtensions
   def run(command)
-    puts "[bash] #{command}"
+    puts "[SHELL] #{command}"
     %x(#{command})
     $?.exitstatus == 0
   end
