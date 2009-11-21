@@ -1,6 +1,6 @@
 require "pupu/helpers"
 
-Merb::Controller.send(:include, Pupu::PupuHelpersMixin)
+Merb::Controller.send(:include, Pupu::Helpers)
 
 Merb::Plugins.config[:pupu] = {
   :root => ""

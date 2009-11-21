@@ -24,8 +24,8 @@ module Pupu
     def add_initializers
       js_initializer  = @plugin.initializer(:javascript)
       css_initializer = @plugin.initializer(:stylesheet)
-      @output.push("<link href='#{css_initializer.url}' media='screen' rel='stylesheet' type='text/css' />") if css_initializer
-      @output.push("<script src='#{js_initializer.url}' type='text/javascript'></script>") if js_initializer
+      @output.push("\n<link href='#{css_initializer.url}' media='screen' rel='stylesheet' type='text/css' />") if css_initializer
+      @output.push("\n<script src='#{js_initializer.url}' type='text/javascript'></script>") if js_initializer
     end
 
     def add_dependencies

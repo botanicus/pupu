@@ -1,9 +1,9 @@
 require_relative "../spec_helper"
 require "pupu/pupu"
 require "pupu/helpers"
-include Pupu::PupuHelpersMixin
+include Pupu::Helpers
 
-describe "PupuHelpersMixin#pupu" do
+describe "Helpers#pupu" do
   before(:each) do
     Pupu.root = File.dirname(__FILE__) + "/data/root/pupu"
   end

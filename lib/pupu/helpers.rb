@@ -1,7 +1,7 @@
 require "pupu/parser"
 
 module Pupu
-  module PupuHelpersMixin
+  module Helpers
     # Use it in your layout
     # Example: pupu :autocompleter, :type => "local"
     def pupu(name, params = Hash.new)
