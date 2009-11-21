@@ -1,0 +1,21 @@
+/* blueprint-based solution */
+/*.success, .error, .notice { display: none; }*/
+
+/* without blueprint */
+#msg-notice {
+  background-color: yellow;
+  color: white;
+  display: none;
+}
+
+#msg-error {
+  background-color: red;
+  color: white;
+  display: none;
+}
+
+#msg-success {
+  background-color: darkgreen;
+  color: white;
+  display: none;
+}
