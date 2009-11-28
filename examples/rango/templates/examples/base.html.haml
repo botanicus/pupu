@@ -3,8 +3,8 @@
 / extend_block helper can be used as well, but it would change the block,
 / so the code would include the lighter and we don't want that
 - block(:head) do
-  != pupu :lighter, syntax: "html", theme: "standard"
-  != block(:pupu)
+  = pupu :lighter, syntax: "html", theme: "standard"
+  = block(:pupu)
 
 - block(:content) do
   %a{href:"/examples/simple"} Simple Example
@@ -12,4 +12,4 @@
   %a{href:"/examples/dependencies"} Example With Dependencies
   |
   %a{href:"/examples/arguments"} Example With Arguments
-  %pre.code.html~ block(:pupu)
+  %pre.code.html~ html_escape block(:pupu)

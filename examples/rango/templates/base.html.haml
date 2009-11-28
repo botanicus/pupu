@@ -2,8 +2,8 @@
 %html{html_attrs("en")}
   %head
     %title= block(:title)
-    != block(:head)
+    = block(:head)
         
   %body
     %h1= block(:title)
-    != block(:content)
+    = block(:content)
