@@ -28,7 +28,7 @@ h2. Using Your Own Wrapper
 If you have bundled application
 The only thing you need to do is just load your environment before pupu starts, example
 
-Rango:
+h3. Rango
 
 <pre>
 #!init
@@ -36,7 +36,7 @@ Rango:
 load File.dirname(__FILE__) + "/gems/gems/pupu-0.0.1/bin/pupu"
 </pre>
 
-Rails/Merb
+h3. Rails and Merb
 
 <pre>
 #!/usr/bin/env ruby1.9
@@ -125,10 +125,6 @@ h2. Plugin generator
 
 <pre>
 pupu create jquery
-</pre>
-
-<pre>
-pupu-gen pupu chunky_bacon helpers.js blue.css
 </pre>
 
 h2. Configuration file
