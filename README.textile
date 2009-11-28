@@ -29,6 +29,7 @@ If you have bundled application
 The only thing you need to do is just load your environment before pupu starts, example
 
 Rango:
+
 <pre>
 #!init
 
@@ -36,6 +37,7 @@ load File.dirname(__FILE__) + "/gems/gems/pupu-0.0.1/bin/pupu"
 </pre>
 
 Rails/Merb
+
 <pre>
 #!/usr/bin/env ruby1.9
 
@@ -122,15 +124,7 @@ h1. I'd like to write my own pupu!
 h2. Plugin generator
 
 <pre>
-pupu-gen pupu chunky_bacon
-# chunky_bacon/README
-# chunky_bacon/LICENSE
-# chunky_bacon/initializers/chunky_bacon.js
-# chunky_bacon/initializers/chunky_bacon.css
-# chunky_bacon/lib
-# chunky_bacon/lib/chunky_bacon.js
-# chunky_bacon/stylesheets
-# chunky_bacon/stylesheets/chunky_bacon.css
+pupu create jquery
 </pre>
 
 <pre>
