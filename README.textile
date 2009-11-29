@@ -37,7 +37,7 @@ pupu uninstall autocompleter
 pupu list
 </pre>
 
-h1. Views
+h1. Helpers
 
 In your views you can include all the plugin-related files this way:
 
@@ -61,6 +61,8 @@ Plugin[:autocompleter].image("spinner.gif")
 h1. Initializers
 
 Initializers are the only part of pupu which are not stored in <code>root/pupu</code>, but are copyied to <code>root/javascripts/initializers</code> and <code>root/stylesheets/initializers</code>. In contrary of files in <code>root/pupu</code>, initializers are intended for user editing.
+
+Example from "botanicus/flash":http://github.com/botanicus/pupu-flash: "flash.js":http://github.com/botanicus/pupu-flash/blob/master/initializers/flash.js, "flash.css":http://github.com/botanicus/pupu-flash/blob/master/initializers/flash.css
 
 <pre>
 window.addEvent("domready", function() {
