@@ -50,13 +50,14 @@ If your framework isn't supported, just:
 <pre>
 require "myframework"
 require "pupu"
+require "pupu/helpers"
 
 Pupu.root = MyFramework.root
-Pupu.media_directory = File.join(MyFramework.root, "media") # you don't have to set it if you are using public or media
+Pupu.media_root = File.join(MyFramework.root, "media") # you don't have to set it if you are using public or media
 MyFrameworkHelpersModule.send(:include, Pupu::Helpers)
 </pre>
 
-And it should work.
+And it should work. Check existing "Rango":http://github.com/botanicus/pupu/blob/master/lib/pupu/adapters/rango.rb, "Merb":http://github.com/botanicus/pupu/blob/master/lib/pupu/adapters/merb.rb resp. "Rails":http://github.com/botanicus/pupu/blob/master/lib/pupu/adapters/rails.rb adapter for inspiration.
 
 h1. Helpers
 
@@ -81,7 +82,7 @@ Plugin[:autocompleter].image("spinner.gif")
 
 h1. Initializers
 
-Initializers are the only part of pupu which are not stored in <code>root/pupu</code>, but are copyied to <code>[media_directory]/javascripts/initializers</code> resp. <code>[media_directory]/stylesheets/initializers</code>. In contrary to files in <code>[media_directory]/pupu</code>, initializers are intended for user editing.
+Initializers are the only part of pupu which are not stored in <code>root/pupu</code>, but are copyied to <code>[media_root]/javascripts/initializers</code> resp. <code>[media_root]/stylesheets/initializers</code>. In contrary to files in <code>[media_root]/pupu</code>, initializers are intended for user editing.
 
 Example from "botanicus/flash":http://github.com/botanicus/pupu-flash: "flash.js":http://github.com/botanicus/pupu-flash/blob/master/initializers/flash.js, "flash.css":http://github.com/botanicus/pupu-flash/blob/master/initializers/flash.css
 
