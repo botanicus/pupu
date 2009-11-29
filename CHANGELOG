@@ -1,1 +1,12 @@
-[12/2/2008] First root release
+= Version 0.0.1
+  * CLI interface with search, install & uninstall
+  * Rake & Thor tasks wrapping the CLI interface
+  * Helpers
+  * Dependencies handling
+  * Metadata handling
+  * Rango & Merb support
+  * Rango & Merb examples
+
+= Version 0.0.2
+  * Rails support
+  * Better documentation
