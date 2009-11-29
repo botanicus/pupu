@@ -10,7 +10,6 @@
 - how to handle metadata if we have it as submodules? (suggestions: media/pupu/metadata.yml for all)
 - pupu has a license, but the stuff we want to put into pupu probably has also a license (MooTools is under MIT etc)
 - media support (.swf): media helper
-- adapters for Merb, Rails (helpers registration)
 - media vs. root vs. custom
 - how to handle metadata? Generate metadata.yml from config.rb (dependencies) or generate it through merb-gen and write it by hand?
 - what about ruby helpers such as flash :notice, :error for flash <divs
