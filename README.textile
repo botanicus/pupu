@@ -46,6 +46,7 @@ At the moment "Rango":http://github.com/botanicus/rango, "Merb":http://github.co
 Rango actually will have stack generator in "upcoming version 0.2":http://wiki.github.com/botanicus/rango/roadmap, so then you can just run @rango create stack my_blog@ and it will work with Pupu out of the box.
 
 If your framework isn't supported, just:
+
 <pre>
 require "myframework"
 require "pupu"
