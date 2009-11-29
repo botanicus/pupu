@@ -37,6 +37,26 @@ pupu uninstall autocompleter
 pupu list
 </pre>
 
+h1. Runtime Setup
+
+Command-line interface doesn't require any setup, runtime needs some.
+
+At the moment "Rango":http://github.com/botanicus/rango, "Merb":http://github.com/merb/merb and Rails are supported directly. If you are using one of these frameworks, just use @require "pupu/adapters/rango"@ in your environment file.
+
+Rango actually will have stack generator in "upcoming version 0.2":http://wiki.github.com/botanicus/rango/roadmap, so then you can just run @rango create stack my_blog@ and it will work with Pupu out of the box.
+
+If your framework isn't supported, just:
+<pre>
+require "myframework"
+require "pupu"
+
+Pupu.root = MyFramework.root
+Pupu.media_directory = File.join(MyFramework.root, "media") # you don't have to set it if you are using public or media
+MyFrameworkHelpersModule.send(:include, Pupu::Helpers)
+</pre>
+
+And it should work.
+
 h1. Helpers
 
 In your views you can include all the plugin-related files this way:
@@ -60,16 +80,9 @@ Plugin[:autocompleter].image("spinner.gif")
 
 h1. Initializers
 
-Initializers are the only part of pupu which are not stored in <code>root/pupu</code>, but are copyied to <code>root/javascripts/initializers</code> and <code>root/stylesheets/initializers</code>. In contrary of files in <code>root/pupu</code>, initializers are intended for user editing.
+Initializers are the only part of pupu which are not stored in <code>root/pupu</code>, but are copyied to <code>[media_directory]/javascripts/initializers</code> resp. <code>[media_directory]/stylesheets/initializers</code>. In contrary to files in <code>[media_directory]/pupu</code>, initializers are intended for user editing.
 
 Example from "botanicus/flash":http://github.com/botanicus/pupu-flash: "flash.js":http://github.com/botanicus/pupu-flash/blob/master/initializers/flash.js, "flash.css":http://github.com/botanicus/pupu-flash/blob/master/initializers/flash.css
-
-<pre>
-window.addEvent("domready", function() {
-  // do the init stuff
-})
-</pre>
-
 
 h1. Links
 
