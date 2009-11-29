@@ -7,7 +7,7 @@
 - rango & merb apps: both with same functionality include specs
 
 - install each dependency just once
-- how to handle metadata if we have it as submodules? (suggestions: media/pupu/metadata.yml for all)
+- how to handle metadata if we have it as submodules? (suggestions: media/pupu/metadata.yml for all) or on the fly from .git/config & config.rb etc
 - pupu has a license, but the stuff we want to put into pupu probably has also a license (MooTools is under MIT etc)
 - media support (.swf): media helper
 - media vs. root vs. custom

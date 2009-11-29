@@ -18,66 +18,24 @@ Another thing which really annoyed me was the bloody <code>js_include_tag</code>
 
 h1. CLI interface
 
-h2. Specify @--media-root=path/to/media/directory@ and Optionally @--strategy=copy|submodules@
-
-You don't have to do anything with environment, just specify @--media-root=path@ and it will work. Example: @pupu install mootools --media-root=media@
-
-h2. Using System @pupu@ and Configuration File
-
-- pupu executable will find it
-- you will require it in your environment file so it will be available in runtime
-
-h2. Using Your Own Wrapper
-
-If you have bundled application
-The only thing you need to do is just load your environment before pupu starts, example
-
-h3. Rango
+If you are storing your media files in different directory than in @public@ or @media@ or if you want to use submodules strategy, you will need some "setup":http://wiki.github.com/botanicus/pupu/setup. *In case you are using defaults, everything should just work out of the box.*
 
 <pre>
-#!init
+# list all available pupus
+pupu search
 
-load File.dirname(__FILE__) + "/gems/gems/pupu-0.0.1/bin/pupu"
-</pre>
+# search for pupu matching mootools in its name (you can use regexp)
+pupu search mootools
 
-h3. Rails and Merb
-
-<pre>
-#!/usr/bin/env ruby1.9
-
-load File.dirname(__FILE__) + "../config/environment.rb"
-</pre>
-
-h2. Wrapper Tasks
-
-Pupu provides Rake & Thor tasks
-
-<pre>
-task "pupu:setup" => :environment
-</pre>
-
-<pre>
-Pupu::Tasks.class_eval do
-  def setup
-    load "config/environment.rb"
-  end
-end
-</pre>
-
-<pre>
 # install autocompleter and its dependencies from my github repo
 pupu install botanicus/autocompleter
 
 # or uninstall, it's the same
-pupu remove autocompleter
+pupu uninstall autocompleter
 
 # list all installed pupus
 pupu list
 </pre>
-
-h1. Storing Pupus in Your Project
-
-copy/submodules
 
 h1. Views
 
@@ -110,45 +68,10 @@ window.addEvent("domready", function() {
 })
 </pre>
 
-h1. Available pupus
-
-* "MooTools":http://github.com/botanicus/pupu-mootools
-* "Autocompleter":http://github.com/botanicus/pupu-autocompleter
-* "Squeezebox":http://github.com/botanicus/pupu-squeezebox
-* "Blueprint CSS":http://github.com/botanicus/pupu-blueprint
-* "Mooeditable":http://github.com/botanicus/pupu-mooeditable
-* "Tips":http://github.com/botanicus/pupu-tips
-* "Growl":http://github.com/botanicus/pupu-growl
-* "Ratings":http://github.com/botanicus/pupu-ratings
-* "Form defaults":http://github.com/botanicus/pupu-form-defaults
-* icon sets
-
-h1. I'd like to write my own pupu!
-
-h2. Plugin generator
-
-<pre>
-pupu create jquery
-</pre>
-
-h2. Configuration file
-
-File config.rb in your pupu root is intended to put package metadata there. You can define dependencies of pupu, arguments of pupu method and define which javascripts and stylesheets will be included in which order.
-
-<pre>
-# autocompleter depends on mootools
-dependencies :mootools
-
-# javascripts for loading
-javascripts "observer", "autocompleter", :in => "lib"
-
-parameter :type, :optional => ["local", "request"] do |type|
-  javascript "lib/autocompleter.#{type}"
-end
-</pre>
 
 h1. Links
 
 - "Wiki":http://wiki.github.com/botanicus/pupu
 - "Source Code":http://github.com/botanicus/pupu
 - "API Documentation":http://rdoc.info/projects/botanicus/pupu
+- Examples: "Rango":http://github.com/botanicus/pupu/tree/master/examples/rango, "Merb":http://github.com/botanicus/pupu/tree/master/examples/merb
