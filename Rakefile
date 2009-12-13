@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require_relative "lib/pupu"
+require_relative "lib/pupu/version"
 
 # ENV setup for external commands
 ENV["RUBYLIB"] = Dir["vendor/*/lib"].join(":")
