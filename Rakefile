@@ -6,6 +6,10 @@ require_relative "lib/pupu/version"
 ENV["RUBYLIB"] = Dir["vendor/*/lib"].join(":")
 $LOAD_PATH.clear.push(*Dir["vendor/*/lib"])
 
+# encoding
+Encoding.default_internal = "utf-8"
+Encoding.default_external = "utf-8"
+
 # http://support.runcoderun.com/faqs/builds/how-do-i-run-rake-with-trace-enabled
 Rake.application.options.trace = true
 
