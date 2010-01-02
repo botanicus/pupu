@@ -1,13 +1,9 @@
 #!/usr/bin/env gem1.9 build
 # encoding: utf-8
 
-# NOTE: we can't use require_relative because when we run gem build, it use eval for executing this file
-$:.unshift File.join(File.dirname(__FILE__), "lib")
-require "pupu/version"
-
 Gem::Specification.new do |s|
   s.name = "pupu"
-  s.version = Pupu::VERSION
+  s.version = "0.0.3"
   s.authors = ["Jakub Šťastný aka Botanicus"]
   s.homepage = "http://github.com/botanicus/pupu"
   s.summary = "Framework-agnostic package system for media files"
