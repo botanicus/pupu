@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 # autocompleter depends on mootools
 dependencies :mootools
 

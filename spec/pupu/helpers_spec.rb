@@ -1,9 +1,12 @@
+# encoding: utf-8
+
 require_relative "../spec_helper"
+
 require "pupu/pupu"
 require "pupu/helpers"
-include Pupu::Helpers
 
 describe "Helpers#pupu" do
+  include Pupu::Helpers
   before(:each) do
     Pupu.root = File.dirname(__FILE__) + "/data/root/pupu"
   end

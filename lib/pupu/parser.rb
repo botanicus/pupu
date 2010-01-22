@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require "pupu/dsl"
 require "pupu/pupu"
 

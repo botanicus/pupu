@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Pupu
   class Metadata
     class << self

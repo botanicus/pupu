@@ -1,3 +1,5 @@
+- bundle the rango app
+
 === Version 0.1 ===
 - Pupu.framework_root: "."
 - Pupu.media_root: "media"
@@ -13,8 +15,10 @@
 - media support (.swf): media helper
 - media vs. root vs. custom
 - how to handle metadata? Generate metadata.yml from config.rb (dependencies) or generate it through merb-gen and write it by hand?
-- what about ruby helpers such as flash :notice, :error for flash <divs
+- what about ruby helpers such as flash :notice, :error for flash <divs>
 - add array with loaded plugins, do not load plugin which is already loaded
+- hooks for minify etc
+- don't touch file system in production mode (don't use File.exist?) -> just load manifest
 
 === Version 0.2 ===
 

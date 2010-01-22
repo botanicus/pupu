@@ -1,4 +1,7 @@
+# encoding: utf-8
+
 require_relative "../spec_helper"
+
 require "pupu/exceptions"
 
 describe Pupu::PupuRootNotFound do
