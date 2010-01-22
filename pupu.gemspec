@@ -1,6 +1,8 @@
 #!/usr/bin/env gem1.9 build
 # encoding: utf-8
 
+require "base64"
+
 Gem::Specification.new do |s|
   s.name = "pupu"
   s.version = "0.0.3"
@@ -9,11 +11,12 @@ Gem::Specification.new do |s|
   s.summary = "Framework-agnostic package system for media files"
   s.description = "Pupu is a plugin system for media like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such pupus into your app."
   s.cert_chain = nil
-  s.email = ["knava.bestvinensis", "gmail.com"].join("@")
+  s.email = Base64.decode64("c3Rhc3RueUAxMDFpZGVhcy5jeg==\n")
 
   # files
-  s.files = Dir.glob("**/*") - Dir.glob("pkg/*")
-  s.executables = ["pupu"]
+  s.files = `git ls-files`.split("\n")
+
+  s.executables = Dir["bin/*"].map(&File.method(:basename))
   s.default_executable = "pupu"
   s.require_paths = ["lib"]
 
