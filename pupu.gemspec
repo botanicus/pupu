@@ -30,6 +30,14 @@ Gem::Specification.new do |s|
   # use gem install pupu --development if you want to install them
   s.add_development_dependency "simple-templater"
 
+  begin
+    require "changelog"
+  rescue LoadError
+    warn "You have to have changelog gem installed for post install message"
+  else
+    s.post_install_message = CHANGELOG.new.version_changes
+  end
+
   # RubyForge
   s.rubyforge_project = "pupu"
 end

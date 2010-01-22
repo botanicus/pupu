@@ -71,7 +71,7 @@ If pupu has optional arguments, you can specify them, it will modify its behavio
 
 <pre>
 # this will include not just basic autocompleter files, but script for local requests too
-pupu :autocompleter, :type => "local"
+pupu :autocompleter, type: "local"
 </pre>
 
 There is some helpers for getting path to pupu's files:

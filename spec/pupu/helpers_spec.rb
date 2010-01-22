@@ -13,6 +13,6 @@ describe "Helpers#pupu" do
   end
 
   it "should return text with assets" do
-    pupu(:autocompleter, :type => "local").should eql(Parser.new(:autocompleter, :type => "local").parse!)
+    pupu(:autocompleter, type: "local").should eql(Parser.new(:autocompleter, type: "local").parse!)
   end
 end

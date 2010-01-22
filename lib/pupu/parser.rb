@@ -13,7 +13,7 @@ module Pupu
 
     def loaded?
       # The reason why just array with plugin names isn't enough is that every time it can be called
-      # with different parameters. For example pupu :mootools and then pupu :mootools, :more => true
+      # with different parameters. For example pupu :mootools and then pupu :mootools, more: true
       @@loaded[@plugin.name] && @dsl.files.all? do |file|
         @@loaded[@plugin.name].include?(file)
       end

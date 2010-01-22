@@ -19,8 +19,8 @@ h2. Layout
 plugin :autocompleter
 
 # for local requests through Autocompleter.Request class
-plugin :autocompleter, :type => "local"
+plugin :autocompleter, type: "local"
 
 # for ajax requests through Autocompleter.Request class
-plugin :autocompleter, :type => "request"
+plugin :autocompleter, type: "request"
 </pre>

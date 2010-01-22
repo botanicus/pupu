@@ -7,6 +7,6 @@ javascripts "observer", "autocompleter"
 # stylesheet
 stylesheet "autocompleter"
 
-parameter :type, :optional => ["local", "request"] do |type|
+parameter :type, optional: ["local", "request"] do |type|
   javascript "autocompleter.#{type}"
 end

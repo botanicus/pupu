@@ -13,7 +13,7 @@ describe Pupu::GitHub do
     end
 
     it "should return nil if plugin do not exists" do
-      plugin(:autocompleter, :request => "local")
+      plugin(:autocompleter, request: "local")
     end
   end
 end

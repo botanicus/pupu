@@ -10,11 +10,11 @@ themes   = Dir["#{root}/stylesheets/Flame.*.css"].map { |theme| File.basename(th
 syntaxes = Dir["#{root}/javascripts/Fuel.*.js"].map { |theme| File.basename(theme).split(".")[1] }
 
 # pupu :lighter, theme: "mocha"
-parameter :theme, :optional => themes do |theme|
+parameter :theme, optional: themes do |theme|
  stylesheet "Flame.#{theme}"
 end
 
 # pupu :lighter, syntax: "ruby"
-parameter :syntax, :optional => syntaxes do |syntax|
+parameter :syntax, optional: syntaxes do |syntax|
  javascript "Fuel.#{syntax}"
 end

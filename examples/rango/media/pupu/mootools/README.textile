@@ -15,5 +15,5 @@ h2. Layout
 plugin :mootools
 
 # for mootools-more
-plugin :mootools, :more => true
+plugin :mootools, more: true
 </pre>

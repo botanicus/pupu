@@ -9,7 +9,7 @@ load "pupu/tasks/pupu.rake"
 # Load the basic runtime dependencies; this will include 
 # any plugins and therefore plugin rake tasks.
 init_env = ENV["MERB_ENV"] || "development"
-Merb.load_dependencies(:environment => init_env)
+Merb.load_dependencies(environment: init_env)
      
 # Get Merb plugins and dependencies
 Merb::Plugins.rakefiles.each { |r| require r } 
@@ -21,10 +21,10 @@ rake_files.each{|rake_file| load rake_file }
 
 desc "Start runner environment"
 task :merb_env do
-  Merb.start_environment(:environment => init_env, :adapter => "runner")
+  Merb.start_environment(environment: init_env, adapter: "runner")
 end
 
 require "spec/rake/spectask"
 require "merb-core/test/tasks/spectasks"
 desc "Default: run spec examples"
-task :default => "spec"
+task default: "spec"

@@ -74,7 +74,7 @@ module Pupu
       end
     end
 
-    # parameter :type, :optional => ["local", "request"] do |type|
+    # parameter :type, optional: ["local", "request"] do |type|
     #   javascript "autocompleter.#{type}"
     # end
 
@@ -82,11 +82,11 @@ module Pupu
     #  javascript "mootools-1.2-more" if boolean
     # end
     def parameter(name, params = Hash.new, &block)
-      # pupu :autocompleter, :type => "request"
-      # @pupu.params: { :type => "request" }
+      # pupu :autocompleter, type: "request"
+      # @pupu.params: { type: "request" }
 
-      # pupu :mootools, :more => true
-      # @pupu.params: { :more => true }
+      # pupu :mootools, more: true
+      # @pupu.params: { more: true }
       if @pupu.params.key?(name)
         block.call(@pupu.params[name])
       end
