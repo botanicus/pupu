@@ -1,4 +1,4 @@
-#!/usr/bin/env gem1.9 build
+#!/usr/bin/env gem build
 # encoding: utf-8
 
 require "base64"
