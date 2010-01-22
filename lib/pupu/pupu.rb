@@ -45,7 +45,13 @@ module Pupu
       end
 
       # strategies: submodules, copy
-      cattr_accessor :strategy
+      def self.strategy
+        @@strategy ||= :copy
+      end
+
+      def self.strategy=(strategy)
+        @@strategy = strategy
+      end
 
       def root
         # TODO: it should be configurable
