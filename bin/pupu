@@ -10,8 +10,9 @@ if File.directory?(File.join(libdir, "pupu"))
   $:.unshift(libdir) unless $:.include?(libdir)
 end
 
-# === Helpers === #
-# TODO: Generators.each { |generator| puts generator.help }
+require "pupu/cli"
+
+# helpers
 def usage
 <<-HELP
 === Usage ===
@@ -26,27 +27,20 @@ pupu create [name]
 HELP
 end
 
+# main loop
 begin
   case ARGV.shift
-  when nil
-    abort usage
   when "install"
-    require "pupu/cli"
     Pupu::CLI.new(ARGV).install
   when "uninstall", "remove"
-    require "pupu/cli"
     Pupu::CLI.new(ARGV).uninstall
   when "update"
-    require "pupu/cli"
     Pupu::CLI.new(ARGV).update
   when "list" # list all pupus
-    require "pupu/cli"
     Pupu::CLI.new(ARGV).list
   when "check" # check setup & if you are in the right directory
-    require "pupu/cli"
     Pupu::CLI.new(ARGV).check || abort("File config/pupu.rb doesn't exist or can't be loaded")
   when "search"
-    require "pupu/cli"
     Pupu::CLI.new(ARGV).search(ARGV.first)
   when "create"
     begin
@@ -65,5 +59,7 @@ begin
     rescue Exception => exception
       abort "Exception #{exception.inspect} occured during running generator #{generator.inspect}\n#{exception.backtrace.join("\n")}"
     end
+  else
+    abort usage
   end
 end

@@ -1,12 +1,13 @@
-- bundle the rango app
+Examples:
+- recreate the rango app AFTER I release Rango 0.3 & bundle it
+- ensure all the examples has the same functionality include specs
+- ensure all the examples work
 
 === Version 0.1 ===
 - Pupu.framework_root: "."
 - Pupu.media_root: "media"
 - Pupu.root: "media/pupu"
 - @pupu.root: "media/pupu/mootools"
-
-- rango & merb apps: both with same functionality include specs
 
 - THERE SHOULD BE A CONVETION TO NAME PUPU WITH PUPU-FRAMEWORK-PLUGIN, FOR EXAMPLE PUPU-MOOTOOLS-FLASH because of search
 - install each dependency just once
