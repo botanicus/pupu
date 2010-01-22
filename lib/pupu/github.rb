@@ -32,7 +32,7 @@ module Pupu
       def update(pupu_name)
         if pupu_name
           pupu = Pupu[pupu_name]
-          if Pupu.strategy.eql?(:submodules)
+          if ::Pupu.strategy.eql?(:submodules)
             puts %(git fetch)
             puts %(git reset origin/master --hard)
           else
@@ -104,7 +104,7 @@ module Pupu
         end
         @pupu = Pupu[repo]
         self.save_metadata(@pupu, url)
-        FileUtils.rm_r(".git") if Pupu.strategy.eql?(:copy)
+        FileUtils.rm_r(".git") if ::Pupu.strategy.eql?(:copy)
       rescue Exception => exception
         FileUtils.rm_r(repo) if File.directory?(repo)
         raise exception

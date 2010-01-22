@@ -7,27 +7,42 @@ require "pupu/metadata"
 
 module Pupu
   # this must be set in adapters
-  class << self
-    attr_accessor :root
+  def self.root
+    @@root ||= Dir.pwd
+  end
 
-    # @example Pupu.media_prefix("media").url
-    #   => "/media/pupu/autocompleter/javascripts/autocompleter.js"
-    def media_prefix=(prefix)
-      MediaPath.rewrite { |path| File.join(prefix, path) }
-    end
+  def self.root=(path)
+    @@root = path
+  end
 
-    # TODO: media_root or media_root?
-    def media_root=(path)
-      MediaPath.media_root = path
-      @media_root = path
-    end
-    attr_reader :media_root
+  # @example Pupu.media_prefix("media").url
+  #   => "/media/pupu/autocompleter/javascripts/autocompleter.js"
+  def self.media_prefix=(prefix)
+    MediaPath.rewrite { |path| File.join(prefix, path) }
+  end
 
-    # @example Pupu.rewrite { |path| "http://media.domain.org/#{path}" }.url
-    #   # => "http://media.domain.org/pupu/autocompleter/javascripts/autocompleter.js"
-    def rewrite(&block)
-      MediaPath.rewrite(&block)
-    end
+  def self.media_root
+    @@media_root ||= Dir.pwd
+  end
+
+  def self.media_root=(path)
+    MediaPath.media_root = path
+    @@media_root = path
+  end
+
+  # @example Pupu.rewrite { |path| "http://media.domain.org/#{path}" }.url
+  #   # => "http://media.domain.org/pupu/autocompleter/javascripts/autocompleter.js"
+  def rewrite(&block)
+    MediaPath.rewrite(&block)
+  end
+
+  # strategies: submodules, copy
+  def self.strategy
+    @@strategy ||= :copy
+  end
+
+  def self.strategy=(strategy)
+    @@strategy = strategy
   end
 
   class Pupu
@@ -42,15 +57,6 @@ module Pupu
       # same as root, but doesn't raise any exception
       def root_path
         File.join(::Pupu.media_root, "pupu")
-      end
-
-      # strategies: submodules, copy
-      def self.strategy
-        @@strategy ||= :copy
-      end
-
-      def self.strategy=(strategy)
-        @@strategy = strategy
       end
 
       def root

@@ -47,7 +47,7 @@ module Pupu
       self.parse_argv
       self.check_setup
       note "Using media directory: #{::Pupu.media_root}"
-      note "Using strategy: #{Pupu.strategy}"
+      note "Using strategy: #{::Pupu.strategy}"
     end
 
     def parse_argv
@@ -62,7 +62,7 @@ module Pupu
         elsif argument.match(/--strategy=(.+)/)
           self.args.delete(argument)
           if %[copy submodules].include?($1)
-            Pupu.strategy = $1.to_sym
+            ::Pupu.strategy = $1.to_sym
           else
             abort "Available strategies: copy, submodules"
           end
@@ -76,7 +76,7 @@ module Pupu
       path ||= ["media", "public"].find { |directory| File.directory?(directory) }
       return if path.nil?
       ::Pupu.media_root = File.expand_path(path)
-      Pupu.strategy ||= :copy
+      ::Pupu.strategy ||= :copy
     end
 
     def check_setup
