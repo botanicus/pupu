@@ -5,7 +5,7 @@ require "base64"
 
 Gem::Specification.new do |s|
   s.name = "pupu"
-  s.version = "0.0.3"
+  s.version = "0.0.4"
   s.authors = ["Jakub Šťastný aka Botanicus"]
   s.homepage = "http://github.com/botanicus/pupu"
   s.summary = "Framework-agnostic package system for media files"
