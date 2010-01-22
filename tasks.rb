@@ -7,8 +7,11 @@ rescue LoadError
   abort "You have to install bundler and run gem bundle first!"
 end
 
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "lib"))
+
 ENV["PATH"] = "script:#{ENV["PATH"]}"
 
+require "pupu"
 require "nake/tasks/gem"
 require "nake/tasks/spec"
 require "nake/tasks/release"
