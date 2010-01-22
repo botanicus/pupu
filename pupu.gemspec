@@ -2,10 +2,11 @@
 # encoding: utf-8
 
 require "base64"
+require File.join(File.dirname(__FILE__), "lib/pupu/version")
 
 Gem::Specification.new do |s|
   s.name = "pupu"
-  s.version = "0.0.4"
+  s.version = Pupu::VERSION
   s.authors = ["Jakub Šťastný aka Botanicus"]
   s.homepage = "http://github.com/botanicus/pupu"
   s.summary = "Framework-agnostic package system for media files"

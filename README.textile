@@ -1,6 +1,6 @@
 h1. About Pupu
 
-"Pupu":http://github.com/botanicus/pupu is a framework-agnostic plugin system for media stuff like JS/CSS frameworks and its plugins, icon sets etc. You can "search GitHub":http://github.com/search?type=Repositories&language=&q=pupu&repo=&langOverride=&x=9&y=24&start_value=1 for more examples. It provides CLI interface for searching, installing and updating pupus from GitHub and it also provides a helper for including static files from pupu into your HTML page. Both CLI and helper can handle dependencies.
+"Pupu":http://github.com/botanicus/pupu is a framework-agnostic plugin system for assets like JS/CSS frameworks and its plugins, icon sets etc. You can "search GitHub":http://github.com/search?type=Repositories&language=&q=pupu&repo=&langOverride=&x=9&y=24&start_value=1 for more examples. It provides CLI interface for searching, installing and updating pupus from GitHub and it also provides a helper for including static files from pupu into your HTML page. Both CLI and helper can handle dependencies.
 
 CLI example:
 
@@ -91,4 +91,4 @@ h1. Links
 - "Wiki":http://wiki.github.com/botanicus/pupu
 - "Source Code":http://github.com/botanicus/pupu
 - "API Documentation":http://rdoc.info/projects/botanicus/pupu
-- Examples: "Rango":http://github.com/botanicus/pupu/tree/master/examples/rango, "Merb":http://github.com/botanicus/pupu/tree/master/examples/merb
+- Examples: "Rango":http://github.com/botanicus/pupu/tree/master/examples/rango, "Merb":http://github.com/botanicus/pupu/tree/master/examples/merb and "Rails":http://github.com/botanicus/pupu/tree/master/examples/rails

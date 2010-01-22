@@ -11,7 +11,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "lib"))
 
 ENV["PATH"] = "script:#{ENV["PATH"]}"
 
-require "pupu"
+require "pupu/version"
 require "nake/tasks/gem"
 require "nake/tasks/spec"
 require "nake/tasks/release"
