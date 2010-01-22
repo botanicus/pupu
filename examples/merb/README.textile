@@ -1,7 +1,5 @@
 h1. Merb Example
 
-* Dependencies for running: @merb-core@
-* Run with @merb -a webrick@ (will start at @http://localhost:4000@)
-
-* Dependencies for testing: @rspec@, @webrat@
-* Specs: @spec spec/application_spec.rb --colour@
+* @gem bundle@ (you have to have bundler 0.7.2 installed)
+* Run with @./bin/merb -a webrick@ (will start at @http://localhost:4000@)
+* Specs: @./bin/spec spec/application_spec.rb --colour@

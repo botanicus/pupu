@@ -1,21 +1,17 @@
-.DS_Store
+# You usually don't want to ignore gems/cache, but examples are
+# part of the pupu gem and we want to keep it as small as possible
+gems/*
+bin/*
+
 log/*
 tmp/*
-TAGS
-*~
-.#*
+
 schema/schema.rb
 schema/*_structure.sql
 schema/*.sqlite3
 schema/*.sqlite
 schema/*.db
+
 *.sqlite
 *.sqlite3
 *.db
-src/*
-.hgignore
-.hg/*
-.svn/*
-gems/gems/*
-gems/specifications/*
-merb_profile_results

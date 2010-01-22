@@ -1,0 +1,5 @@
+h1. Rails Example
+
+* @gem bundle@ (you have to have bundler 0.7.2 installed)
+* Run with @./script/server@ (will start at @http://localhost:3000@)
+* Specs: @./script/spec spec/application_spec.rb --colour@

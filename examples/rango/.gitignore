@@ -2,6 +2,3 @@
 # part of the pupu gem and we want to keep it as small as possible
 gems/*
 bin/*
-
-tmp/*
-log/*

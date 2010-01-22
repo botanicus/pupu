@@ -4,6 +4,13 @@
 # === Usage === #
 # init.rb
 
+# bundler
+begin
+  require_relative "gems/environment.rb"
+rescue LoadError => exception
+  abort "LoadError during loading gems/environment: #{exception.message}\nRun gem bundle to fix it."
+end
+
 # setup $:
 pupu_libdir = File.expand_path("../../lib")
 raise Errno::ENOENT, "#{pupu_libdir} doesn't exist" unless File.directory?(pupu_libdir)

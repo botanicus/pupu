@@ -1,10 +1,24 @@
 # Be sure to restart your server when you modify this file
 
+# bundler
+begin
+  require_relative "../gems/environment.rb"
+rescue LoadError => exception
+  abort "LoadError during loading gems/environment: #{exception.message}\nRun gem bundle to fix it."
+end
+
+# setup $:
+pupu_libdir = File.expand_path("../../lib")
+raise Errno::ENOENT, "#{pupu_libdir} doesn't exist" unless File.directory?(pupu_libdir)
+$:.unshift(pupu_libdir)
+
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
+
+require "pupu/adapters/rails"
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -26,7 +40,7 @@ Rails::Initializer.run do |config|
 
   # Skip frameworks you're not going to use. To use Rails without a database,
   # you must remove the Active Record framework.
-  config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
+  config.frameworks -= [:active_record, :active_resource, :action_mailer]
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
