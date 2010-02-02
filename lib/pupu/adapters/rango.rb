@@ -3,6 +3,16 @@
 require "pupu"
 require "pupu/helpers"
 
+Pupu.framework = :rango
+
+def Pupu.environment
+  Rango.environment
+end
+
+def Pupu.logger
+  Rango.logger
+end
+
 Rango.after_boot(:register_pupu) do
   Pupu.root = Rango.root
   #Pupu.media_prefix = Project.settings.media_prefix
