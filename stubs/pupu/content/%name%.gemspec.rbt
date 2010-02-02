@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.summary = "" # TODO: summary
   s.description = "" # TODO: long description
   s.cert_chain = nil
-  s.email = # TODO: your mail
+  s.email = Base64.decode64() # TODO: your encrypted e-mail
   s.has_rdoc = true
 
   # files
