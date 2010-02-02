@@ -13,5 +13,5 @@ rescue LoadError
 end
 
 module Pupu::Helpers
-  include <%= @name %>::Helpers
+  include <%= @constant %>::Helpers
 end
