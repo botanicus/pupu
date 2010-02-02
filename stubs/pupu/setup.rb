@@ -10,6 +10,7 @@ require "simple-templater/hooks/preprocess/full_name"
 # --javascripts=mootools-core,mootools-more | --no-javascripts
 # --stylesheets=one,two             | --no-stylesheets
 # --dependencies=mootools,blueprint | --no-dependencies
+# --ruby || --no-ruby
 hook do |generator, context|
   generator.before Hooks::FullName, Hooks::GithubUser
   generator.target = "pupu-#{context[:name]}" unless generator.target.match(/^pupu-/) # this is the convention

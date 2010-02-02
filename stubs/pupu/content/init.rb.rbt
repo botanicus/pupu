@@ -1,0 +1,17 @@
+# encoding: utf-8
+
+# This file will be loaded automatically when the pupu helper is used
+# If you don't want to load this file, use pupu :whatever, helpers: false
+
+$LOAD_PATH.unshift(File.expand_path("lib", __FILE__))
+
+begin
+  require "<%= @name %>/adapters/#{Pupu.framework}"
+rescue LoadError
+  # If you don't have adapter file, everything should work anyway since Pupu::Helpers
+  # mixin is included into helper module of your framework, so we can fail silently
+end
+
+module Pupu::Helpers
+  include <%= @name %>::Helpers
+end
