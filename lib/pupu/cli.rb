@@ -9,7 +9,7 @@ require "pupu/pupu"
 require "pupu/github"
 
 # copyied from merb.thor, this part is actually my code as well :)
-module ColorfulMessages
+module Kernel
   # red
   def error(*messages)
     puts messages.map { |msg| "\033[1;31m#{msg}\033[0m" }
@@ -40,10 +40,9 @@ end
 
 module Pupu
   class CLI
-    include ColorfulMessages
-    attr_reader :args
-    def initialize(args)
-      @args = args
+    attr_reader :args, :options
+    def initialize(args, options)
+      @args, @options = args, options
       self.detect
       self.load_config
       self.parse_argv
@@ -88,8 +87,9 @@ module Pupu
     def install
       self.args.each do |pupu|
         begin
-          GitHub.install(pupu)
-        rescue PluginIsAlreadyInstalled
+          GitHub.install(pupu, options)
+        rescue PluginIsAlreadyInstalled => e
+          puts e.backtrace.join("\n- ")
           info "Plugin #{pupu} is already installed, skipping"
         end
       end
