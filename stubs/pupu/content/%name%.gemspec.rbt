@@ -1,0 +1,47 @@
+#!/usr/bin/env gem build
+# encoding: utf-8
+
+# Run ./<%= @name %>.gemspec or gem build <%= @name %>.gemspec
+# NOTE: we can't use require_relative because when we run gem build, it use eval for executing this file
+require File.join(File.dirname(__FILE__), "lib", "<%= @name %>", "version")
+require "base64"
+
+Gem::Specification.new do |s|
+  s.name = "<%= @name %>"
+  s.version = <%= @constant %>::VERSION
+  s.authors = ["<%= @full_name %>"]
+  s.homepage = "http://github.com/<%= @github_user %>/<%= @github_repository %>"
+  s.summary = "" # TODO: summary
+  s.description = "" # TODO: long description
+  s.cert_chain = nil
+  s.email = # TODO: your mail
+  s.has_rdoc = true
+
+  # files
+  s.files = `git ls-files`.split("\n")
+
+  s.executables = Dir["bin/*"].map(&File.method(:basename))
+  s.default_executable = "<%= @name %>"
+  s.require_paths = ["lib"]
+
+  # Ruby version
+  s.required_ruby_version = ::Gem::Requirement.new(">= 1.9")
+
+  # runtime dependencies
+  # s.add_dependency "my-gem"
+
+  # development dependencies
+  # use gem install <%= @name %> --development if you want to install them
+  # s.add_development_dependency "simple-templater"
+
+  begin
+    require "changelog"
+  rescue LoadError
+    warn "You have to have changelog gem installed for post install message"
+  else
+    s.post_install_message = CHANGELOG.new.version_changes
+  end
+
+  # RubyForge
+  s.rubyforge_project = "<%= @name %>"
+end

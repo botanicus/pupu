@@ -23,4 +23,7 @@ hook do |generator, context|
   unless context[:github_repository] && context[:github_repository].match(/^pupu-/)
     context[:github_repository] = "pupu-#{context[:github_repository]}"
   end
+  if context[:ruby]
+    context[:constant] = context[:name].camel_case
+  end
 end

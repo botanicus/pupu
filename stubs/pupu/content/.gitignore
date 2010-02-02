@@ -5,5 +5,8 @@
 .DS_Store
 .yardoc
 .cache
-pkg/
-nbproject/
+
+/*.gem
+script/*
+gems/*
+!gems/cache
