@@ -17,6 +17,18 @@ module Pupu
     @@root = path
   end
 
+  def self.framework
+    @@framework
+  end
+
+  def self.framework=(framework)
+    @@framework = framework
+  end
+
+  def self.environment?(environment)
+    self.environment.eql?(environment)
+  end
+
   # @example Pupu.media_prefix("media").url
   #   => "/media/pupu/autocompleter/javascripts/autocompleter.js"
   def self.media_prefix=(prefix)
