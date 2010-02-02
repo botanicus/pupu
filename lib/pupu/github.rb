@@ -21,13 +21,14 @@ module Pupu
     class << self
       include ShellExtensions
       # GitHub.install("autocompleter")
-      # GitHub.install("botanicus/autocompleter")
-      def install(repo)
+      # GitHub.install("botanicus/autocompleter", force: true)
+      def install(repo, options = Hash.new)
         user, repo = repo.split("/") if repo.match(%r{/})
         user = ENV["USER"] unless user
         url = "git://github.com/#{user}/pupu-#{repo}.git"
-        self.install_files(repo, url)
-        self.install_dependencies(@pupu)
+        info "Installing #{repo}"
+        self.install_files(repo, url, options)
+        self.install_dependencies(@pupu, options)
         # TODO: git commit [files] -m "Added pupu #{repo} from #{url}"
       end
 
@@ -73,17 +74,22 @@ module Pupu
         end
       end
 
-      def install_dependencies(pupu)
+      def install_dependencies(pupu, options = Hash.new)
         dsl = DSL.new(pupu)
         dsl.instance_eval(File.read(pupu.file("config.rb").path))
         dsl.get_dependencies.each do |dependency|
-          self.install(dependency.name.to_s) # FIXME: "user/repo"
+          info "Installing dependency #{dependency}"
+          self.install(dependency.name.to_s, options) # FIXME: "user/repo"
         end
       end
 
-      def install_files(repo, url)
+      def install_files(repo, url, options = Hash.new)
         chdir do |media_dir|
-          raise PluginIsAlreadyInstalled if File.directory?(repo) # TODO: custom exception class
+          if File.directory?(repo) && !options[:force]
+            raise PluginIsAlreadyInstalled, "Pupu #{repo} already exist"
+          elsif File.directory?(repo) && options[:force]
+            FileUtils.rm_r(repo)
+          end
           run("git clone #{url} #{repo}") || abort("Git failed")
           Dir.chdir(repo) do
             proceed_files(repo, url)
