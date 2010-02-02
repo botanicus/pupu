@@ -1,0 +1,10 @@
+# encoding: utf-8
+
+require_relative "spec_helper"
+
+describe <%= @constant %> do
+  it "should have VERSION constant" do
+    <%= @constant %>::VERSION.should be_kind_of(String)
+    <%= @constant %>::VERSION.should match(/^\d+\.\d+\.\d+$/)
+  end
+end
