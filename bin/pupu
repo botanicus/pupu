@@ -16,8 +16,9 @@ require "pupu/cli"
 def usage
 <<-HELP
 === Usage ===
-pupu install [pupu]
+pupu install [pupu] [-f|--force]
 pupu uninstall [pupu]
+pupu reinstall [pupu]
 pupu update [pupu|all]
 pupu list
 pupu check
@@ -34,6 +35,8 @@ begin
     Pupu::CLI.new(ARGV).install
   when "uninstall", "remove"
     Pupu::CLI.new(ARGV).uninstall
+  when "reinstall"
+    Pupu::CLI.new(ARGV, force: true).install
   when "update"
     Pupu::CLI.new(ARGV).update
   when "list" # list all pupus
