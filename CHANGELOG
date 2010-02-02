@@ -18,3 +18,8 @@
 
 = Version 0.0.4
   * Added Rails example app
+  * pupu reinstall & pupu install --force
+  * Added Pupu.framework
+  * Added Pupu.logger
+  * Added Pupu.environment & Pupu.environment?
+  * Added --ruby & --no-ruby options to the generator
