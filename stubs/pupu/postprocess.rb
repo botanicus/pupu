@@ -11,6 +11,7 @@ hook do |generator, context|
 
   unless context[:ruby]
     rm "init.rb"
+    rm "deps.rb"
     rm "#{context[:name]}.gemspec"
     rm "#{context[:name]}.pre.gemspec"
     rm_r "lib"
