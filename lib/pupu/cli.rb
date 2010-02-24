@@ -41,7 +41,7 @@ end
 module Pupu
   class CLI
     attr_reader :args, :options
-    def initialize(args, options)
+    def initialize(args, options = Hash.new)
       @args, @options = args, options
       self.detect
       self.load_config
