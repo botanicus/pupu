@@ -51,15 +51,22 @@ module Pupu
     def javascript(basename, params = Hash.new)
       path = @pupu.javascript(basename).url
       tag  = "<script src='#{path}' type='text/javascript'></script>"
+      if params[:if]
+        tag = "<!--[if #{params[:if]}]>" + tag + "<![endif]-->"
+      end
       @files.push(path)
       @output.push(tag)
     end
 
     def stylesheet(basename, params = Hash.new)
       path = @pupu.stylesheet(basename).url
+      condition = params.delete(:if)
       default = {media: 'screen', rel: 'stylesheet', type: 'text/css'}
       params = default.merge(params)
       tag  = "<link href='#{path}' #{params.to_html_attrs} />"
+      if condition
+        tag = "<!--[if #{condition}]>" + tag + "<![endif]-->"
+      end
       @files.push(path)
       @output.push(tag)
     end

@@ -23,3 +23,6 @@
   * Added Pupu.logger
   * Added Pupu.environment & Pupu.environment?
   * Added --ruby & --no-ruby options to the generator
+
+= Version 0.0.5
+  * Added if option to javascript/stylesheet, so you can use styleshett "ie", if: "lt IE 8"
