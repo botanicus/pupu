@@ -20,3 +20,13 @@ Rango.after_boot(:register_pupu) do
   Rango::Helpers.send(:include, Pupu::Helpers)
   Rango.logger.info("Pupu plugin registered")
 end
+
+module Pupu
+  module Helpers
+    def pupu_page
+      # page = get_context_value(:page) # TOHLE KUNDA NEFUNGUJE V TEMPLEJTACH :(
+      # set_context_value(:page, page || Page.new)
+      context[:pupu_page] ||= Page.new
+    end
+  end
+end

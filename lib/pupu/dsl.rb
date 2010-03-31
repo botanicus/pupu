@@ -11,12 +11,19 @@ end
 
 module Pupu
   class DSL
-    attr_reader :output, :files, :path
-    def initialize(pupu)
-      @pupu = pupu
+    attr_reader :output, :path
+
+    def files
+      @page.files
+    end
+
+    def initialize(pupu, page = Page.new)
+      @pupu   = pupu
+      @page   = page
       @output = Array.new
-      @files  = Array.new
+      @files  = files
       @dependencies = Array.new
+      puts "DSL: #{page.inspect}"
       @path = pupu.file("config.rb")
     end
 
@@ -54,8 +61,10 @@ module Pupu
       if params[:if]
         tag = "<!--[if #{params[:if]}]>" + tag + "<![endif]-->"
       end
-      @files.push(path)
-      @output.push(tag)
+      unless files.include?(path)
+        files.push(path)
+        @output.push(tag)
+      end
     end
 
     def stylesheet(basename, params = Hash.new)
@@ -67,8 +76,10 @@ module Pupu
       if condition
         tag = "<!--[if #{condition}]>" + tag + "<![endif]-->"
       end
-      @files.push(path)
-      @output.push(tag)
+      unless files.include?(path)
+        files.push(path)
+        @output.push(tag)
+      end
     end
 
     def javascripts(*names)

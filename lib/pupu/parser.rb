@@ -4,11 +4,24 @@ require "pupu/dsl"
 require "pupu/pupu"
 
 module Pupu
+  class Page
+    attr_reader :files
+    def initialize
+      @files = Array.new
+    end
+
+    def parse(name, options)
+      Parser.new(name, options, self)
+    end
+  end
+
   class Parser
-    def initialize(plugin_name, plugin_params)
+    def initialize(plugin_name, plugin_params, page = Page.new)
       @plugin    = Pupu[plugin_name, plugin_params]
       @output    = Array.new
-      @dsl       = DSL.new(@plugin)
+      puts "Parser: #{page.inspect}"
+      @page = page
+      @dsl       = DSL.new(@plugin, page)
       @@loaded ||= Hash.new
       @@loaded[@plugin.name] = Array.new
     end
@@ -32,7 +45,7 @@ module Pupu
 
     def add_dependencies
       @dsl.get_dependencies.each do |dependency|
-        parser = Parser.new(dependency.name, dependency.params)
+        parser = Parser.new(dependency.name, dependency.params, @page)
         @output.push(parser.parse!) unless parser.loaded?
       end
     end
