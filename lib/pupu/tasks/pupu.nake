@@ -1,0 +1,52 @@
+# encoding: utf-8
+
+autoload "Pupu", "pupu/cli"
+
+# == Setup ==
+# task "pupu:setup" => :environment
+Task.new("pupu:setup") do |task|
+  task.hidden = true
+  task.define do
+    require "pupu/cli"
+  end
+end
+
+Task.new("pupu:install") do |task|
+  task.description = "Install given packages"
+  task.dependencies << "pupu:setup"
+  task.define do |*names|
+    Pupu::CLI.install(*names)
+  end
+end
+
+Task.new("pupu:uninstall") do |task|
+  task.description = "Uninstall given packages"
+  task.dependencies << "pupu:setup"
+  task.define do |*names|
+    Pupu::CLI.uninstall(*names)
+  end
+end
+
+Task.new("pupu:update") do |task|
+  task.description = "Update given packages. If no name is given, update all of them."
+  task.dependencies << "pupu:setup"
+  task.define do |*names|
+    Pupu::CLI.update(*names)
+  end
+end
+
+Task.new("pupu:list") do |task|
+  task.description = "List all installed packages."
+  task.dependencies << "pupu:setup"
+  task.define do
+    Pupu::CLI.list
+  end
+end
+
+Task.new("pupu:search") do |task|
+  task.description = "Search pupu matching given pattern on GitHub"
+  task.dependencies << "pupu:setup"
+  task.define do |pattern|
+    Pupu::CLI.search(pattern)
+  end
+end
