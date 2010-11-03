@@ -148,7 +148,7 @@ module Pupu
       # search on github
       require "yaml"
       require "open-uri"
-      open("http://github.com/api/v1/yaml/search/pupu") do |stream|
+      open("https://github.com/api/v1/yaml/search/pupu") do |stream|
         repositories = YAML::load(stream.read)["repositories"]
         repositories.each do |repository|
           repository = OpenStruct.new(repository)

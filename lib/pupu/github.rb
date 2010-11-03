@@ -78,8 +78,12 @@ module Pupu
         dsl = DSL.new(pupu)
         dsl.instance_eval(File.read(pupu.file("config.rb").path))
         dsl.get_dependencies.each do |dependency|
-          info "Installing dependency #{dependency}"
-          self.install(dependency.name.to_s, options) # FIXME: "user/repo"
+          begin
+            info "Installing dependency #{dependency}"
+            self.install(dependency.name.to_s, options) # FIXME: "user/repo"
+          rescue PluginIsAlreadyInstalled => exception
+            puts "~ #{exception.message}"
+          end
         end
       end
 

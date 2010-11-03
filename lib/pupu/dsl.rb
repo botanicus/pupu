@@ -2,6 +2,7 @@
 
 require "ostruct"
 require "media-path"
+require "pupu/parser"
 
 class Hash
   def to_html_attrs
