@@ -1,20 +1,8 @@
-= Version 0.0.1
-  * CLI interface with search, install & uninstall
-  * Rake & Thor tasks wrapping the CLI interface
-  * Helpers
-  * Dependencies handling
-  * Metadata handling
-  * Rango & Merb support
-  * Rango & Merb examples
+= Version 0.1
+  * Ace adapter.
 
-= Version 0.0.2
-  * Rails support
-  * Better documentation
-
-= Version 0.0.3
-  * Bug fixes
-  * Refactoring
-  * Examples
+= Version 0.0.5
+  * Added if option to javascript/stylesheet, so you can use styleshett "ie", if: "lt IE 8"
 
 = Version 0.0.4
   * Added Rails example app
@@ -24,5 +12,20 @@
   * Added Pupu.environment & Pupu.environment?
   * Added --ruby & --no-ruby options to the generator
 
-= Version 0.0.5
-  * Added if option to javascript/stylesheet, so you can use styleshett "ie", if: "lt IE 8"
+= Version 0.0.3
+  * Bug fixes
+  * Refactoring
+  * Examples
+
+= Version 0.0.2
+  * Rails support
+  * Better documentation
+
+= Version 0.0.1
+  * CLI interface with search, install & uninstall
+  * Rake & Thor tasks wrapping the CLI interface
+  * Helpers
+  * Dependencies handling
+  * Metadata handling
+  * Rango & Merb support
+  * Rango & Merb examples

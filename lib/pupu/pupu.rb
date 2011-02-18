@@ -63,9 +63,9 @@ module Pupu
     class << self
       # TODO: return Pupu object, not string
       def all
-        Dir["#{self.root}/*"].select do |item|
-          File.directory?(item)
-        end.map { |entry| File.basename(entry).to_s }
+        files = Dir["#{self.root_path}/*"]
+        dirs = files.select(&File.method(:directory?))
+        dirs.map(&File.method(:basename))
       end
 
       # same as root, but doesn't raise any exception
@@ -84,8 +84,8 @@ module Pupu
         #    # exception
         #  end
         raise "Pupu.media_root has to be initialized" if ::Pupu.media_root.nil?
-        raise Errno::ENOENT, "#{::Pupu.media_root}/pupu doesn't exist, you have to create it first!" unless File.directory?File.join(::Pupu.media_root, "pupu")
-        @root ||= MediaPath.new(File.join(::Pupu.media_root, "pupu"))
+        raise Errno::ENOENT, "#{self.root_path} doesn't exist, you have to create it first!" unless File.directory?(self.root_path)
+        @root ||= MediaPath.new(self.root_path)
       end
 
       # TODO: reflect changes on root method
@@ -100,7 +100,7 @@ module Pupu
         if self.all.include?(plugin)
           self.new(plugin, params)
         else
-          raise PluginNotFoundError
+          raise PluginNotFoundError.new(plugin)
         end
       end
     end

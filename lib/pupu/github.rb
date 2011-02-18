@@ -9,7 +9,7 @@ require "pupu/exceptions"
 
 module ShellExtensions
   def run(command)
-    puts "[SHELL] #{command}"
+    puts "[SHELL] #{command} # in #{Dir.pwd}"
     %x(#{command})
     $?.exitstatus == 0
   end
@@ -124,8 +124,8 @@ module Pupu
 
       def chdir(pupu = nil, &block)
         FileUtils.mkdir_p(Pupu.root_path) unless File.directory?(Pupu.root_path)
-        Dir.chdir(Pupu.root.to_s) do
-          pupu ? block.call(pupu.root) : block.call(Pupu.root)
+        Dir.chdir(Pupu.root_path.to_s) do
+          pupu ? block.call(pupu.root) : block.call(Pupu.root_path)
         end
       end
     end

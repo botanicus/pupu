@@ -5,6 +5,9 @@ module Pupu
   end
 
   class PluginNotFoundError < StandardError
+    def initialize(plugin)
+      super("Plugin not found: #{plugin.inspect}")
+    end
   end
 
   class PluginIsAlreadyInstalled < StandardError
