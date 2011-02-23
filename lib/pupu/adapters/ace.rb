@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+require "ace"
 require "pupu"
 require "pupu/helpers"
 
