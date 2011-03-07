@@ -72,7 +72,7 @@ module Pupu
     end
 
     def detect
-      pupu_dir = Dir["media/pupu", "public/pupu"].first
+      pupu_dir = Dir["media/pupu", "public/pupu", "content/assets/pupu"].first
       path = pupu_dir ? File.expand_path(File.dirname(pupu_dir)) : nil
       path ||= ["media", "public"].find { |directory| File.directory?(directory) }
       return if path.nil?
