@@ -113,7 +113,8 @@ module Pupu
     end
 
     def root
-      self.class.root.join(@path)
+      # self.class.root.join(@path)
+      File.join(self.class.root_path, @path)
     end
 
     def metadata
