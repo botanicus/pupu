@@ -107,7 +107,8 @@ module Pupu
     end
 
     def update
-      args = Pupu.all if self.args.empty? # update all if no pupu specified
+      args = self.args
+      args = Pupu.all if args.empty? # update all if no pupu specified
       args.each do |pupu|
         begin
           GitHub.update(pupu)
