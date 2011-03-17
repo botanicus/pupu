@@ -19,7 +19,7 @@ module Pupu
     def initialize(plugin_name, plugin_params, page = Page.new)
       @plugin    = Pupu[plugin_name, plugin_params]
       @output    = Array.new
-      puts "Parser: #{page.inspect}"
+      # puts "Parser: #{page.inspect}"
       @page = page
       @dsl       = DSL.new(@plugin, page)
       @@loaded ||= Hash.new

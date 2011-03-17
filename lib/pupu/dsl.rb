@@ -24,7 +24,7 @@ module Pupu
       @output = Array.new
       @files  = files
       @dependencies = Array.new
-      puts "DSL: #{page.inspect}"
+      # puts "DSL: #{page.inspect}"
       @path = pupu.file("config.rb")
     end
 
