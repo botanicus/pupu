@@ -63,7 +63,7 @@ module Pupu
 
       protected
       def save_metadata(pupu, url)
-        revision = %x(git log | head -1).chomp.sub(/^commit /, "")
+        revision = %x(git log --pretty=format:'%H' -1)
         dsl = DSL.new(pupu)
         dependencies = dsl.get_dependencies.map { |dependency| dependency.name }
         params = {revision: revision, repository: url, dependencies: dependencies}
