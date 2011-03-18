@@ -42,7 +42,7 @@ module Pupu
             path = pupu.root.to_s # otherwise after we remove the path, we get error at mkdir telling us that the path doesn't exist
             pupu.metadata # cache metadata
             FileUtils.rm_r(path)
-            self.install_files(pupu_name, pupu.metadata.repozitory)
+            self.install_files(pupu_name, pupu.metadata.repository)
           end
         else
           Pupu.all.each do |pupu_name|
