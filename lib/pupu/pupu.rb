@@ -122,6 +122,7 @@ module Pupu
       path = self.file("metadata.yml").path
       hash = YAML::load_file(path)
       @metadata = OpenStruct.new(hash)
+      @metadata.repository ||= @metadata.repozitory   # temporary hack for old style metadata.yml
     rescue Errno::ENOENT # we might remove pupu directory, so metadata are missing, but we can get them from cache
       @metadata
     end

@@ -66,7 +66,7 @@ module Pupu
         revision = %x(git log | head -1).chomp.sub(/^commit /, "")
         dsl = DSL.new(pupu)
         dependencies = dsl.get_dependencies.map { |dependency| dependency.name }
-        params = {revision: revision, repozitory: url, dependencies: dependencies}
+        params = {revision: revision, repository: url, dependencies: dependencies}
         Dir.chdir(@pupu.root.to_s) do
           File.open("metadata.yml", "w") do |file|
             file.puts(params.to_yaml)
