@@ -14,6 +14,7 @@ module Pupu
   end
 
   def self.root=(path)
+    raise PupuRootNotFound unless File.directory?( path )
     @@root = path
   end
 
