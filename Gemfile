@@ -1,9 +1,7 @@
-# configuration
-bundle_path "gems"
-bin_path "script"
-disable_rubygems
+source 'http://rubygems.org'
 
 # gems
 gem "nake"
 gem "media-path"
-gem "rspec", only: "test"
+
+gem "rspec", "~> 1.3.2", :group => :test
