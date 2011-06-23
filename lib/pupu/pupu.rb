@@ -156,6 +156,8 @@ module Pupu
         file("#{@path}.js", "#{::Pupu.media_root}/javascripts/initializers") rescue nil # TODO: fix media
       when :stylesheet
         file("#{@path}.css", "#{::Pupu.media_root}/stylesheets/initializers") rescue nil # TODO: fix media
+      else
+        raise Exception, "#{type.to_s} is not know type of initializer"
       end
     end
 
