@@ -44,15 +44,15 @@ describe Pupu::Pupu do
     end
 
     it "should return pathname to pupu" do
-      @pupu.initializer.should eql("#{PROJECT_ROOT}/pupu/autocompleter/initializer.js") # TODO: pole s 2 pathname
+      @pupu.initializer.map{|path| path.to_s}.should eql(["#{Pupu.media_root}/pupu/autocompleter/initializers/autocompleter.js","#{Pupu.media_root}/pupu/autocompleter/initializers/autocompleter.css"])
     end
 
     it "should return pathname to pupu" do
-      @pupu.initializer(:javascript).should eql("#{PROJECT_ROOT}/pupu/autocompleter/initializers/autocompleter.js")
+      @pupu.initializer(:javascript).to_s.should eql("#{Pupu.media_root}/pupu/autocompleter/initializers/autocompleter.js")
     end
 
     it "should return pathname to pupu" do
-      @pupu.initializer(:stylesheet).should eql("#{PROJECT_ROOT}/pupu/autocompleter/initializers/autocompleter.css")
+      @pupu.initializer(:stylesheet).to_s.should eql("#{Pupu.media_root}/pupu/autocompleter/initializers/autocompleter.css")
     end
 
     it "should raise error for non-existing initializer type" do
@@ -71,6 +71,7 @@ describe Pupu::Pupu do
     end
 
     it "should return pathname to pupu" do
+      pending "#copy_initializers is not implemented yet"
       @pupu.initializer.should eql("#{PROJECT_ROOT}/root/pupu/autocompleter/initializer.js")
     end
 
@@ -81,15 +82,17 @@ describe Pupu::Pupu do
 
   describe "#uninstall" do
     before(:each) do
-      #@pupu = Pupu::Pupu[:autocompleter]
+      @pupu = Pupu::Pupu[:autocompleter]
     end
 
     it "should return path to image" do
+      pending
       @pupu.uninstall # TODO
     end
 
     it "should return nil if image do not exists" do
-      lambda { @pupu.image("missing.gif") }.should raise_error(AssetNotFound) # TODO
+      pending
+      lambda { @pupu.image("missing.gif") }.should raise_error(Pupu::AssetNotFound) # TODO
     end
   end
 
@@ -99,11 +102,11 @@ describe Pupu::Pupu do
     end
 
     it "should return path to image" do
-      @pupu.image("spinner.gif").should eql("/pupu/autocompleter/images/spinner.gif")
+      @pupu.image("spinner.gif").to_s.should eql("#{Pupu.media_root}/pupu/autocompleter/images/spinner.gif")
     end
 
     it "should return nil if image do not exists" do
-      lambda { @pupu.image("missing.gif") }.should raise_error(AssetNotFound)
+      lambda { @pupu.image("missing.gif") }.should raise_error(Pupu::AssetNotFound)
     end
   end
 
@@ -113,11 +116,11 @@ describe Pupu::Pupu do
     end
 
     it "should return path to javascript" do
-      @pupu.javascript("autocompleter").should eql("/pupu/autocompleter/lib/autocompleter.js")
+      @pupu.javascript("autocompleter").to_s.should eql("#{Pupu.media_root}/pupu/autocompleter/javascripts/autocompleter.js")
     end
 
     it "should return nil if javascript do not exists" do
-      lambda { @pupu.javascript("missing") }.should raise_error(AssetNotFound)
+      lambda { @pupu.javascript("missing") }.should raise_error(Pupu::AssetNotFound)
     end
   end
 
@@ -127,11 +130,11 @@ describe Pupu::Pupu do
     end
 
     it "should return path to image" do
-      @pupu.stylesheet("autocompleter").should eql("/pupu/autocompleter/autocompleter.css")
+      @pupu.stylesheet("autocompleter").to_s.should eql("#{Pupu.media_root}/pupu/autocompleter/stylesheets/autocompleter.css")
     end
 
     it "should return nil if stylesheet do not exists" do
-      lambda { @pupu.stylesheet("missing") }.should raise_error(AssetNotFound)
+      lambda { @pupu.stylesheet("missing") }.should raise_error(Pupu::AssetNotFound)
     end
   end
 end
