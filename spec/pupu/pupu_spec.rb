@@ -55,12 +55,12 @@ describe Pupu::Pupu do
       @pupu.initializer(:stylesheet).should eql("#{PROJECT_ROOT}/pupu/autocompleter/initializers/autocompleter.css")
     end
 
-    it "should return pathname to pupu" do
+    it "should raise error for non-existing initializer type" do
       lambda { @pupu.initializer(:nonexisting) }.should raise_error()
     end
 
-    it "should return nil if image do not exists" do
-      lambda { @pupu.image("missing.gif") }.should raise_error(AssetNotFound) # TODO
+    it "should raise AssetNotFound if image do not exists" do
+      lambda { @pupu.image("missing.gif") }.should raise_error(Pupu::AssetNotFound)
     end
   end
 
@@ -75,7 +75,7 @@ describe Pupu::Pupu do
     end
 
     it "should return nil if image do not exists" do
-      lambda { @pupu.image("missing.gif") }.should raise_error(AssetNotFound) # TODO
+      lambda { @pupu.image("missing.gif") }.should raise_error(Pupu::AssetNotFound)
     end
   end
 

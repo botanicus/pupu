@@ -137,7 +137,7 @@ module Pupu
     end
 
     def image(basename)
-      file("javascripts/#{image}")
+      file("javascripts/#{basename}")
     end
 
     def uninstall
@@ -168,6 +168,8 @@ module Pupu
     def file(path, root = self.root)
       root = MediaPath.new(root) if root.is_a?(String)
       root.join(path)
+    rescue Errno::ENOENT
+      raise AssetNotFound, "#{soft_file(path, root)}"
     end
   end
 end
