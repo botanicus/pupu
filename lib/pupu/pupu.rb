@@ -14,6 +14,7 @@ module Pupu
   end
 
   def self.root=(path)
+    raise PupuRootNotFound unless File.directory?( path )
     @@root = path
   end
 
@@ -136,7 +137,7 @@ module Pupu
     end
 
     def image(basename)
-      file("javascripts/#{image}")
+      file("images/#{basename}")
     end
 
     def uninstall
@@ -152,9 +153,11 @@ module Pupu
       when :all
         [self.initializer(:javascript), self.initializer(:stylesheet)]
       when :javascript
-        file("#{@path}.js", "#{::Pupu.media_root}/javascripts/initializers") rescue nil # TODO: fix media
+        file("#{@path}.js", "#{root}/initializers") rescue nil # TODO: fix media
       when :stylesheet
-        file("#{@path}.css", "#{::Pupu.media_root}/stylesheets/initializers") rescue nil # TODO: fix media
+        file("#{@path}.css", "#{root}/initializers") rescue nil # TODO: fix media
+      else
+        raise Exception, "#{type.to_s} is not know type of initializer"
       end
     end
 
@@ -165,6 +168,8 @@ module Pupu
     def file(path, root = self.root)
       root = MediaPath.new(root) if root.is_a?(String)
       root.join(path)
+    rescue Errno::ENOENT
+      raise AssetNotFound, "#{soft_file(path, root)}"
     end
   end
 end
