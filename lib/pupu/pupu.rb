@@ -1,4 +1,4 @@
-# encoding: utf-8
+L# encoding: utf-8
 
 require "yaml"
 require "ostruct"
@@ -14,7 +14,7 @@ module Pupu
   end
 
   def self.root=(path)
-    raise PupuRootNotFound unless File.directory?( path )
+    raise PupuRootNotFound unless File.directory?(path)
     @@root = path
   end
 
