@@ -1,4 +1,5 @@
 # encoding: utf-8
+require "fakefs/spec_helpers"
 
 require_relative "../spec_helper"
 
@@ -79,18 +80,17 @@ describe Pupu::Pupu do
   end
 
   describe "#uninstall" do
+    include FakeFS::SpecHelpers
+
     before(:each) do
+      FakeFS::FileSystem.clone("#{PROJECT_ROOT}")
       @pupu = Pupu::Pupu[:autocompleter]
     end
 
-    it "should return path to image" do
-      pending
-      @pupu.uninstall # TODO
-    end
-
-    it "should return nil if image do not exists" do
-      pending
-      lambda { @pupu.image("missing.gif") }.should raise_error(Pupu::AssetNotFound) # TODO
+    it "should remove plugins directory" do
+      File.should exist(@pupu.root.to_s)
+      @pupu.uninstall
+      File.should_not exist(@pupu.root.to_s)
     end
   end
 
