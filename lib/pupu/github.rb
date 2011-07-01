@@ -102,19 +102,8 @@ module Pupu
       end
 
       def proceed_files(repo, url)
-        js_initializer = "initializers/#{repo}.js"
-        css_initializer = "initializers/#{repo}.css"
-        if File.exist?(js_initializer) &&  (not File.exist?("#{::Pupu.media_root}/javascripts/initializers/#{repo}.js"))
-          puts "Creating JS initializer"
-          FileUtils.mkdir_p("#{::Pupu.media_root}/javascripts/initializers")
-          FileUtils.mv js_initializer, "#{::Pupu.media_root}/javascripts/initializers/#{repo}.js"
-        end
-        if File.exist?(css_initializer) && (not File.exist?("#{::Pupu.media_root}/stylesheets/initializers/#{repo}.css"))
-          puts "Creating CSS initializer"
-          FileUtils.mkdir_p("#{::Pupu.media_root}/stylesheets/initializers")
-          FileUtils.mv css_initializer, "#{::Pupu.media_root}/stylesheets/initializers/#{repo}.css"
-        end
         @pupu = Pupu[repo]
+        @pupu.copy_initializers
         self.save_metadata(@pupu, url)
         FileUtils.rm_r(".git") if ::Pupu.strategy.eql?(:copy)
       rescue Exception => exception
