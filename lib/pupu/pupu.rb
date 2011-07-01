@@ -153,9 +153,21 @@ module Pupu
       when :all
         [self.initializer(:javascript), self.initializer(:stylesheet)]
       when :javascript
-        file("#{@path}.js", "#{root}/initializers") rescue nil # TODO: fix media
+        begin
+          file("#{@path}.js", "#{root}/initializers")
+        rescue AssetNotFound
+          file("#{@path}.js", "#{::Pupu.media_root}/javascripts/initializers")
+        rescue
+          nil
+        end
       when :stylesheet
-        file("#{@path}.css", "#{root}/initializers") rescue nil # TODO: fix media
+        begin
+          file("#{@path}.css", "#{root}/initializers")
+        rescue AssetNotFound
+          file("#{@path}.css", "#{::Pupu.media_root}/stylesheets/initializers")
+        rescue
+          nil
+        end
       else
         raise Exception, "#{type.to_s} is not know type of initializer"
       end

@@ -81,10 +81,9 @@ describe Pupu::Pupu do
     end
 
     it "should cause #initializer to return path to copied file" do
-      pending("not yet correctly implemented")
       @pupu.initializer(:javascript).to_s.should eql("#{Pupu.media_root}/pupu/autocompleter/initializers/autocompleter.js")
-      # @pupu.copy_initializers
-      # @pupu.initializer(:javascript).to_s.should eql("#{Pupu.media_root}/javascripts/initializers/autocompleter.js")
+      @pupu.copy_initializers
+      @pupu.initializer(:javascript).to_s.should eql("#{Pupu.media_root}/javascripts/initializers/autocompleter.js")
     end
   end
 
