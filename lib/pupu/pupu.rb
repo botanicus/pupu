@@ -160,6 +160,21 @@ module Pupu
         raise Exception, "#{type.to_s} is not know type of initializer"
       end
     end
+    
+    def copy_initializers
+      js_initializer = initializer(:javascript)
+      css_initializer = initializer(:stylesheet)
+      
+      if js_initializer && (not File.exist?("#{::Pupu.media_root}/javascripts/initializers/#{File.basename(js_initializer.to_s)}"))
+        FileUtils.mkdir_p("#{::Pupu.media_root}/javascripts/initializers")
+        FileUtils.mv js_initializer.to_s, "#{::Pupu.media_root}/javascripts/initializers/#{File.basename(js_initializer.to_s)}"
+      end
+      
+      if css_initializer && (not File.exist?("#{::Pupu.media_root}/stylesheets/initializers/#{File.basename(css_initializer.to_s)}"))
+        FileUtils.mkdir_p("#{::Pupu.media_root}/stylesheets/initializers")
+        FileUtils.mv css_initializer.to_s, "#{::Pupu.media_root}/stylesheets/initializers/#{File.basename(css_initializer.to_s)}"
+      end
+    end
 
     def soft_file(path, root = self.root)
       File.join(root.to_s, path.to_s) # for files which doesn't exist so far
