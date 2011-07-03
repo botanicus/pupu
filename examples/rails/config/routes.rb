@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
   #   map.resources :products
 
   # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
+  #  map.resources :products, member: { short: :get, toggle: :post }, collection: { sold: :get }
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
   # Sample resource route with more complex sub-resources
   #   map.resources :products do |products|
   #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
+  #     products.resources :sales, collection: { recent: :get }
   #   end
 
   # Sample resource route within a namespace:

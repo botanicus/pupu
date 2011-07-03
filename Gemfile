@@ -4,4 +4,4 @@ source 'http://rubygems.org'
 gem "nake"
 gem "media-path"
 
-gem "rspec", "~> 1.3.2", :group => :test
+gem "rspec", "~> 2.6.0", group: :test
