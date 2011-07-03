@@ -153,11 +153,38 @@ module Pupu
       when :all
         [self.initializer(:javascript), self.initializer(:stylesheet)]
       when :javascript
-        file("#{@path}.js", "#{root}/initializers") rescue nil # TODO: fix media
+        begin
+          file("#{@path}.js", "#{root}/initializers")
+        rescue AssetNotFound
+          file("#{@path}.js", "#{::Pupu.media_root}/javascripts/initializers")
+        rescue
+          nil
+        end
       when :stylesheet
-        file("#{@path}.css", "#{root}/initializers") rescue nil # TODO: fix media
+        begin
+          file("#{@path}.css", "#{root}/initializers")
+        rescue AssetNotFound
+          file("#{@path}.css", "#{::Pupu.media_root}/stylesheets/initializers")
+        rescue
+          nil
+        end
       else
         raise Exception, "#{type.to_s} is not know type of initializer"
+      end
+    end
+    
+    def copy_initializers
+      js_initializer = initializer(:javascript)
+      css_initializer = initializer(:stylesheet)
+      
+      if js_initializer && (not File.exist?("#{::Pupu.media_root}/javascripts/initializers/#{File.basename(js_initializer.to_s)}"))
+        FileUtils.mkdir_p("#{::Pupu.media_root}/javascripts/initializers")
+        FileUtils.mv js_initializer.to_s, "#{::Pupu.media_root}/javascripts/initializers/#{File.basename(js_initializer.to_s)}"
+      end
+      
+      if css_initializer && (not File.exist?("#{::Pupu.media_root}/stylesheets/initializers/#{File.basename(css_initializer.to_s)}"))
+        FileUtils.mkdir_p("#{::Pupu.media_root}/stylesheets/initializers")
+        FileUtils.mv css_initializer.to_s, "#{::Pupu.media_root}/stylesheets/initializers/#{File.basename(css_initializer.to_s)}"
       end
     end
 

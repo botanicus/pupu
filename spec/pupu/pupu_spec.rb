@@ -1,4 +1,5 @@
 # encoding: utf-8
+require "fakefs/spec_helpers"
 
 require_relative "../spec_helper"
 
@@ -64,33 +65,40 @@ describe Pupu::Pupu do
 
   # initializer.js will be copied into root/javascripts/initializers/[pupu-name].js
   describe "#copy_initializers" do
+    include FakeFS::SpecHelpers
+    
     before(:each) do
+      FakeFS::FileSystem.clone("#{PROJECT_ROOT}")
       @pupu = Pupu::Pupu[:autocompleter]
     end
 
-    it "should return pathname to pupu" do
-      pending "#copy_initializers is not implemented yet"
-      @pupu.initializer.should eql("#{PROJECT_ROOT}/root/pupu/autocompleter/initializer.js")
+    it "should copy initializers to ROOT/initializers" do
+      File.should_not exist("#{Pupu.media_root}/javascripts/initializers/autocompleter.js")
+      File.should_not exist("#{Pupu.media_root}/stylesheets/initializers/autocompleter.css")
+      @pupu.copy_initializers
+      File.should exist("#{Pupu.media_root}/javascripts/initializers/autocompleter.js")
+      File.should exist("#{Pupu.media_root}/stylesheets/initializers/autocompleter.css")      
     end
 
-    it "should return nil if image do not exists" do
-      lambda { @pupu.image("missing.gif") }.should raise_error(Pupu::AssetNotFound)
+    it "should cause #initializer to return path to copied file" do
+      @pupu.initializer(:javascript).to_s.should eql("#{Pupu.media_root}/pupu/autocompleter/initializers/autocompleter.js")
+      @pupu.copy_initializers
+      @pupu.initializer(:javascript).to_s.should eql("#{Pupu.media_root}/javascripts/initializers/autocompleter.js")
     end
   end
 
   describe "#uninstall" do
+    include FakeFS::SpecHelpers
+
     before(:each) do
+      FakeFS::FileSystem.clone("#{PROJECT_ROOT}")
       @pupu = Pupu::Pupu[:autocompleter]
     end
 
-    it "should return path to image" do
-      pending
-      @pupu.uninstall # TODO
-    end
-
-    it "should return nil if image do not exists" do
-      pending
-      lambda { @pupu.image("missing.gif") }.should raise_error(Pupu::AssetNotFound) # TODO
+    it "should remove plugins directory" do
+      File.should exist(@pupu.root.to_s)
+      @pupu.uninstall
+      File.should_not exist(@pupu.root.to_s)
     end
   end
 
