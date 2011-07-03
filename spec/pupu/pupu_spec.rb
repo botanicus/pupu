@@ -18,8 +18,6 @@ describe Pupu::Pupu do
       lambda { Pupu::Pupu[:non_existing_pupu] }.should raise_error(Pupu::PluginNotFoundError)
     end
   end
-  
-
 
   describe ".root=" do
     it "should return Pupu::Pupu object" do
