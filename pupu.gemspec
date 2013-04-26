@@ -11,7 +11,6 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/botanicus/pupu"
   s.summary = "Framework-agnostic package system for media files"
   s.description = "Pupu is a plugin system for media like mootools plugins, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such pupus into your app."
-  s.cert_chain = nil
   s.email = Base64.decode64("c3Rhc3RueUAxMDFpZGVhcy5jeg==\n")
 
   # files
